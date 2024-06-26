@@ -4,6 +4,9 @@ SOURCES = main.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 
+LIBFT = cd libft && make
+LIB = libft/libft.a
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  
 RM = rm -f
@@ -11,16 +14,19 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJECTS) 
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -lreadline
+	@$(LIBFT)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIB) -o $(NAME) -lreadline
 
 
 %.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJECTS) 
+	$(RM) $(OBJECTS)
+	cd libft && make clean 
 
 fclean: clean
-	$(RM) $(NAME) 
+	$(RM) $(NAME)
+	cd libft && make fclean 
 
 re: fclean all
