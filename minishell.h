@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/26 05:06:07 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/06/27 07:04:09 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "./libft/libft.h"
 
 #define RESET "\033[0m"
 #define GOLD "\033[0;33m"
