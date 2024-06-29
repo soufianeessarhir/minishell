@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/28 01:29:27 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/06/29 09:21:40 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int check_quote(char *line)
         return (1);
     return (0);
 }
-void    readline_loop(char **line)
+void    readline_loop(char **line, t_gc **lst)
 {
     while (1)
     {
@@ -51,13 +51,22 @@ void    readline_loop(char **line)
         }
         printf("%s\n", *line);
         free(*line);
+        (void)lst;
     }
 }
+void f() 
+{
+    system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **env)
 {
-   
+    t_gc *lst;
     char *line;
-    readline_loop(&line);
+    int i;
+    i = 0;
+    atexit(f);
+    readline_loop(&line, &lst);
     (void)ac;
     (void)av;
     (void)env;
