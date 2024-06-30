@@ -19,7 +19,7 @@ $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) $(LIB) -o $(NAME) -lreadline
 
 
-%.o: %.c 
+%.o: %.c minishell.h ./libft/libft.h ./libft/gc/gc.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
