@@ -1,5 +1,7 @@
 NAME = minishell
-SOURCES = main.c  gc/ft_free.c gc/ft_lstadd_back.c gc/ft_lstadd_front.c gc/ft_lstclear.c gc/ft_lstdelone.c gc/ft_lstiter.c gc/ft_lstlast.c gc/ft_lstmap.c gc/ft_lstnew.c gc/ft_lstsize.c gc/ft_malloc.c\
+SOURCES = main.c  gc/ft_free.c gc/ft_lstadd_back.c gc/ft_lstadd_front.c gc/ft_lstclear.c gc/ft_lstdelone.c gc/ft_lstlast.c  gc/ft_lstnew.c gc/ft_lstsize.c gc/ft_malloc.c\
+		dll_utils.c dll_utils1.c\
+		
 
 
 OBJECTS = $(SOURCES:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/29 08:53:05 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/03 05:45:53 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,23 @@
 #define BGMAGENTA "\033[45m"
 #define BGCYAN "\033[46m"
 #define BGWHITE "\033[47m"
+
+typedef struct s_token
+{
+    char *value;
+    int type;
+    struct s_token *next;
+    struct s_token *prev;
+}               t_token;
+
+t_token *ft_dll_lstnew(char *content, int type);
+void    ft_dll_lstadd_front(t_token **lst, t_token *new);
+void    ft_dll_lstadd_back(t_token **lst, t_token *new);
+void    ft_dll_lstclear(t_token **lst);
+t_token *ft_dll_lstlast(t_token *lst);
+int     ft_dll_lstsize(t_token *lst);
+
+
 
 
 #endif
