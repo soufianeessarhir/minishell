@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/03 05:45:53 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/03 05:54:47 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void    ft_dll_lstadd_back(t_token **lst, t_token *new);
 void    ft_dll_lstclear(t_token **lst);
 t_token *ft_dll_lstlast(t_token *lst);
 int     ft_dll_lstsize(t_token *lst);
+char    **ft_tokinize(char *line);
+void    help(char *line,char **sep_token,int *j,int *i);
+void    skip_quoted(char **sep_token,char *line, int *i,int *j);
+
 
 
 
