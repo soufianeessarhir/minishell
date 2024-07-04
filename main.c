@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/03 05:55:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/04 01:45:55 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void    readline_loop(char **line, t_gc **lst)
 {
     char **token;
+    
     while (1)
     {
         *line = readline(BOLD GREEN "minishell" YELLOW "$ "RESET BOLD );
@@ -23,8 +24,9 @@ void    readline_loop(char **line, t_gc **lst)
         if (*line[0] != '\0')
             add_history(*line);
         token = ft_tokinize(*line);
-        for (int i = 0; token[i] != NULL; i++)
-            printf("%s\n", token[i]);
+        syntax_error(token);
+        // for (int i = 0; token[i] != NULL; i++)
+        //     printf("%s\n", token[i]);
       
         (void)lst;
     }
