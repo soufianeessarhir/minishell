@@ -6,11 +6,35 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/04 01:45:55 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:01:51 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+int  is_exist(char *str,char c,int *i)
+{
+    while (str[++(*i)] != '\0')
+    {
+        if (str[*i] == '/' || str[*i] == ';')
+            return (0);
+        if (str[*i] == c)
+            return (1);
+    }
+    return (0);
+}
+int sp_uq_handling (char *line)
+{
+    int i;
+
+    i = -1;
+    while (line[++i])
+    {
+        if ((line[i] == ';' || line[i] == '/') || (line[i] == '\'' && !is_exist(line,'\'',&i))
+            || (line[i] == '\"' && !is_exist(line,'\"',&i)))
+            return (printf("syntax error \n"),1);
+    }
+    return (0);
+}
 
 void    readline_loop(char **line, t_gc **lst)
 {
@@ -23,11 +47,10 @@ void    readline_loop(char **line, t_gc **lst)
             break;
         if (*line[0] != '\0')
             add_history(*line);
+        sp_uq_handling(*line);
+        continue;
         token = ft_tokinize(*line);
         syntax_error(token);
-        // for (int i = 0; token[i] != NULL; i++)
-        //     printf("%s\n", token[i]);
-      
         (void)lst;
     }
 }
