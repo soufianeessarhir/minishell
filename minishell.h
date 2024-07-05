@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/04 01:46:14 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/06 00:04:37 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <readline/history.h>
 #include "./libft/libft.h"
 #include "./gc/gc.h"
+#include <signal.h>
+
 
 #define RESET "\033[0m"
 #define GOLD "\033[0;33m"
@@ -65,7 +67,7 @@ void    skip_quoted(char **sep_token,char *line, int *i,int *j);
 void  init_graph(int graph[4][3]);
 int syntax_error(char **args);
 
-
+void handle_sigint(int sig);
 
 
 

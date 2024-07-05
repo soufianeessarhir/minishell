@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/04 01:45:55 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/06 00:06:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ int	main(int ac, char **av, char **env)
     char *line;
     int i;
     i = 0;
+
+	rl_catch_signals = 0;
+    signal(SIGINT, handle_sigint);
     readline_loop(&line, &lst);
     (void)ac;
     (void)av;
     (void)env;
+	//handling singals
     return (0);
 }
