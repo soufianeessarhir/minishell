@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/04 01:46:14 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:15:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ char    **ft_tokinize(char *line);
 void    help(char *line,char **sep_token,int *j,int *i);
 void    skip_quoted(char **sep_token,char *line, int *i,int *j);
 void  init_graph(int graph[4][3]);
-int syntax_error(char **args);
+int syntax_error(char **args,t_token **token);
+int sp_uq_handling (char *line);
+
 
 
 

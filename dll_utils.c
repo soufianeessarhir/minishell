@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:38:06 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/03 05:47:11 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/05 01:28:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void    ft_dll_lstclear(t_token **lst)
     {
         tmp = *lst;
         *lst = (*lst)->next;
-        free(tmp->value);
         free(tmp);
     }
 }

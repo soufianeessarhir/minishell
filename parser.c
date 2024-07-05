@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/04 02:00:56 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/05 00:01:18 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,24 @@ void  init_graph(int graph[4][3])
     graph[3][2] = -1;
 }
 
-int syntax_error(char **args)
+int syntax_error(char **args,t_token **token)
 {
     int graph[4][3];
-    t_token *token;
     int state;
+    t_token *tmp;
     
-    token = NULL;
     state = 0;
     init_graph(graph);
-    init_token(args,&token);
-    while (token)
+    init_token(args,token);
+    tmp = *token;
+    while (tmp)
     {
-        state = graph[state][token->type - 1];
+        state = graph[state][tmp->type - 1];
         if (state == -1)
             return ( printf("syntax error\n"),1);
-        token = token->next;
+        tmp = tmp->next;
     }
-    if (token == NULL && state == 1)
+    if (tmp == NULL && state == 1)
         return (0);
         
     return (printf("syntax error\n"),1);
