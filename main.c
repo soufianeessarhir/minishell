@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/06 04:53:41 by sessarhi         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/06 00:06:20 by relamine         ###   ########.fr       */
+>>>>>>> 66b7fc001a4993188a8593154d33c585d1ca60d4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +208,21 @@ int	main(int ac, char **av, char **env)
 {
     t_gc *lst;
     char *line;
+<<<<<<< HEAD
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);
     readline_loop(&line, &lst, env);
+=======
+    int i;
+    i = 0;
+
+	rl_catch_signals = 0;
+    signal(SIGINT, handle_sigint);
+    readline_loop(&line, &lst);
+    (void)ac;
+    (void)av;
+    (void)env;
+	//handling singals
+>>>>>>> 66b7fc001a4993188a8593154d33c585d1ca60d4
     return (0);
 }
