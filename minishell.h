@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 00:04:37 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/06 13:53:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ void  init_graph(int graph[4][3]);
 int syntax_error(char **args);
 
 void handle_sigint(int sig);
+int echo(int argc, char **argv);
+void ft_builtin_func(char **argv);
+int pwd(char *argv);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 00:06:20 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/06 12:22:37 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,22 @@ void    readline_loop(char **line, t_gc **lst)
     {
         *line = readline(BOLD GREEN "minishell" YELLOW "$ "RESET BOLD );
         if (!*line)
-            break;
+        {
+			write(0, "exit", 4);
+			exit(0);
+		}
         if (*line[0] != '\0')
             add_history(*line);
         token = ft_tokinize(*line);
+		// for (int i = 0; token[i] != NULL; i++)
+		// 	printf("%s\n", token[i]);
         syntax_error(token);
+		ft_builtin_func(token);
+		// if (ft_strcmp(token[0], "echo") == 0)
+		//
         // for (int i = 0; token[i] != NULL; i++)
         //     printf("%s\n", token[i]);
-      
+	
         (void)lst;
     }
 }
