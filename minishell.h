@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/04 22:15:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/05 23:45:21 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ typedef struct s_token
     struct s_token *next;
     struct s_token *prev;
 }               t_token;
+
+typedef struct s_env
+{
+    int i;
+    int j;
+    char *src;
+    char *value;
+    char *result;
+    int is_expandable;
+}               t_env;
 
 t_token *ft_dll_lstnew(char *content, int type);
 void    ft_dll_lstadd_front(t_token **lst, t_token *new);

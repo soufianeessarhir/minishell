@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/05 02:06:24 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/06 04:53:41 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,37 +44,112 @@ int is_dollar(char *str)
     }
     return 0;
 }
+// char *grep_env(char *str) 
+// {
+//     int i;
+//     int j;
+//     char *value;
+    
+//     i = 0;
+//     j = 0;
+//     while (str[i] && str[i] != '$')
+//         i++;
+//     j = i++;
+//     if (str[i] == '?')
+//         return ft_strdup("0");
+//     while ((ft_isalnum(str[i]) || str[i] == '_') && str[i])
+//         i++;
+//     value = ft_substr(str, j, i - j);
+//     return value;
+// }
+char *cleand_str(char *str) 
+{
+    int i;
+    int j;
+    char quote;
+    
+    i = 0;
+    j = 0;
+    
+    while (str[i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+        {
+            quote = str[i++];
+            while (str[i] && str[i] != quote)
+                str[j++] = str[i++];
+            i++;
+        }
+        else
+            str[j++] = str[i++];
+    }
+    str[j] = '\0';
+    return str;
+}
+int is_expandabe(char *str,int start,int end) 
+{
+    char *tmp;
+    char *tmp2;
+    char *tmp3;
+    
+    while (str[start] == str[end] && (str[start] == '\'' || str[start] == '\"'))
+    {
+        start--;
+        end++;
+    }
+    start++;
+    tmp = ft_substr(str, start, end - start);
+    tmp3 = ft_strdup(tmp);
+    tmp2 = cleand_str(tmp3);
+    if ((tmp[0] == '\'' && tmp2[0] == '\'') || (tmp[0] == '\'' && (tmp[1] != '\'' && tmp2[1] != '\"')))
+        return 0;
+    return 1;
+}
 
 char *env_search(char *str, char **env) 
 {
-    char *result;
-    int i;
-    int j;
-    
-    i = 0;
-    result = NULL;
-    while (str[i]) 
+    t_env *tmp;
+
+    tmp = malloc(sizeof(t_env));
+    tmp->i = -1;
+    tmp->j = 0;
+    tmp->result = NULL;
+    while (str[++tmp->i]) 
     {
-        if (str[i] == '$') 
+        while (str[tmp->i] && str[tmp->i] != '$')
+            tmp->i++;
+        tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i));
+        if (str[tmp->i] == '$' && str[tmp->i + 1] == '?')
         {
-            j = i + 1;
-            while (ft_isalnum(str[j]) || str[j] == '_') 
-                j++;
-            if (str[j++]=='?')
-                result = ft_strjoin(result, "0");
-            else if (is_env( ft_substr(str, i + 1, j - i - 1), env)) 
-                result = ft_strjoin(result, is_env(ft_substr(str, i + 1, j - i - 1), env));
-            i = j;
+            tmp->result = ft_strjoin(tmp->result,ft_strdup("0"));
+            tmp->i++;
         } 
-        else 
+        else
         {
-            j = i;
-            while (str[i] && str[i] != '$')
-                i++;
-            result = ft_strjoin(result, ft_substr(str, j, i - j));
+            tmp->j = tmp->i;
+            tmp->i++;
+            while ((ft_isalnum(str[tmp->i]) || str[tmp->i] == '_') && str[tmp->i])
+                tmp->i++;
+            if (is_expandabe(str,tmp->j - 1,tmp->i))
+            {
+                tmp->src = ft_substr(str, tmp->j + 1, tmp->i - tmp->j- 1);
+                tmp->value = is_env(tmp->src, env);
+                if (tmp->value)
+                    tmp->result = ft_strjoin(tmp->result, tmp->value);
+                else
+                    tmp->result = ft_strjoin(tmp->result, tmp->src);
+                free(tmp->src);
+            }
+            else
+            {
+                tmp->src = ft_substr(str, tmp->j, tmp->i - tmp->j);
+                tmp->result = ft_strjoin(tmp->result, tmp->src);
+                free(tmp->src);
+            }
         }
+        tmp->j = tmp->i;
     }
-    return result;
+    return cleand_str(tmp->result);  
 }
 
 void env_handling(t_token **token_lst, char **env) 
