@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:53:28 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/03 05:56:03 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/06 08:17:24 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ void   skip_quoted(char **sep_token,char *line, int *i,int *j)
     c = line[*i];
     (*sep_token)[++(*j)] = c;
     while (line[++(*i)] != c)
+    {
+        if (line[*i] == '\0')
+        {
+            (*sep_token)[++(*j)] = c;
+            break;
+        }
         (*sep_token)[++(*j)] = line[*i];
+    }
     (*sep_token)[++(*j)] = c;
     (*i)++;
 }

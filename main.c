@@ -6,30 +6,42 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 04:53:41 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/06 13:52:29 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-char *is_env(char *str, char **env) 
+int check_ex(char *str) 
 {
     int i;
-    int len;
+    int j;
+    int flag;
+    char quote;
     
     i = 0;
-    len = strlen(str);
-
-    while (env[i]) 
+    j = 0;
+    flag = 0;
+    while (str[i])
     {
-        if (strncmp(str, env[i], len) == 0 && env[i][len] == '=') 
+        if ( str[i] == '\"')
         {
-            return (env[i] + len + 1);
+            quote = str[i++];
+            while (str[i] && str[i] != quote)
+               i++;
+            i++;
         }
-        i++;
+        else if (str[i] == '\'')
+        {
+            quote = str[i++];
+            while (str[i] && str[i] != quote)
+                i++;
+            if (str[i] != quote)
+                flag = 1;
+            i++;
+        }
     }
-    return NULL;
+    return flag;
 }
 
 int is_dollar(char *str) 
@@ -37,31 +49,12 @@ int is_dollar(char *str)
     while (*str) 
     {
         if (*str == '$') 
-        {
             return 1;
-        }
         str++;
     }
     return 0;
 }
-// char *grep_env(char *str) 
-// {
-//     int i;
-//     int j;
-//     char *value;
-    
-//     i = 0;
-//     j = 0;
-//     while (str[i] && str[i] != '$')
-//         i++;
-//     j = i++;
-//     if (str[i] == '?')
-//         return ft_strdup("0");
-//     while ((ft_isalnum(str[i]) || str[i] == '_') && str[i])
-//         i++;
-//     value = ft_substr(str, j, i - j);
-//     return value;
-// }
+
 char *cleand_str(char *str) 
 {
     int i;
@@ -89,19 +82,25 @@ char *cleand_str(char *str)
 int is_expandabe(char *str,int start,int end) 
 {
     char *tmp;
-    char *tmp2;
     char *tmp3;
-    
+
     while (str[start] == str[end] && (str[start] == '\'' || str[start] == '\"'))
     {
         start--;
         end++;
     }
     start++;
+    while (str[start] == str[start + 1])
+    { 
+        start= start + 2;
+        end = end - 2;
+    }
     tmp = ft_substr(str, start, end - start);
     tmp3 = ft_strdup(tmp);
-    tmp2 = cleand_str(tmp3);
-    if ((tmp[0] == '\'' && tmp2[0] == '\'') || (tmp[0] == '\'' && (tmp[1] != '\'' && tmp2[1] != '\"')))
+    end = 0;
+    while (tmp[end] != '$' && tmp[end] != '\0')
+        end++;
+    if(check_ex(ft_substr(tmp3, 0, end)))
         return 0;
     return 1;
 }
@@ -121,7 +120,7 @@ char *env_search(char *str, char **env)
         tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i));
         if (str[tmp->i] == '$' && str[tmp->i + 1] == '?')
         {
-            tmp->result = ft_strjoin(tmp->result,ft_strdup("0"));
+            tmp->result = ft_strjoin(tmp->result, ft_itoa(errno));
             tmp->i++;
         } 
         else
@@ -133,30 +132,28 @@ char *env_search(char *str, char **env)
             if (is_expandabe(str,tmp->j - 1,tmp->i))
             {
                 tmp->src = ft_substr(str, tmp->j + 1, tmp->i - tmp->j- 1);
-                tmp->value = is_env(tmp->src, env);
+                tmp->value = getenv(tmp->src);
                 if (tmp->value)
                     tmp->result = ft_strjoin(tmp->result, tmp->value);
                 else
                     tmp->result = ft_strjoin(tmp->result, tmp->src);
-                free(tmp->src);
+                
             }
             else
             {
                 tmp->src = ft_substr(str, tmp->j, tmp->i - tmp->j);
                 tmp->result = ft_strjoin(tmp->result, tmp->src);
-                free(tmp->src);
             }
         }
         tmp->j = tmp->i;
     }
+    (void)env;
     return cleand_str(tmp->result);  
 }
-
 void env_handling(t_token **token_lst, char **env) 
 {
     t_token *tmp;
     char *new_value;
-    
     tmp = *token_lst;
     new_value = NULL;
     while (tmp) 
