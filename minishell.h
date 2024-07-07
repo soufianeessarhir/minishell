@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/05 23:45:21 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/07 09:36:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "./libft/libft.h"
+#include <signal.h>
+#include <sys/types.h>
+
 #include "./gc/gc.h"
+
 
 #define RESET "\033[0m"
 #define GOLD "\033[0;33m"
@@ -77,7 +81,11 @@ int syntax_error(char **args,t_token **token);
 int sp_uq_handling (char *line);
 
 
-
+void handle_sigint(int sig);
+int echo(int argc, char **argv);
+void ft_builtin_func(char **argv);
+int pwd(void);
+void exit_0(int j);
 
 
 

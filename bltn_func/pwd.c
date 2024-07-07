@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 22:26:33 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 11:39:21 by relamine         ###   ########.fr       */
+/*   Created: 2024/07/06 13:36:37 by relamine          #+#    #+#             */
+/*   Updated: 2024/07/07 08:44:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+
+int pwd(void)
 {
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0); 
-	while ((s1[i] || s2[i]) && i < n)
+    char *pwd;
+	
+    pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		perror("");
+		return (1);
 	}
-	return (0);
+	ft_putstr_fd(pwd, 1);
+	ft_putstr_fd("\n", 1);
+    return (0);
 }
+

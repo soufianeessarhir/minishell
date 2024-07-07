@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/07 16:11:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/07 16:14:32 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,22 +165,32 @@ void env_handling(t_token **token_lst)
 void    readline_loop(char **line, t_gc **lst,char **env)
 {
     t_token *token_lst;
+	char **token;
 
     token_lst = NULL;
     while (1)
     {
         *line = readline(BOLD GREEN "minishell" YELLOW "$ "RESET BOLD );
         if (!*line)
-            break;
+        {
+			write(0, "exit", 4);
+			exit(0);
+		}
         if (*line[0] != '\0')
             add_history(*line);
         sp_uq_handling(*line);
-        syntax_error(ft_tokinize(*line),&token_lst);
-        env_handling(&token_lst);
-        for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
-            printf("%s\n",tmp->value);
+		// for (int i = 0; token[i] != NULL; i++)
+		// 	printf("%s\n", token[i]);
+		token = ft_tokinize(*line);
+        syntax_error(token, &token_lst);
+		ft_builtin_func(token);
+		// if (ft_strcmp(token[0], "echo") == 0)
+		//
+        env_handling(&token_lst,env);
+        // for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
+        //     printf("%s\n",tmp->value);
         free(*line);
-        ft_dll_lstclear(&token_lst);
+		ft_dll_lstclear(&token_lst);
         (void)lst;
     }
     (void)env;  
@@ -197,6 +207,9 @@ int	main(int ac, char **av, char **env)
     char *line;
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);
+	// rl_catch_signals = 0;
+    signal(SIGINT, handle_sigint);
     readline_loop(&line, &lst, env);
+
     return (0);
 }
