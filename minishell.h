@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 13:53:54 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/07 09:36:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "./libft/libft.h"
-#include "./gc/gc.h"
 #include <signal.h>
+#include <sys/types.h>
+
+#include "./gc/gc.h"
 
 
 #define RESET "\033[0m"
@@ -55,6 +57,16 @@ typedef struct s_token
     struct s_token *prev;
 }               t_token;
 
+typedef struct s_env
+{
+    int i;
+    int j;
+    char *src;
+    char *value;
+    char *result;
+    int is_expandable;
+}               t_env;
+
 t_token *ft_dll_lstnew(char *content, int type);
 void    ft_dll_lstadd_front(t_token **lst, t_token *new);
 void    ft_dll_lstadd_back(t_token **lst, t_token *new);
@@ -65,12 +77,15 @@ char    **ft_tokinize(char *line);
 void    help(char *line,char **sep_token,int *j,int *i);
 void    skip_quoted(char **sep_token,char *line, int *i,int *j);
 void  init_graph(int graph[4][3]);
-int syntax_error(char **args);
+int syntax_error(char **args,t_token **token);
+int sp_uq_handling (char *line);
+
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv);
 void ft_builtin_func(char **argv);
-int pwd(char *argv);
+int pwd(void);
+void exit_0(int j);
 
 
 

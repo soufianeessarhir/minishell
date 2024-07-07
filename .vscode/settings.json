@@ -1,10 +1,13 @@
 {
   "files.associations": {
-	"types.h": "c",
-	"wait.h": "c",
-	"minishell.h": "c",
-	"libft.h": "c"
-},
+    "types.h": "c",
+    "wait.h": "c",
+    "minishell.h": "c",
+    "libft.h": "c",
+    "signal.h": "c",
+    "readline.h": "c",
+    "history.h": "c"
+  },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",
   "C_Cpp_Runner.cppCompilerPath": "clang++",

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 08:33:52 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/06 10:41:37 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/07 09:08:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ int echo(int argc, char **argv)
 	
 	flag_n = 0;
 	index = 1;
-	while (argc > 1 && ft_handling_n(argv[index]) == 0)
+	while (index < argc && ft_handling_n(argv[index]) == 0)
 	{
 		flag_n = 1;
 		index++;
 	}
+
 	while (index < argc)
 	{
 		ft_putstr_fd(argv[index], 1);

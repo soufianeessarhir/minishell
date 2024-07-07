@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/06 13:36:37 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/07 08:44:43 by relamine         ###   ########.fr       */
+/*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
+/*   Updated: 2024/07/07 09:35:13 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int pwd(void)
+void exit_0(int i)
 {
-    char *pwd;
-	
-    pwd = getcwd(NULL, 0);
-	if (pwd == NULL)
-	{
-		perror("");
-		return (1);
-	}
-	ft_putstr_fd(pwd, 1);
-	ft_putstr_fd("\n", 1);
-    return (0);
+	if (i == 0)
+		ft_putstr_fd("exit\n", 1);
+	exit(i);
 }
-
