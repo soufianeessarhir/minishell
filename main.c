@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 13:52:29 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/07 16:11:37 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,52 +105,46 @@ int is_expandabe(char *str,int start,int end)
     return 1;
 }
 
-char *env_search(char *str, char **env) 
+char *env_search(char *str) 
 {
     t_env *tmp;
 
     tmp = malloc(sizeof(t_env));
-    tmp->i = -1;
+    tmp->i = 0;
     tmp->j = 0;
     tmp->result = NULL;
-    while (str[++tmp->i]) 
+    while (str[tmp->i]) 
     {
-        while (str[tmp->i] && str[tmp->i] != '$')
-            tmp->i++;
-        tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i));
-        if (str[tmp->i] == '$' && str[tmp->i + 1] == '?')
+        if (str[tmp->i] == '$')
         {
-            tmp->result = ft_strjoin(tmp->result, ft_itoa(errno));
-            tmp->i++;
-        } 
-        else
-        {
+            if (str[tmp->i + 1] == '?')
+            {
+                tmp->result = ft_strjoin(tmp->result, ft_itoa(errno));
+                tmp->i += 2;
+                continue;
+            }
             tmp->j = tmp->i;
             tmp->i++;
             while ((ft_isalnum(str[tmp->i]) || str[tmp->i] == '_') && str[tmp->i])
                 tmp->i++;
             if (is_expandabe(str,tmp->j - 1,tmp->i))
-            {
-                tmp->src = ft_substr(str, tmp->j + 1, tmp->i - tmp->j- 1);
-                tmp->value = getenv(tmp->src);
-                if (tmp->value)
-                    tmp->result = ft_strjoin(tmp->result, tmp->value);
-                else
-                    tmp->result = ft_strjoin(tmp->result, tmp->src);
-                
-            }
+                tmp->result = ft_strjoin(tmp->result,getenv(ft_substr(str, tmp->j + 1, tmp->i - tmp->j - 1)));
             else
-            {
-                tmp->src = ft_substr(str, tmp->j, tmp->i - tmp->j);
-                tmp->result = ft_strjoin(tmp->result, tmp->src);
-            }
+                tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j));
+            tmp->j = tmp->i;
         }
-        tmp->j = tmp->i;
+        else
+        {
+            tmp->j = tmp->i;
+            while (str[tmp->i] != '$' && str[tmp->i])
+                tmp->i++;
+            tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j));
+        }
     }
-    (void)env;
     return cleand_str(tmp->result);  
 }
-void env_handling(t_token **token_lst, char **env) 
+
+void env_handling(t_token **token_lst) 
 {
     t_token *tmp;
     char *new_value;
@@ -160,7 +154,7 @@ void env_handling(t_token **token_lst, char **env)
     {
         if (tmp->type == 1 && is_dollar(tmp->value))
         {
-            new_value = env_search(tmp->value, env);
+            new_value = env_search(tmp->value);
             free(tmp->value);
             tmp->value = new_value;
         }
@@ -182,7 +176,7 @@ void    readline_loop(char **line, t_gc **lst,char **env)
             add_history(*line);
         sp_uq_handling(*line);
         syntax_error(ft_tokinize(*line),&token_lst);
-        env_handling(&token_lst,env);
+        env_handling(&token_lst);
         for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
             printf("%s\n",tmp->value);
         free(*line);
