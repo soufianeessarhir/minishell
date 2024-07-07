@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 13:10:57 by sessarhi          #+#    #+#             */
-/*   Updated: 2023/11/08 14:52:01 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:36:27 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libc.h"
+#include "libft.h"
 
 int	ft_isdigit(int c)
 {
