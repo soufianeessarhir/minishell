@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/08 18:21:31 by relamine         ###   ########.fr       */
+/*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
+/*   Updated: 2024/07/08 01:32:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void exit_0(int i)
+void unset(const char *argv, char **env)
 {
-	exit(i);
+	size_t len = strlen(argv);
+
+    while (*env)
+	{
+        if (strncmp(*env, argv, len) == 0 && (*env)[len] == '=') {
+			
+			if (unlink(*env))
+			{
+				perror("unset");
+				return;
+			}
+            return;
+        }
+        env++;
+    }
 }
