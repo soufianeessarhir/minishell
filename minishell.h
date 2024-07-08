@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/07 09:36:42 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:18:59 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_token
     struct s_token *prev;
 }               t_token;
 
-typedef struct s_env
+typedef struct s_env_vars
 {
     int i;
     int j;
@@ -65,6 +65,12 @@ typedef struct s_env
     char *value;
     char *result;
     int is_expandable;
+}               t_env_vars;
+typedef struct s_env
+{
+    char *key;
+    char *value;
+    struct s_env *next;
 }               t_env;
 
 t_token *ft_dll_lstnew(char *content, int type);
@@ -79,6 +85,16 @@ void    skip_quoted(char **sep_token,char *line, int *i,int *j);
 void  init_graph(int graph[4][3]);
 int syntax_error(char **args,t_token **token);
 int sp_uq_handling (char *line);
+
+
+t_env *new_env(char *key, char *value);
+void env_add_back(t_env **env_lst, t_env *new);
+void  intit_env_list(t_env **env_lst, char **env);
+char *my_getenv(char *key, t_env *env_lst);
+int is_expandabe(char *str, int i, int j);
+int check_ex(char *str);
+char *env_search(char *str,char **env);
+void env_handling(t_token **token_lst, char **env);
 
 
 void handle_sigint(int sig);
