@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/08 18:20:19 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/09 00:51:11 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    readline_loop(char **line, t_gc **lst,char **env)
         env_handling(&token_lst, env);
 		ft_builtin_func(token, env);
 		// if (ft_strcmp(token[0], "echo") == 0)
-		//
+		
         // for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
         //     printf("%s\n",tmp->value);
         free(*line);
