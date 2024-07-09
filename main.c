@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/08 19:15:01 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/09 10:54:25 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void    readline_loop(char **line, t_gc **lst,char **env)
 		ft_builtin_func(token, env);
 		// if (ft_strcmp(token[0], "echo") == 0)
 		//
-        // for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
-        //     printf("%s\n",tmp->value);
+        for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
+            printf("%s\n",tmp->value);
         free(*line);
 		ft_dll_lstclear(&token_lst);
         (void)lst;
@@ -109,7 +109,7 @@ int	main(int ac, char **av, char **env)
     char *line;
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
     signal(SIGINT, handle_sigint);
     readline_loop(&line, &lst, env);
 

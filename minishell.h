@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/08 18:17:30 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:17:41 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void env_add_back(t_env **env_lst, t_env *new);
 void  intit_env_list(t_env **env_lst, char **env);
 char *my_getenv(char *key, t_env *env_lst);
 int is_expandabe(char *str, int i, int j);
-int check_ex(char *str);
+int check_ex(char *str,int end);
 char *env_search(char *str,char **env);
 void env_handling(t_token **token_lst, char **env);
 

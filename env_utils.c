@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/08 12:17:29 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:38:26 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,32 +73,34 @@ char *my_getenv(char *key, t_env *env_lst)
     }
     return NULL;
 }
-int check_ex(char *str) 
+int check_ex(char *str, int end) 
 {
     int i;
-    int j;
     int flag;
     char quote;
     
     i = 0;
-    j = 0;
     flag = 0;
-    while (str[i])
+    while (str[i] && i <= end)
     {
-        if ( str[i] == '\"')
+        if (str[i] == '\"')
         {
             quote = str[i++];
-            while (str[i] && str[i] != quote)
-               i++;
+            while (str[i] && str[i] != quote && i < end)
+                i++;
             i++;
         }
         else if (str[i] == '\'')
         {
             quote = str[i++];
-            while (str[i] && str[i] != quote)
+            while (str[i] && str[i] != quote && i < end)
                 i++;
             if (str[i] != quote)
                 flag = 1;
+            i++;
+        }
+        else
+        {
             i++;
         }
     }
