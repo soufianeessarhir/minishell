@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/09 08:36:33 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/09 08:56:15 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ int ft_execute(char **argv, char **envp)
 	if (childpid == 0)
     {
 		if (execve(path_cmd, argv, envp) == -1)
-			return (perror("execve"), 1);
-
+		{
+			perror("execve");
+			exit(errno);
+		}
     }
     return 0;
 }
