@@ -7,6 +7,7 @@
     "signal.h": "c",
     "readline.h": "c",
     "history.h": "c",
+<<<<<<< HEAD
     "__bit_reference": "c",
     "__hash_table": "c",
     "__split_buffer": "c",
@@ -18,6 +19,9 @@
     "string_view": "c",
     "unordered_map": "c",
     "vector": "c"
+=======
+    "sstream": "c"
+>>>>>>> 6c7abf390bde9f654ce1dc575965131222cb293a
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",

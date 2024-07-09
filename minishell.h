@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/09 11:17:41 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/09 12:11:12 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int env(char **env);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
 void unset(const char *argv, char **env);
-
+void cd(char **argv);
+int ft_execute(char **argv, char **envp);
 
 
 #endif
