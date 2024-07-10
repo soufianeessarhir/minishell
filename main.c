@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/09 12:10:58 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:11:39 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int ac, char **av, char **env)
     char *line;
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
     signal(SIGINT, handle_sigint);
     readline_loop(&line, &lst, env);
 
