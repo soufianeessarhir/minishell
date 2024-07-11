@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/09 08:25:12 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:12:55 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-void ft_builtin_func(char **argv, char **envp)
+void ft_builtin_func(char **argv, char **envp, t_gc **l_gc)
 {
 	int i;
 
@@ -106,7 +106,7 @@ void ft_builtin_func(char **argv, char **envp)
 
 	if (ft_strcmp(argv[i], "cd") == 0)
 	{
-		cd(argv);
+		cd(argv, l_gc);
 		return;
 	}
 
@@ -120,7 +120,7 @@ void ft_builtin_func(char **argv, char **envp)
 	}
 
 	//FOR EXUCUTE COMMAND
-	ft_execute(argv, envp);
+	ft_execute(argv, envp, l_gc);
 
 	//FOR UNSET
 	// i = 0;

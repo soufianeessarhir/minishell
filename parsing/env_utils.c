@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/09 11:38:26 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:46:41 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void env_add_back(t_env **env_lst, t_env *new)
         tmp->next = new;
     }
 }
-void  intit_env_list(t_env **env_lst, char **env) 
+void  intit_env_list(t_env **env_lst, char **env, t_gc **lst) 
 {
     int i;
     int j;
@@ -51,8 +51,8 @@ void  intit_env_list(t_env **env_lst, char **env)
         j = 0;
         while (env[i] && env[i][j] != '=' && env[i][j] != '\0')
             j++;
-        key = ft_substr(env[i], 0, j);
-        value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1);
+        key = ft_substr(env[i], 0, j, lst);
+        value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1, lst);
         if (!*env_lst)
             *env_lst = new_env(key, value);
         else

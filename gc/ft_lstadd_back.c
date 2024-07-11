@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:07:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/29 08:57:47 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:23:49 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_lstadd_back(t_gc **lst, t_gc *new)
 {
 	t_gc	*tmp;
 
+	tmp = *lst;
 	if (!*lst && new)
 	{
 		(*lst) = new;
@@ -23,7 +24,6 @@ void	ft_lstadd_back(t_gc **lst, t_gc *new)
 	}
 	if (!new || !*lst)
 		return ;
-	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;

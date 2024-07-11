@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:53:28 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/06 08:17:24 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:24:30 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void   skip_quoted(char **sep_token,char *line, int *i,int *j)
     (*sep_token)[++(*j)] = c;
     (*i)++;
 }
-char **ft_tokinize(char *line)
+char **ft_tokinize(char *line,t_gc **l_gc)
 {
     int i;
     int j;
@@ -58,7 +58,7 @@ char **ft_tokinize(char *line)
 
     i = -1;
     j = -1;
-   sep_token = malloc (sizeof(char) * (ft_strlen(line) + ft_strlen(line)));
+   sep_token = ft_malloc (sizeof(char) * (ft_strlen(line) + ft_strlen(line)), l_gc);
    ft_memset(sep_token, 0, ft_strlen(line) + ft_strlen(line));
    while (line[++i] != '\0')
    {
@@ -76,5 +76,5 @@ char **ft_tokinize(char *line)
         else
             sep_token[++j] = line[i];
    }
-   return (ft_split(sep_token, ' '));
+   return (ft_split(sep_token, ' ', l_gc));
 }

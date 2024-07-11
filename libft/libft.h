@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 20:12:01 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/29 09:12:34 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:14:56 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <errno.h>
+#include "../gc/gc.h"
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -35,13 +36,13 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
-char	*ft_strdup(const char *str);
-char	*ft_itoa(int n);
+char	*ft_strdup(const char *str, t_gc **gc);
+char	*ft_itoa(int n, t_gc **gc);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strtrim(char const *s1, char const *set);
-char	**ft_split(char const *s, char c);
+char	*ft_substr(char const *s, unsigned int start, size_t len, t_gc **gc);
+char	*ft_strjoin(char const *s1, char const *s2, t_gc **gc);
+char	*ft_strtrim(char const *s1, char const *set,t_gc **gc);
+char	**ft_split(char const *s, char c, t_gc **gc);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);

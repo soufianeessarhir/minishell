@@ -6,12 +6,12 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/09 11:35:20 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:52:38 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-char *clear_close_quotes(char *str)
+char *clear_close_quotes(char *str,t_gc **l_gc)
 {
 	int i;
 	int j;
@@ -20,7 +20,7 @@ char *clear_close_quotes(char *str)
 
 	i = 0;
 	j = 0;
-	tmp = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
 	ft_memset(tmp, 0, ft_strlen(str) + 1);
 	while (str[i])
 	{
@@ -78,35 +78,33 @@ char *cleand_str(char *str)
 	str[j] = '\0';
 	return str;
 }	
-int is_expandabe(char *str,int start,int end) 
+int is_expandabe(char *str,int start,int end,t_gc **l_gc) 
 {	
 	(void)end;
 	start++;
-	if(check_ex(ft_substr(str, 0, start ),start))
+	if(check_ex(ft_substr(str, 0, start ,l_gc),start))
 		return 0;
 
 	return 1;
 }
 
-char *env_search(char *str,char **env) 
+char *env_search(char *str,t_env *env_lst, t_gc **l_gc) 
 {
 	t_env_vars *tmp;
-	t_env *env_lst;
+	
 
-	env_lst = NULL;
-	intit_env_list(&env_lst, env);
-	tmp = malloc(sizeof(t_env_vars));
+	tmp = ft_malloc(sizeof(t_env_vars), l_gc);
 	tmp->i = 0;
 	tmp->j = 0;
 	tmp->result = NULL;
-	str = clear_close_quotes(str);
+	str = clear_close_quotes(str,l_gc);
 	while (str[tmp->i]) 
 	{
 		if (str[tmp->i] == '$')
 		{
 			if (str[tmp->i + 1] == '?')
 			{
-				tmp->result = ft_strjoin(tmp->result, ft_itoa(errno));
+				tmp->result = ft_strjoin(tmp->result, ft_itoa(errno,l_gc), l_gc);
 				tmp->i += 2;
 				continue;
 			}
@@ -114,10 +112,10 @@ char *env_search(char *str,char **env)
 			tmp->i++;
 			while ((ft_isalnum(str[tmp->i]) || str[tmp->i] == '_' ) && str[tmp->i])
 				tmp->i++;
-			if (is_expandabe(str,tmp->j - 1,tmp->i))
-				tmp->result = ft_strjoin(tmp->result,my_getenv(ft_substr(str, tmp->j + 1, tmp->i - tmp->j - 1), env_lst));
+			if (is_expandabe(str,tmp->j - 1,tmp->i,l_gc))
+				tmp->result = ft_strjoin(tmp->result,my_getenv(ft_substr(str, tmp->j + 1, tmp->i - tmp->j - 1,l_gc), env_lst), l_gc);
 			else
-				tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j));
+				tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j,l_gc), l_gc);
 			tmp->j = tmp->i;
 		}
 		else
@@ -125,14 +123,14 @@ char *env_search(char *str,char **env)
 			tmp->j = tmp->i;
 			while (str[tmp->i] != '$' && str[tmp->i])
 				tmp->i++;
-			tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j));
+			tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j,l_gc), l_gc);
 		}
 		
 	}
 	return (cleand_str(tmp->result));  
 }
 
-void env_handling(t_token **token_lst, char **env) 
+void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc) 
 {
 	t_token *tmp;
 	char *new_value;
@@ -144,7 +142,7 @@ void env_handling(t_token **token_lst, char **env)
 		{
 			if (is_dollar(tmp->value))
 			{
-				new_value = env_search(tmp->value, env);
+				new_value = env_search(tmp->value, env_lst, l_gc);
 				free(tmp->value);
 				tmp->value = new_value;
 			}

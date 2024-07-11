@@ -6,14 +6,14 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/10 13:11:39 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:26:51 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-void her_doc_handling(t_token **token_lst)
+void her_doc_handling(t_token **token_lst, t_gc **l_gc)
 {
     t_token *tmp;
     t_token *tmp2;
@@ -28,7 +28,7 @@ void her_doc_handling(t_token **token_lst)
     tmp = *token_lst;
     if (!tmp->next)
         return;
-    fd = open(ft_strjoin("/tmp/",tmp->next->value), O_CREAT | O_RDWR | O_TRUNC, 0644);
+    fd = open(ft_strjoin("/tmp/",tmp->next->value,l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
     while (tmp)
     {
         if (tmp->type == 2 && strncmp(tmp->value, "<<", 2) == 0)
@@ -68,7 +68,11 @@ void    readline_loop(char **line, t_gc **lst,char **env)
 {
     t_token *token_lst;
 	char **token;
+    t_env *env_lst;
+    t_gc *l_gc;
 
+    l_gc = NULL;
+    intit_env_list(&env_lst, env,lst);
     token_lst = NULL;
     while (1)
     {
@@ -83,13 +87,13 @@ void    readline_loop(char **line, t_gc **lst,char **env)
         // sp_uq_handling(*line);
 		// for (int i = 0; token[i] != NULL; i++)
 		// 	printf("%s\n", token[i]);
-		token = ft_tokinize(*line);
-        syntax_error(token, &token_lst);
-        her_doc_handling(&token_lst);
-        env_handling(&token_lst, env);
-		ft_builtin_func(token, env);
+		token = ft_tokinize(*line, &l_gc);
+        syntax_error(token, &token_lst,&l_gc);
+        her_doc_handling(&token_lst,&l_gc);
+        env_handling(&token_lst,env_lst, &l_gc);
+		// ft_builtin_func(token, env, &l_gc);
 		// if (ft_strcmp(token[0], "echo") == 0)
-		//
+		// //
         for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
             printf("%s\n",tmp->value);
         free(*line);

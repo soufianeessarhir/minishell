@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/09 04:59:09 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:09:03 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-static char	*skip_slash(char *str)
+static char	*skip_slash(char *str, t_gc **l_gc)
+
 {
 	int i;
 	char *command;
@@ -25,10 +26,10 @@ static char	*skip_slash(char *str)
 	while (str[i])
 	{
 		bol = 0;
-		get_char = ft_substr(str, i, 1);
+		get_char = ft_substr(str, i, 1,l_gc);
 		if (get_char == NULL)
 			return (NULL);
-		command = ft_strjoin(command, get_char);
+		command = ft_strjoin(command, get_char,l_gc);
 		if (command == NULL)
 			return (NULL);
 		while (str[i] == '/')
@@ -45,7 +46,7 @@ static char	*skip_slash(char *str)
 	return (command);
 }
 
-void cd(char **argv)
+void cd(char **argv,t_gc **l_gc)
 {
 	int		i;
 	int		j;
@@ -58,7 +59,7 @@ void cd(char **argv)
 	if (path == NULL)
 		path = getenv("HOME");
 	else
-		path = skip_slash(path);
+		path = skip_slash(path,l_gc);
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 1);
