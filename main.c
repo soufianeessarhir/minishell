@@ -6,116 +6,132 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 17:26:51 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:07:45 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
+
 #include "minishell.h"
 
-void her_doc_handling(t_token **token_lst, t_gc **l_gc)
-{
-    t_token *tmp;
-    t_token *tmp2;
-    t_token *tmp3;
-    char *line;
-    int i;
-    int fd;
 
-    if (!token_lst || !*token_lst)
+t_cmd *new_cmd(char *cmd, char *redir, t_gc **l_gc) {
+    t_cmd *new;
+
+    new = (t_cmd *)ft_malloc(sizeof(t_cmd), l_gc);
+    if (!new) return NULL;
+    new->cmd = cmd ? cmd : ft_strdup("", l_gc);
+    new->redirection = redir ? redir : ft_strdup("", l_gc);
+    new->next = NULL;
+    return new;
+}
+
+void ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new) {
+    t_cmd *tmp;
+
+    if (!new) return;
+    if (!*lst) {
+        *lst = new;
         return;
-    i = 0;
-    tmp = *token_lst;
-    if (!tmp->next)
-        return;
-    fd = open(ft_strjoin("/tmp/",tmp->next->value,l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
-    while (tmp)
-    {
-        if (tmp->type == 2 && strncmp(tmp->value, "<<", 2) == 0)
-        {
-            while (1)
-            {
-                line = readline(">");
-                if (!line || ft_strncmp(line, tmp->next->value, ft_strlen(line)) == 0)
-                    break;
-                write(fd, line, ft_strlen(line));
-                write(fd, "\n", 1);
-            }
-            close(fd);
-            tmp2 = tmp->prev;
-            if (tmp->next)
-                tmp3 = tmp->next->next;
-            else
-                tmp3 = NULL;
-            if (tmp->value)
-                free(tmp->value);
-            if (tmp->next && tmp->next->value)
-                free(tmp->next->value);
-            if (tmp->next)
-                free(tmp->next);
-            free(tmp);
-            if (tmp2)
-                tmp2->next = tmp3;
-            if (tmp3)
-                tmp3->prev = tmp2;
-            tmp = tmp3;
+    }
+    tmp = *lst;
+    while (tmp->next) tmp = tmp->next;
+    tmp->next = new;
+}
+
+void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
+    t_token *tmp = token_lst;
+    t_cmd *new;
+
+    while (tmp) {
+        new = new_cmd(NULL, NULL, l_gc);
+        if (!new) {
+            printf("Failed to create new command\n");
+            return;
         }
-        if (tmp)
+        while (tmp && tmp->type != 3) { // Assuming type 3 indicates a command separator
+            if (tmp->type == 2) { // Assuming type 2 indicates a redirection token
+                new->redirection = ft_strjoin(new->redirection, tmp->value, l_gc);
+                new->redirection = ft_strjoin(new->redirection, " ", l_gc);
+                if (tmp->next) {
+                    new->redirection = ft_strjoin(new->redirection, tmp->next->value, l_gc);
+                    new->redirection = ft_strjoin(new->redirection, " ", l_gc);
+                    tmp = tmp->next;
+                }
+            } else {
+                new->cmd = ft_strjoin(new->cmd, tmp->value, l_gc);
+                new->cmd = ft_strjoin(new->cmd, " ", l_gc);
+            }
             tmp = tmp->next;
+        }
+        ft_lstadd_back_cmd(cmd, new);
+        if (tmp) tmp = tmp->next;
     }
 }
-void    readline_loop(char **line, t_gc **lst,char **env)
-{
+
+void readline_loop(char **line, t_gc **lst, char **env) {
     t_token *token_lst;
-	char **token;
+    char **token;
     t_env *env_lst;
     t_gc *l_gc;
-
+    t_cmd *cmd;
+    
     l_gc = NULL;
-    intit_env_list(&env_lst, env,lst);
     token_lst = NULL;
-    while (1)
-    {
-        *line = readline(BOLD GREEN "minishell" YELLOW "$ "RESET BOLD );
-        if (!*line)
-        {
-			write(0, "exit", 4);
-			exit(0);
-		}
-        if (*line[0] != '\0')
-            add_history(*line);
-        // sp_uq_handling(*line);
-		// for (int i = 0; token[i] != NULL; i++)
-		// 	printf("%s\n", token[i]);
-		token = ft_tokinize(*line, &l_gc);
-        syntax_error(token, &token_lst,&l_gc);
-        her_doc_handling(&token_lst,&l_gc);
-        env_handling(&token_lst,env_lst, &l_gc);
-		// ft_builtin_func(token, env, &l_gc);
-		// if (ft_strcmp(token[0], "echo") == 0)
-		// //
-        for (t_token *tmp = token_lst; tmp; tmp = tmp->next)
-            printf("%s\n",tmp->value);
+    env_lst = NULL;
+    cmd = NULL;
+    
+    puts("Welcome to minishell");
+    intit_env_list(&env_lst, env, lst);
+    while (1) {
+        *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
+        if (!*line) {
+            write(0, "exit\n", 5);
+            exit(0);
+        }
+        if (*line[0] != '\0') add_history(*line);
+        
+        sp_uq_handling(*line);
+        token = ft_tokinize(*line, &l_gc);
+        if (!token) {
+            printf("Tokenization failed\n");
+            continue;
+        }
+        syntax_error(token, &token_lst, &l_gc);
+        if (!token_lst) {
+            printf("Syntax error\n");
+            continue;
+        }
+        env_handling(&token_lst, env_lst, &l_gc);
+        init_cmd(&cmd, token_lst, &l_gc);
+        
+        for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) {
+            printf("cmd: %s\n", tmp->cmd);
+            printf("redir: %s\n", tmp->redirection);
+        }
+
         free(*line);
-		ft_dll_lstclear(&token_lst);
-        (void)lst;
+        *line = NULL;
+        ft_free(&l_gc);
+        cmd = NULL;
+        token_lst = NULL;
     }
 }
 
-void f() 
-{
+void f() {
     system("leaks minishell");
 }
 
-int	main(int ac, char **av, char **env)
-{
-    t_gc *lst;
-    char *line;
-    if (ac != 1)
-        return (printf("Usage: %s\n", av[0]),1);
-	rl_catch_signals = 0;
+int main(int ac, char **av, char **env) {
+    t_gc *lst = NULL;
+    char *line = NULL;
+
+    atexit(f);
+    if (ac != 1) return (printf("Usage: %s\n", av[0]), 1);
+    rl_catch_signals = 0;
     signal(SIGINT, handle_sigint);
     readline_loop(&line, &lst, env);
-
-    return (0);
+    ft_free(&lst);
+    return 0;
 }
+

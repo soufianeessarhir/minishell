@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 17:12:42 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/12 23:50:44 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,15 @@ typedef struct s_env
     struct s_env *next;
 }               t_env;
 
+typedef struct s_cmd
+{
+    char *cmd;
+    char *redirection;
+    struct s_cmd *next;
+}               t_cmd;
+
+
+
 t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc);
 void    ft_dll_lstadd_front(t_token **lst, t_token *new);
 void    ft_dll_lstadd_back(t_token **lst, t_token *new);
@@ -109,6 +118,6 @@ void unset(const char *argv, char **env);
 void cd(char **argv,t_gc **l_gc);
 int ft_execute(char **argv, char **envp,t_gc **l_gc);
 int	ft_strcmp(const char *s1, const char *s2);
-
+void her_doc_handling(t_token **token_lst, t_gc **l_gc);
 
 #endif

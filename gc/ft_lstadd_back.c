@@ -6,25 +6,26 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 18:07:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 17:23:49 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:36:33 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gc.h"
 
-void	ft_lstadd_back(t_gc **lst, t_gc *new)
+void ft_lstadd_back(t_gc **lst, t_gc *new) 
 {
-	t_gc	*tmp;
+    t_gc *tmp;
 
-	tmp = *lst;
-	if (!*lst && new)
-	{
-		(*lst) = new;
-		return ;
-	}
-	if (!new || !*lst)
-		return ;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
+	if (!*lst && !new)
+		return;
+    if (!new)
+        return;
+    if (!*lst) {
+        *lst = new;
+        return;
+    }
+    tmp = *lst;
+    while (tmp->next)
+        tmp = tmp->next;
+    tmp->next = new;
 }

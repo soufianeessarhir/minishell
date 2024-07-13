@@ -6,24 +6,24 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 01:08:46 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/29 09:07:38 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/13 00:35:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gc.h"
 
-void    ft_free(t_gc **lst)
+void ft_free(t_gc **lst)
 {
-    t_gc  *tmp;
+    t_gc *tmp;
 
-    if (!*lst)
-        return ;
     while (*lst)
     {
-        tmp = (*lst)->next;
-        free((*lst)->ptr);
-        free(*lst);
-        *lst = tmp;
+        tmp = *lst;
+        *lst = (*lst)->next;
+        free(tmp->ptr);
+        tmp->ptr = NULL;
+        free(tmp);
+        tmp = NULL;
     }
 }
 
