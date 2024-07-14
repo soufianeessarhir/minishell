@@ -6,36 +6,38 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:46:41 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/13 20:36:42 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env *new_env(char *key, char *value) 
+t_env	*new_env(char *key, char *value)
 {
-    t_env *new;
+	t_env	*new;
 
-    new = malloc(sizeof(t_env));
-    new->key = key;
-    new->value = value;
-    new->next = NULL;
-    return new;
+	new = malloc(sizeof(t_env));
+	new->key = key;
+	new->value = value;
+	new->next = NULL;
+	return (new);
 }
-void env_add_back(t_env **env_lst, t_env *new) 
+
+void	env_add_back(t_env **env_lst, t_env *new)
 {
-    t_env *tmp;
+	t_env	*tmp;
 
-    if (!*env_lst)
-        *env_lst = new;
-    else
-    {
-        tmp = *env_lst;
-        while (tmp->next)
-            tmp = tmp->next;
-        tmp->next = new;
-    }
+	if (!*env_lst)
+		*env_lst = new;
+	else
+	{
+		tmp = *env_lst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
 }
+
 void  intit_env_list(t_env **env_lst, char **env, t_gc **lst) 
 {
     int i;
@@ -64,7 +66,7 @@ char *my_getenv(char *key, t_env *env_lst)
 {
     while (env_lst)
     {
-        if (!ft_strncmp(key, env_lst->key, ft_strlen(key)))
+        if (!ft_strcmp(key, env_lst->key))
         {
             return env_lst->value;
             

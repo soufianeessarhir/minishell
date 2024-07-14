@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 09:44:02 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 17:15:23 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:06:39 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len, t_gc **gc)
 	str = ft_malloc(len + 1, gc);
 	if (!str)
 		return (NULL);
+	ft_memset(str, 0, len + 1);
 	i = 0;
 	while (i < len)
 	{

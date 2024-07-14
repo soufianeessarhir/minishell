@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:52:38 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:13:56 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,17 @@ int is_dollar(char *str)
 	return 0;
 }
 
-char *cleand_str(char *str) 
+char *cleand_str(char *str, t_gc **l_gc) 
 {
 	int i;
 	int j;
 	char quote;
+	char *tmp;
 	
 	i = 0;
 	j = 0;
-	
+	tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
+	memset(tmp, 0, ft_strlen(str) + 1);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -84,7 +86,6 @@ int is_expandabe(char *str,int start,int end,t_gc **l_gc)
 	start++;
 	if(check_ex(ft_substr(str, 0, start ,l_gc),start))
 		return 0;
-
 	return 1;
 }
 
@@ -117,6 +118,7 @@ char *env_search(char *str,t_env *env_lst, t_gc **l_gc)
 			else
 				tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j,l_gc), l_gc);
 			tmp->j = tmp->i;
+			
 		}
 		else
 		{
@@ -126,8 +128,9 @@ char *env_search(char *str,t_env *env_lst, t_gc **l_gc)
 			tmp->result = ft_strjoin(tmp->result, ft_substr(str, tmp->j, tmp->i - tmp->j,l_gc), l_gc);
 		}
 		
+		puts(tmp->result);
 	}
-	return (cleand_str(tmp->result));  
+	return (cleand_str(tmp->result,l_gc));  
 }
 
 void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc) 
@@ -136,6 +139,7 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
 	char *new_value;
 	tmp = *token_lst;
 	new_value = NULL;
+	
 	while (tmp) 
 	{
 		if (tmp->type == 1 )
@@ -143,11 +147,10 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
 			if (is_dollar(tmp->value))
 			{
 				new_value = env_search(tmp->value, env_lst, l_gc);
-				free(tmp->value);
 				tmp->value = new_value;
 			}
 			else
-				tmp->value = cleand_str(tmp->value);
+				tmp->value = cleand_str(tmp->value,l_gc);
 		}
 		tmp = tmp->next;
 	}

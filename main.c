@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/13 13:07:45 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/14 17:56:46 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void readline_loop(char **line, t_gc **lst, char **env) {
     token_lst = NULL;
     env_lst = NULL;
     cmd = NULL;
+    token = NULL;
     
-    puts("Welcome to minishell");
     intit_env_list(&env_lst, env, lst);
     while (1) {
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
@@ -91,30 +91,23 @@ void readline_loop(char **line, t_gc **lst, char **env) {
         }
         if (*line[0] != '\0') add_history(*line);
         
-        sp_uq_handling(*line);
+        // sp_uq_handling(*line);
         token = ft_tokinize(*line, &l_gc);
-        if (!token) {
-            printf("Tokenization failed\n");
-            continue;
-        }
-        syntax_error(token, &token_lst, &l_gc);
-        if (!token_lst) {
-            printf("Syntax error\n");
-            continue;
-        }
-        env_handling(&token_lst, env_lst, &l_gc);
-        init_cmd(&cmd, token_lst, &l_gc);
-        
-        for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) {
-            printf("cmd: %s\n", tmp->cmd);
-            printf("redir: %s\n", tmp->redirection);
-        }
-
+		for (int i = 0; token[i]; i++) {
+			printf("%s\n", token[i]);
+		}
+        // syntax_error(token, &token_lst, &l_gc);
+        // env_handling(&token_lst, env_lst, &l_gc);
+        // init_cmd(&cmd, token_lst, &l_gc);
+        // ft_builtin_func(cmd, env, &l_gc);
+       
         free(*line);
         *line = NULL;
         ft_free(&l_gc);
         cmd = NULL;
         token_lst = NULL;
+        token = NULL;
+        
     }
 }
 
