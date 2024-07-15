@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/12 23:50:44 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:13:26 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ typedef struct s_env_vars
     char *src;
     char *value;
     char *result;
-    int is_expandable;
+   char quote;
+    struct s_env_vars *next;
 }               t_env_vars;
 typedef struct s_env
 {

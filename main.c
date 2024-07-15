@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/14 17:56:46 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/15 05:08:15 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,11 @@ void readline_loop(char **line, t_gc **lst, char **env) {
         
         // sp_uq_handling(*line);
         token = ft_tokinize(*line, &l_gc);
-		for (int i = 0; token[i]; i++) {
-			printf("%s\n", token[i]);
-		}
-        // syntax_error(token, &token_lst, &l_gc);
-        // env_handling(&token_lst, env_lst, &l_gc);
-        // init_cmd(&cmd, token_lst, &l_gc);
+        syntax_error(token, &token_lst, &l_gc);
+        env_handling(&token_lst, env_lst, &l_gc);
+        init_cmd(&cmd, token_lst, &l_gc);
+		for (t_token *tmp = token_lst; tmp; tmp = tmp->next) 
+			printf("value: %s\n", tmp->value);
         // ft_builtin_func(cmd, env, &l_gc);
        
         free(*line);
