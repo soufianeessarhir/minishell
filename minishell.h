@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/15 17:13:26 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/16 00:32:48 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ typedef struct s_env
 typedef struct s_cmd
 {
     char *cmd;
-    char *redirection;
+	char **args;
+    char *red_in;
+	char *red_out;
+	int red_in_fd;
+	int red_out_fd;
     struct s_cmd *next;
 }               t_cmd;
 
