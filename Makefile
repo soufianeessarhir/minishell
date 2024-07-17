@@ -19,7 +19,7 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS) 
 	@$(LIBFT)
-	$(CC) $(CFLAGS) $(OBJECTS) $(LIB) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIB) -o $(NAME) -lreadline  -ltermcap
 
 
 %.o: %.c minishell.h ./libft/libft.h ./libft/gc/gc.h
