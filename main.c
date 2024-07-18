@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/16 01:49:41 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/18 02:51:58 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
         token = ft_tokinize(*line, &l_gc);
         syntax_error(token, &token_lst, &l_gc);
         env_handling(&token_lst, env_lst, &l_gc);
+		her_doc_handling(&token_lst, &l_gc);
         init_cmd(&cmd, token_lst, &l_gc);
 		for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
 		{

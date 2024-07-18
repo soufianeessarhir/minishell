@@ -6,11 +6,12 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/17 05:44:39 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/18 02:44:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int all_dolar(char *str)
 {
 	int i = 0;
@@ -40,7 +41,7 @@ int chaech_quted_dolar(char *str)
 	return (0);
 }
 
-// Function to create a new environment variable node
+
 t_env_vars *new_env_vars(char *value, t_gc **l_gc) 
 {
     t_env_vars *new = ft_malloc(sizeof(t_env_vars), l_gc);
@@ -49,7 +50,7 @@ t_env_vars *new_env_vars(char *value, t_gc **l_gc)
     return new;
 }
 
-// Function to add a new environment variable node to the end of the list
+
 void env_lstadd_back(t_env_vars **alst, t_env_vars *new) 
 {
     t_env_vars *tmp;
@@ -65,7 +66,7 @@ void env_lstadd_back(t_env_vars **alst, t_env_vars *new)
     tmp->next = new;
 }
 
-// Function to remove quotes from a string
+
 char *clear_close_quotes(char *str, t_gc **l_gc)
 {
     int i = 0, j = 0;
@@ -89,7 +90,7 @@ char *clear_close_quotes(char *str, t_gc **l_gc)
     return tmp;
 }
 
-// Function to check if a string contains a dollar sign
+
 int is_dollar(char *str) 
 {
     while (*str) 
@@ -101,7 +102,7 @@ int is_dollar(char *str)
     return 0;
 }
 
-// Function to clean a string by removing quotes
+
 char *cleand_str(char *str, t_gc **l_gc) 
 {
     int i = 0, j = 0;
@@ -125,7 +126,7 @@ char *cleand_str(char *str, t_gc **l_gc)
     return tmp;
 }
 
-// Function to check if a substring is expandable
+
 int is_expandabe(char *str, int start, int end, t_gc **l_gc) 
 {
     char *substr = ft_substr(str, 0, start, l_gc);
@@ -134,7 +135,6 @@ int is_expandabe(char *str, int start, int end, t_gc **l_gc)
     return result == 0;
 }
 
-// Function to search for environment variables and replace them in a string
 char *env_search(char *str, t_env *env_lst, t_gc **l_gc) 
 {
     int i = 0, j = 0;
@@ -187,7 +187,7 @@ char *remove_dolars(char *str, t_gc **l_gc,int flag)
 	tmp = ft_strjoin(tmp, ft_substr(str, j, i - j, l_gc), l_gc);
 	return tmp;
 }
-// Helper function to process strings with quotes and environment variables
+
 char *helper(char *s, t_gc **l_gc, t_env *env_lst)
 {
    t_env_vars *new = NULL, *tmp = NULL;
@@ -264,7 +264,7 @@ char *helper(char *s, t_gc **l_gc, t_env *env_lst)
     return cleand_str(new_value, l_gc);
 }
 
-// Function to handle environment variables in token list
+
 void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc) 
 {
     t_token *tmp = *token_lst;
@@ -273,7 +273,7 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
     {
         if (tmp->type == 1)
         {
-            if (is_dollar(tmp->value))
+            if (is_dollar(tmp->value) && ft_strcmp(tmp->prev->value, "<<") != 0)
                 tmp->value = helper(tmp->value, l_gc, env_lst);
             else
                 tmp->value = cleand_str(tmp->value, l_gc);
