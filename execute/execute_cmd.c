@@ -6,20 +6,20 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/09 08:56:15 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 00:26:26 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *get_path(char **argv)
+static char *get_path(char **argv,  t_env *env_lst)
 {
 	char *env_path;
 	char *path_env_copy;
 	char **split_paths;
 	char *path_check;
 
-	env_path = getenv("PATH");
+	env_path = my_getenv("PATH", env_lst);
     if (env_path == NULL)
         return (NULL);
 	path_env_copy = ft_strdup(env_path);
@@ -44,13 +44,18 @@ static char *get_path(char **argv)
 	return (NULL);
 }
 
-int ft_execute(char **argv, char **envp)
+int ft_execute(char **argv, char ***envp)
 {
 	char *path_cmd;
 	pid_t childpid;
-	
-	if (argv[0][0] != '/')
-		path_cmd = get_path(argv);
+	t_env *env_lst;
+	char *num_shlvl;
+	char **shelvl;
+
+	env_lst = NULL;
+	intit_env_list(&env_lst, *envp);
+	if (strchr(argv[0], '/') == NULL)
+		path_cmd = get_path(argv, env_lst);
 	else
 		path_cmd = argv[0];
 	childpid = fork();
@@ -60,14 +65,31 @@ int ft_execute(char **argv, char **envp)
 		return 1;
 	}
 	if (childpid > 0)
-    {
         wait(NULL);
-    }
 	if (childpid == 0)
     {
-		if (execve(path_cmd, argv, envp) == -1)
+		if (ft_strcmp(path_cmd, "./minishell") == 0)
 		{
-			perror("execve");
+			num_shlvl = my_getenv("SHLVL", env_lst);
+			int i = ft_atoi(num_shlvl);
+			if (i == 0 || i >= 10240)
+				i = 1;
+			else if (i < 0)
+				i = 0;
+			else
+				i++;
+			num_shlvl = ft_strjoin("SHLVL=", ft_itoa(i));
+			shelvl = malloc(sizeof(char *) * 3);
+			shelvl[0] = ft_strdup("export");
+			shelvl[1] = num_shlvl;
+			shelvl[2] = NULL;
+			ft_export(shelvl, envp);
+		}
+		if (execve(path_cmd, argv, *envp) == -1)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(argv[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
 			exit(errno);
 		}
     }

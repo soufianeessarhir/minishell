@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/09 04:59:09 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/14 02:51:19 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,32 @@ static char	*skip_slash(char *str)
 	return (command);
 }
 
-void cd(char **argv)
+void cd(char **argv, char ***envp)
 {
 	int		i;
 	int		j;
 	char	*path;
+	t_env *env_lst;
 
 	i = 1;
 	j = 0;
-
 	path = argv[i];
-	if (path == NULL)
-		path = getenv("HOME");
+	env_lst = NULL;
+	intit_env_list(&env_lst, *envp);
+	if (path == NULL || ft_strcmp(path, "~") == 0)
+		path = my_getenv("HOME", env_lst);
 	else
 		path = skip_slash(path);
+	// export OLDPWD
+	export_oldpwd(envp);
+	// change directory
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 1);
 		ft_putstr_fd(argv[i], 1);
 		ft_putstr_fd(": ", 1);
 		perror("");
-	}; 
+	}
+	// export PWD
+	export_pwd(envp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/09 12:11:12 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/17 08:04:15 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,21 @@ void env_handling(t_token **token_lst, char **env);
 
 
 void handle_sigint(int sig);
-int echo(int argc, char **argv);
-void ft_builtin_func(char **token, char **env);
+int echo(int argc, char **argv, char **envp);
+void ft_builtin_func(char **token, char ***env);
 int pwd(void);
 void exit_0(int j);
 int env(char **env);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
 void unset(const char *argv, char **env);
-void cd(char **argv);
-int ft_execute(char **argv, char **envp);
-
+void cd(char **argv, char ***envp);
+int ft_execute(char **argv, char ***envp);
+void ft_export(char **argv, char ***envp);
+int	ft_strcmp(const char *s1, const char *s2);
+void export_pwd(char ***envp);
+void export_oldpwd(char ***envp);
+char *get_value(char *str);
+char *get_key(char *str);
 
 #endif

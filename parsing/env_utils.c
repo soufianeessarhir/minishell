@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/09 11:38:26 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/17 23:31:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,12 @@ char *my_getenv(char *key, t_env *env_lst)
 {
     while (env_lst)
     {
-        if (!ft_strncmp(key, env_lst->key, ft_strlen(key)))
-        {
+        if (!ft_strcmp(key, env_lst->key))
             return env_lst->value;
-            
-        }
         env_lst = env_lst->next;
     }
+	if (ft_strcmp(key, "PATH") == 0)
+		return ("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin");
     return NULL;
 }
 int check_ex(char *str, int end) 

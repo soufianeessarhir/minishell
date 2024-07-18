@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 08:33:52 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/07 18:35:50 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/15 01:52:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,25 @@ static int	ft_handling_n(const char *s1)
 	return (1);
 }
 
-int echo(int argc, char **argv)
+int echo(int argc, char **argv, char **envp)
 {
 	int flag_n;
 	int index;
+	t_env *env_lst;
 	
 	flag_n = 0;
 	index = 1;
+	env_lst = NULL;
+	intit_env_list(&env_lst, envp);
 	while (index < argc && ft_handling_n(argv[index]) == 0)
 	{
 		flag_n = 1;
 		index++;
 	}
-
 	while (index < argc)
 	{
+		if (ft_strcmp(argv[index], "~") == 0)
+			argv[index] = my_getenv("HOME", env_lst);
 		ft_putstr_fd(argv[index], 1);
 		if (index + 1 < argc)
 			ft_putstr_fd(" ", 1);
