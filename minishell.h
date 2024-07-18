@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/17 08:04:15 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:38:05 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ typedef struct s_env_vars
     char *src;
     char *value;
     char *result;
-    int is_expandable;
+   char quote;
+    struct s_env_vars *next;
 }               t_env_vars;
 typedef struct s_env
 {
@@ -73,46 +74,59 @@ typedef struct s_env
     struct s_env *next;
 }               t_env;
 
-t_token *ft_dll_lstnew(char *content, int type);
+typedef struct s_cmd
+{
+    char *cmd;
+	char **args;
+    char *red_in;
+	char *red_out;
+	int red_in_fd;
+	int red_out_fd;
+    struct s_cmd *next;
+}               t_cmd;
+
+
+
+t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc);
 void    ft_dll_lstadd_front(t_token **lst, t_token *new);
 void    ft_dll_lstadd_back(t_token **lst, t_token *new);
 void    ft_dll_lstclear(t_token **lst);
 t_token *ft_dll_lstlast(t_token *lst);
 int     ft_dll_lstsize(t_token *lst);
-char    **ft_tokinize(char *line);
+char    **ft_tokinize(char *line,t_gc **l_gc);
 void    help(char *line,char **sep_token,int *j,int *i);
 void    skip_quoted(char **sep_token,char *line, int *i,int *j);
 void  init_graph(int graph[4][3]);
-int syntax_error(char **args,t_token **token);
+int syntax_error(char **args,t_token **token,t_gc **l_gc);
 int sp_uq_handling (char *line);
 
 
-t_env *new_env(char *key, char *value);
+t_env	*new_env(char *key, char *value, t_gc **lst);
 void env_add_back(t_env **env_lst, t_env *new);
-void  intit_env_list(t_env **env_lst, char **env);
+void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char *my_getenv(char *key, t_env *env_lst);
-int is_expandabe(char *str, int i, int j);
+int is_expandabe(char *str, int i, int j,t_gc **l_gc);
 int check_ex(char *str,int end);
-char *env_search(char *str,char **env);
-void env_handling(t_token **token_lst, char **env);
+char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
+void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 
 
 void handle_sigint(int sig);
-int echo(int argc, char **argv, char **envp);
-void ft_builtin_func(char **token, char ***env);
+int echo(int argc, char **argv, char **envp, t_gc **lst);
+void ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst);
 int pwd(void);
 void exit_0(int j);
-int env(char **env);
+int env(char **env, t_gc **lst);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
 void unset(const char *argv, char **env);
-void cd(char **argv, char ***envp);
-int ft_execute(char **argv, char ***envp);
-void ft_export(char **argv, char ***envp);
+void cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
+int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst);
+void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst);
 int	ft_strcmp(const char *s1, const char *s2);
-void export_pwd(char ***envp);
-void export_oldpwd(char ***envp);
-char *get_value(char *str);
-char *get_key(char *str);
+void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst);
+void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);
+char *get_value(char *str, t_gc **l_gc);
+char *get_key(char *str, t_gc **l_gc);
 
 #endif

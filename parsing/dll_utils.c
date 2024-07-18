@@ -6,17 +6,17 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:38:06 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 03:11:34 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 03:23:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *ft_dll_lstnew(char *content, int type)
+t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc)
 {
     t_token *new;
 
-    new = malloc(sizeof(t_token));
+    new = ft_malloc(sizeof(t_token), l_gc);
     if (!new)
         return (NULL);
     new->value = content;
@@ -25,6 +25,7 @@ t_token *ft_dll_lstnew(char *content, int type)
     new->prev = NULL;
     return (new);
 }
+
 void    ft_dll_lstadd_front(t_token **lst, t_token *new)
 {
     if (!new)
@@ -38,6 +39,7 @@ void    ft_dll_lstadd_front(t_token **lst, t_token *new)
     (*lst)->prev = new;
     *lst = new;
 }
+
 void    ft_dll_lstadd_back(t_token **lst, t_token *new)
 {
     t_token *tmp;
@@ -55,6 +57,7 @@ void    ft_dll_lstadd_back(t_token **lst, t_token *new)
     tmp->next = new;
     new->prev = tmp;
 }
+
 void    ft_dll_lstclear(t_token **lst)
 {
     t_token *tmp;

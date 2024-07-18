@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/17 06:05:36 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:37:31 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-void export_pwd(char ***envp)
+void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst)
 {
-    char **args = malloc(sizeof(char *) * 3);
+    char **args = ft_malloc(sizeof(char *) * 3, l_gc);
 
-    args[0] = ft_strdup("export ");
-    args[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
+    args[0] = ft_strdup("export ", l_gc);
+    args[1] = ft_strjoin("PWD=", getcwd(NULL, 0), l_gc);
     args[2] = NULL;
-    ft_export(args, envp);
+    ft_export(args, envp, l_gc, lst);
 }
 
-void export_oldpwd(char ***envp)
+void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
 {
-	char **args = malloc(sizeof(char *) * 3);
+	char **args = ft_malloc(sizeof(char *) * 3, l_gc);
 
-	args[0] = ft_strdup("export ");
-	args[1] = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
+	args[0] = ft_strdup("export ", l_gc);
+	args[1] = ft_strjoin("OLDPWD=", getcwd(NULL, 0), l_gc);
 	args[2] = NULL;
-	ft_export(args, envp);
+	ft_export(args, envp, l_gc, lst);
 }

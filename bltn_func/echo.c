@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 08:33:52 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/15 01:52:28 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:22:17 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_handling_n(const char *s1)
 	return (1);
 }
 
-int echo(int argc, char **argv, char **envp)
+int echo(int argc, char **argv, char **envp, t_gc **lst)
 {
 	int flag_n;
 	int index;
@@ -38,7 +38,7 @@ int echo(int argc, char **argv, char **envp)
 	flag_n = 0;
 	index = 1;
 	env_lst = NULL;
-	intit_env_list(&env_lst, envp);
+	intit_env_list(&env_lst, envp, lst);
 	while (index < argc && ft_handling_n(argv[index]) == 0)
 	{
 		flag_n = 1;

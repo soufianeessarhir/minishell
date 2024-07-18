@@ -6,14 +6,15 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/14 02:51:19 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:01:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-static char	*skip_slash(char *str)
+static char	*skip_slash(char *str, t_gc **l_gc)
+
 {
 	int i;
 	char *command;
@@ -25,10 +26,10 @@ static char	*skip_slash(char *str)
 	while (str[i])
 	{
 		bol = 0;
-		get_char = ft_substr(str, i, 1);
+		get_char = ft_substr(str, i, 1,l_gc);
 		if (get_char == NULL)
 			return (NULL);
-		command = ft_strjoin(command, get_char);
+		command = ft_strjoin(command, get_char,l_gc);
 		if (command == NULL)
 			return (NULL);
 		while (str[i] == '/')
@@ -45,7 +46,7 @@ static char	*skip_slash(char *str)
 	return (command);
 }
 
-void cd(char **argv, char ***envp)
+void cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 {
 	int		i;
 	int		j;
@@ -56,13 +57,13 @@ void cd(char **argv, char ***envp)
 	j = 0;
 	path = argv[i];
 	env_lst = NULL;
-	intit_env_list(&env_lst, *envp);
+	intit_env_list(&env_lst, *envp, l_gc);
 	if (path == NULL || ft_strcmp(path, "~") == 0)
 		path = my_getenv("HOME", env_lst);
 	else
-		path = skip_slash(path);
+		path = skip_slash(path, l_gc);
 	// export OLDPWD
-	export_oldpwd(envp);
+	export_oldpwd(envp, l_gc, lst);
 	// change directory
 	if (chdir(path) == -1)
 	{
@@ -72,5 +73,5 @@ void cd(char **argv, char ***envp)
 		perror("");
 	}
 	// export PWD
-	export_pwd(envp);
+	export_pwd(envp, l_gc, lst);
 }

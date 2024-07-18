@@ -6,18 +6,19 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 00:50:15 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/06/29 08:59:40 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:29:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gc.h"
-void *ft_malloc(size_t size, t_gc **lst)
+
+void *ft_malloc(size_t size, t_gc **lst) 
 {
-    t_gc	*new;
+    t_gc *new;
 
     new = ft_lstnew(malloc(size));
     if (!new)
-        return (NULL);
+        return NULL;
     ft_lstadd_back(lst, new);
-    return (new->ptr);
+    return new->ptr;
 }

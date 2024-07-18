@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/17 23:43:16 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:30:34 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_builtin_func(char **argv, char ***envpv)
+void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 {
 	int i;
 
@@ -23,7 +23,7 @@ void ft_builtin_func(char **argv, char ***envpv)
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		echo(i, argv, *envpv);
+		echo(i, argv, *envpv, lst);
 		return;
 	}
 
@@ -85,14 +85,14 @@ void ft_builtin_func(char **argv, char ***envpv)
 	i = 0;
 	if (ft_strcmp(argv[i], "env") == 0)
 	{
-		env(*envpv);
+		env(*envpv, gc);
 		return;
 	}
 
 	//FOR CD
 	if (ft_strcmp(argv[i], "cd") == 0)
 	{
-		cd(argv, envpv);
+		cd(argv, envpv, gc, lst);
 		return;
 	}
 
@@ -102,12 +102,12 @@ void ft_builtin_func(char **argv, char ***envpv)
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		ft_export(argv, envpv);
+		ft_export(argv, envpv, gc, lst);
 		return;
 	}
 	
 	//FOR EXUCUTE COMMAND
-	ft_execute(argv, envpv);
+	ft_execute(argv, envpv, gc, lst);
 
 	//FOR UNSET
 	// i = 0;

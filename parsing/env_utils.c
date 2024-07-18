@@ -6,37 +6,39 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/17 23:31:09 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:38:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env *new_env(char *key, char *value) 
+t_env	*new_env(char *key, char *value, t_gc **lst)
 {
-    t_env *new;
+	t_env	*new;
 
-    new = malloc(sizeof(t_env));
-    new->key = key;
-    new->value = value;
-    new->next = NULL;
-    return new;
+	new = ft_malloc(sizeof(t_env), lst);
+	new->key = key;
+	new->value = value;
+	new->next = NULL;
+	return (new);
 }
-void env_add_back(t_env **env_lst, t_env *new) 
+
+void	env_add_back(t_env **env_lst, t_env *new)
 {
-    t_env *tmp;
+	t_env	*tmp;
 
-    if (!*env_lst)
-        *env_lst = new;
-    else
-    {
-        tmp = *env_lst;
-        while (tmp->next)
-            tmp = tmp->next;
-        tmp->next = new;
-    }
+	if (!*env_lst)
+		*env_lst = new;
+	else
+	{
+		tmp = *env_lst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
 }
-void  intit_env_list(t_env **env_lst, char **env) 
+
+void  intit_env_list(t_env **env_lst, char **env, t_gc **lst) 
 {
     int i;
     int j;
@@ -51,12 +53,12 @@ void  intit_env_list(t_env **env_lst, char **env)
         j = 0;
         while (env[i] && env[i][j] != '=' && env[i][j] != '\0')
             j++;
-        key = ft_substr(env[i], 0, j);
-        value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1);
+        key = ft_substr(env[i], 0, j, lst);
+        value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1, lst);
         if (!*env_lst)
-            *env_lst = new_env(key, value);
+            *env_lst = new_env(key, value, lst);
         else
-         env_add_back(env_lst, new_env(key, value));
+         env_add_back(env_lst, new_env(key, value, lst));
         i++;
     }
 }

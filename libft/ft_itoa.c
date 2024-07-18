@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 22:28:09 by sessarhi          #+#    #+#             */
-/*   Updated: 2023/11/13 06:17:07 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:24:30 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_len(long n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n,t_gc **gc)
 {
 	int		len;
 	long	nb;
@@ -40,7 +40,7 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	len = ft_len(nb);
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_malloc(sizeof(char) * (len + 1),gc);
 	if (!str)
 		return (NULL);
 	if (nb < 0)

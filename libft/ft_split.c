@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 22:38:11 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 02:42:08 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/18 03:22:48 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	ft_countchars(char const *s, char c, int i)
     return (j);
 }
 
-static char	**ft_strfill(const char *s, char c, int size)
+static char	**ft_strfill(const char *s, char c, int size, t_gc **gc)
 {
     int		i;
     int		j;
@@ -87,14 +87,14 @@ static char	**ft_strfill(const char *s, char c, int size)
 
     i = -1;
     j = -1;
-    ptr = malloc(sizeof(char *) * (size + 1));
+    ptr = ft_malloc(sizeof(char *) * (size + 1), gc);
     if (!ptr)
         return (NULL);
     while (++j < ft_countwords(s, c))
     {
         while (s[++i] == c)
             ;
-        ptr[j] = ft_substr(s, i, ft_countchars(s, c, i));
+        ptr[j] = ft_substr(s, i, ft_countchars(s, c, i), gc);
         if (ptr[j] == NULL)
             return (my_free(ptr),NULL);
         i = i + ft_countchars(s, c, i);
@@ -103,12 +103,12 @@ static char	**ft_strfill(const char *s, char c, int size)
     return (ptr);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, t_gc **gc)
 {
     char	**str;
 
     if (!s)
         return (NULL);
-    str = ft_strfill(s, c, ft_countwords(s, c));
+    str = ft_strfill(s, c, ft_countwords(s, c), gc);
     return (str);
 }
