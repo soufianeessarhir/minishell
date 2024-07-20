@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/20 12:00:46 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:52:06 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int syntax_error(char **args,t_token **token,t_gc **l_gc);
 int sp_uq_handling (char *line);
 
 
-t_env *new_env(char *key, char *value);
+t_env	*new_env(char *key, char *value, t_gc **lst);
 void env_add_back(t_env **env_lst, t_env *new);
 void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char *my_getenv(char *key, t_env *env_lst);
@@ -113,17 +113,21 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 
 
 void handle_sigint(int sig);
-int echo(int argc, char **argv);
-void ft_builtin_func(char **argv, char **envp, t_gc **l_gc);
+int echo(int argc, char **argv, char **envp, t_gc **lst);
+void ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst);
 int pwd(void);
 void exit_0(int j);
-int env(char **env);
+int env(char **env, t_gc **lst);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
-void unset(const char *argv, char **env);
-void cd(char **argv,t_gc **l_gc);
-int ft_execute(char **argv, char **envp,t_gc **l_gc);
+void cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
+int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst);
+void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst);
 int	ft_strcmp(const char *s1, const char *s2);
-void her_doc_handling(t_token **token_lst, t_gc **l_gc);
+void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst);
+void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);
+char *get_value(char *str, t_gc **l_gc);
+char *get_key(char *str, t_gc **l_gc);
+void unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
 
 #endif

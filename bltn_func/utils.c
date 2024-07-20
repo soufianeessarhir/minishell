@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/08 00:46:32 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:08:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,38 @@ int ft_strlen_double(char **str)
 	while (str[i] != NULL)
 		i++;
 	return (i);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
+
+void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst)
+{
+    char **args = ft_malloc(sizeof(char *) * 3, l_gc);
+
+    args[0] = ft_strdup("export ", l_gc);
+    args[1] = ft_strjoin("PWD=", getcwd(NULL, 0), l_gc);
+    args[2] = NULL;
+    ft_export(args, envp, l_gc, lst);
+}
+
+void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
+{
+	char **args = ft_malloc(sizeof(char *) * 3, l_gc);
+
+	args[0] = ft_strdup("export ", l_gc);
+	args[1] = ft_strjoin("OLDPWD=", getcwd(NULL, 0), l_gc);
+	args[2] = NULL;
+	ft_export(args, envp, l_gc, lst);
 }

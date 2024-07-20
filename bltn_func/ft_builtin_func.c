@@ -6,30 +6,15 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/19 22:26:46 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:51:42 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]))
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
-
-void ft_builtin_func(char **argv, char **envp, t_gc **l_gc)
+void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 {
 	int i;
-
 
 	//FOR ECHO
 	i = 0;
@@ -38,7 +23,7 @@ void ft_builtin_func(char **argv, char **envp, t_gc **l_gc)
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		echo(i, argv);
+		echo(i, argv, *envpv, lst);
 		return;
 	}
 
@@ -100,13 +85,14 @@ void ft_builtin_func(char **argv, char **envp, t_gc **l_gc)
 	i = 0;
 	if (ft_strcmp(argv[i], "env") == 0)
 	{
-		env(envp);
+		env(*envpv, gc);
 		return;
 	}
 
+	//FOR CD
 	if (ft_strcmp(argv[i], "cd") == 0)
 	{
-		cd(argv, l_gc);
+		cd(argv, envpv, gc, lst);
 		return;
 	}
 
@@ -116,20 +102,22 @@ void ft_builtin_func(char **argv, char **envp, t_gc **l_gc)
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		// export(argv, envp);
+		ft_export(argv, envpv, gc, lst);
+		return;
 	}
-
+	
+	// FOR UNSET
+	i = 0;
+	if (ft_strncmp(argv[i], "unset", ft_strlen(argv[i])) == 0)
+	{
+		i++;
+		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
+			i++;
+		unset(argv, envpv, gc, lst);
+		return;
+	}
 	//FOR EXUCUTE COMMAND
-	ft_execute(argv, envp, l_gc);
+	ft_execute(argv, envpv, gc, lst);
 
-	//FOR UNSET
-	// i = 0;
-	// if (ft_strncmp(argv[i], "unset", ft_strlen(argv[i])) == 0)
-	// {
-	// 	i++;
-	// 	while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
-	// 		i++;
-	// 	unset(argv[1], envp);
-	// }
 	
 }

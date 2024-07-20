@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/13 20:36:42 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/18 04:38:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*new_env(char *key, char *value)
+t_env	*new_env(char *key, char *value, t_gc **lst)
 {
 	t_env	*new;
 
-	new = malloc(sizeof(t_env));
+	new = ft_malloc(sizeof(t_env), lst);
 	new->key = key;
 	new->value = value;
 	new->next = NULL;
@@ -56,9 +56,9 @@ void  intit_env_list(t_env **env_lst, char **env, t_gc **lst)
         key = ft_substr(env[i], 0, j, lst);
         value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1, lst);
         if (!*env_lst)
-            *env_lst = new_env(key, value);
+            *env_lst = new_env(key, value, lst);
         else
-         env_add_back(env_lst, new_env(key, value));
+         env_add_back(env_lst, new_env(key, value, lst));
         i++;
     }
 }
@@ -67,12 +67,11 @@ char *my_getenv(char *key, t_env *env_lst)
     while (env_lst)
     {
         if (!ft_strcmp(key, env_lst->key))
-        {
             return env_lst->value;
-            
-        }
         env_lst = env_lst->next;
     }
+	if (ft_strcmp(key, "PATH") == 0)
+		return ("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin");
     return NULL;
 }
 int check_ex(char *str, int end) 
