@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 04:32:43 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:56:02 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
         syntax_error(token, &token_lst, &l_gc);
         env_handling(&token_lst, env_lst, &l_gc);
         init_cmd(&cmd, token_lst, &l_gc);
-		for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
-		{
-			printf("cmd: %s\n", tmp->cmd);
-			printf("red_in: %s\n", tmp->red_in);
-			printf("red_out: %s\n", tmp->red_out);
-			for (int i = 0; tmp->args[i]; i++) 
-			{
-				printf("args[%d]: %s\n", i, tmp->args[i]);
-			}
-		}
+		// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
+		// {
+		// 	printf("cmd: %s\n", tmp->cmd);
+		// 	printf("red_in: %s\n", tmp->red_in);
+		// 	printf("red_out: %s\n", tmp->red_out);
+		// 	for (int i = 0; tmp->args[i]; i++) 
+		// 	{
+		// 		printf("args[%d]: %s\n", i, tmp->args[i]);
+		// 	}
+		// }
         ft_builtin_func(cmd->args, &env, &l_gc,lst);
        
         free(*line);
@@ -157,15 +157,15 @@ void readline_loop(char **line, t_gc **lst, char **env)
     }
 }
 
-void f() {
-    system("leaks minishell");
-}
+// void f() {
+//     system("leaks minishell");
+// }
 
 int	main(int ac, char **av, char **env)
 {
     t_gc *lst;
     char *line;
-	atexit(f);
+	// atexit(f);
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);
 	rl_catch_signals = 0;

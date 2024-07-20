@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/18 04:47:05 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 08:51:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char *get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
             return (path_check);
 		split_paths++;
 	}
-	return (NULL);
+	return (argv[0]);
 }
 
 int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
