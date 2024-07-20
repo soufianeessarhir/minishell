@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/18 04:30:34 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:10:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,18 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 		return;
 	}
 	
+	// FOR UNSET
+	i = 0;
+	if (ft_strncmp(argv[i], "unset", ft_strlen(argv[i])) == 0)
+	{
+		i++;
+		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
+			i++;
+		unset(argv, envpv, gc, lst);
+		return;
+	}
 	//FOR EXUCUTE COMMAND
 	ft_execute(argv, envpv, gc, lst);
 
-	//FOR UNSET
-	// i = 0;
-	// if (ft_strncmp(argv[i], "unset", ft_strlen(argv[i])) == 0)
-	// {
-	// 	i++;
-	// 	while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
-	// 		i++;
-	// 	unset(argv[1], envp);
-	// }
 	
 }

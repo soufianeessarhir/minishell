@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 04:38:05 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:10:49 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void exit_0(int j);
 int env(char **env, t_gc **lst);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
-void unset(const char *argv, char **env);
 void cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
 int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst);
 void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst);
@@ -128,5 +127,6 @@ void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst);
 void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);
 char *get_value(char *str, t_gc **l_gc);
 char *get_key(char *str, t_gc **l_gc);
+void unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
 
 #endif
