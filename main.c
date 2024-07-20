@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/20 13:08:50 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:37:07 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		ft_export(shelvl, &env,  &l_gc, lst);
 	}
     
-    intit_env_list(&env_lst, env, lst);
     while (1) {
+    	intit_env_list(&env_lst, env, lst);
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
         if (!*line) {
             write(0, "exit\n", 5);
