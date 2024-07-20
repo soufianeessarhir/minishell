@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/20 10:32:26 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:31:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		ft_export(shelvl, &env,  &l_gc, lst);
 	}
     
-    intit_env_list(&env_lst, env, lst);
     while (1) {
+    	intit_env_list(&env_lst, env, lst);
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
         if (!*line) {
             write(0, "exit\n", 5);
@@ -137,16 +137,17 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			syntax_error(token, &token_lst, &l_gc);
 			env_handling(&token_lst, env_lst, &l_gc);
 			init_cmd(&cmd, token_lst, &l_gc);
-			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
-			// {
-			// 	printf("cmd: %s\n", tmp->cmd);
-			// 	printf("red_in: %s\n", tmp->red_in);
-			// 	printf("red_out: %s\n", tmp->red_out);
-			// 	for (int i = 0; tmp->args[i]; i++) 
-			// 	{
-			// 		printf("args[%d]: %s\n", i, tmp->args[i]);
-			// 	}
-			// }
+			for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
+			{
+				printf("cmd: %s\n", tmp->cmd);
+				printf("red_in: %s\n", tmp->red_in);
+				printf("red_out: %s\n", tmp->red_out);
+				for (int i = 0; tmp->args[i]; i++) 
+				{
+					printf("args[%d]: %s\n", i, tmp->args[i]);
+				}
+			}
+	
 			ft_builtin_func(cmd->args, &env, &l_gc,lst);
 		
 			free(*line);

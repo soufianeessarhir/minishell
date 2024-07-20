@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 08:33:52 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/18 04:22:17 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:31:33 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,5 @@ int echo(int argc, char **argv, char **envp, t_gc **lst)
 	}
 	if (flag_n == 0)
 		ft_putstr_fd("\n", 1);
-
 	return (0);
 }

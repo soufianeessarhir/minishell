@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/20 11:10:42 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:25:40 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 
 	//FOR ECHO
 	i = 0;
+	if (argv == NULL || argv[i] == NULL)
+		return;
 	if (ft_strcmp(argv[i], "echo") == 0)
 	{
 		i++;
@@ -56,16 +58,16 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 			checker = ft_atoi_checker(argv[i]);
 			if (argc >= 2 && checker != -1 && checker != -2)
 			{
-				ft_putstr_fd("exit\n", 1);
-				ft_putstr_fd("minishell: exit: too many arguments\n", 1);
+				ft_putstr_fd("exit\n", 2);
+				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 				return;
 			}
 			else if (checker == -1 || checker == -2)
 			{
-				ft_putstr_fd("exit\n", 1);
-				ft_putstr_fd("minishell: exit: ", 1);
-				ft_putstr_fd(argv[i], 1);
-				ft_putstr_fd(": numeric argument required\n", 1);
+				ft_putstr_fd("exit\n", 2);
+				ft_putstr_fd("minishell: exit: ", 2);
+				ft_putstr_fd(argv[i], 2);
+				ft_putstr_fd(": numeric argument required\n", 2);
 				exit_0(255);
 			}
 			else
