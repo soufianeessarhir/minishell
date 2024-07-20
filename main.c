@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 02:51:58 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:04:28 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,40 +109,41 @@ void readline_loop(char **line, t_gc **lst, char **env)
     token = NULL;
     
     intit_env_list(&env_lst, env, lst);
-    while (1) {
-        *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
-        if (!*line) {
-            write(0, "exit\n", 5);
-            exit(0);
-        }
-        if (*line[0] != '\0') add_history(*line);
+ while (1) {
+    *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
+    if (!*line) {
+        write(0, "exit\n", 5);
+        exit(0);
+    }
+    else if (*line[0] != '\0') {
+        add_history(*line);
         
         // sp_uq_handling(*line);
         token = ft_tokinize(*line, &l_gc);
         syntax_error(token, &token_lst, &l_gc);
         env_handling(&token_lst, env_lst, &l_gc);
-		her_doc_handling(&token_lst, &l_gc);
+        her_doc_handling(&token_lst, &l_gc);
         init_cmd(&cmd, token_lst, &l_gc);
-		for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
-		{
-			printf("cmd: %s\n", tmp->cmd);
-			printf("red_in: %s\n", tmp->red_in);
-			printf("red_out: %s\n", tmp->red_out);
-			for (int i = 0; tmp->args[i]; i++) 
-			{
-				printf("args[%d]: %s\n", i, tmp->args[i]);
-			}
-		}
+        for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
+        {
+            printf("cmd: %s\n", tmp->cmd);
+            printf("red_in: %s\n", tmp->red_in);
+            printf("red_out: %s\n", tmp->red_out);
+            for (int i = 0; tmp->args[i]; i++) 
+            {
+                printf("args[%d]: %s\n", i, tmp->args[i]);
+            }
+        }
         // ft_builtin_func(cmd, env, &l_gc);
-       
-        free(*line);
-        *line = NULL;
-        ft_free(&l_gc);
-        cmd = NULL;
-        token_lst = NULL;
-        token = NULL;
-        
     }
+   
+    free(*line);
+    *line = NULL;
+    ft_free(&l_gc);
+    cmd = NULL;
+    token_lst = NULL;
+    token = NULL;
+}
 }
 
 void f() {

@@ -12,7 +12,7 @@ LIB = libft/libft.a
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 RM = rm -f
 
 all: $(NAME)

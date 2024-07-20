@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/16 00:32:48 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:00:46 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "./libft/libft.h"
 #include <signal.h>
 #include <sys/types.h>
+#include <sanitizer/lsan_interface.h>
 
 #include "./gc/gc.h"
 
