@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/18 04:24:19 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:48:30 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,15 @@ void combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 }
 
 // Function to print exported environment variables
-void print_exported_variables(char **envp, t_gc **gc) {
+void print_exported_variables(char **envp, t_gc **gc, int bol) {
     int i = 0;
     while (envp[i] != NULL)
 	{
+		if (ft_strcmp(get_key(envp[i], gc), "PATH") == 0 && bol == 1)
+		{
+			i++;
+			continue;
+		}
         ft_putstr_fd("declare -x ", 1);
         ft_putstr_fd(envp[i], 1);
 		if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
@@ -85,7 +90,7 @@ void print_exported_variables(char **envp, t_gc **gc) {
     }
 }
 
-void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst)
+void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 {
 	int g;
 	int i;
@@ -95,8 +100,10 @@ void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst)
 
 	g = ft_strlen_double(argv);
 	if (g == 1)
-		return (print_exported_variables(*envp, gc));
+		return (print_exported_variables(*envp, gc, *boll));
 	i = 1;
+	if (ft_strcmp(get_key(argv[i], gc), "PATH") == 0)
+		*boll = 0;
 	while (argv[i])
 	{	
 		if (get_key(argv[i], gc) == NULL)

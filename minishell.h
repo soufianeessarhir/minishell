@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/20 23:10:15 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:22:05 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,15 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char **envp, t_gc **lst);
-void ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst);
+void ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst, int *bol);
 int pwd(void);
 void exit_0(int j);
-int env(char **env, t_gc **lst);
+int env(char **env, t_gc **lst, int bol);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
 void cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
 int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst);
-void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst);
+void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll);
 int	ft_strcmp(const char *s1, const char *s2);
 void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst);
 void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);

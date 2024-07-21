@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 04:38:54 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/21 09:52:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	env_add_back(t_env **env_lst, t_env *new)
 	}
 }
 
-void  intit_env_list(t_env **env_lst, char **env, t_gc **lst) 
+void   intit_env_list(t_env **env_lst, char **env, t_gc **lst) 
 {
     int i;
     int j;
@@ -58,7 +58,7 @@ void  intit_env_list(t_env **env_lst, char **env, t_gc **lst)
         if (!*env_lst)
             *env_lst = new_env(key, value, lst);
         else
-         env_add_back(env_lst, new_env(key, value, lst));
+        	env_add_back(env_lst, new_env(key, value, lst));
         i++;
     }
 }
@@ -70,8 +70,6 @@ char *my_getenv(char *key, t_env *env_lst)
             return env_lst->value;
         env_lst = env_lst->next;
     }
-	if (ft_strcmp(key, "PATH") == 0)
-		return ("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin");
     return NULL;
 }
 int check_ex(char *str, int end) 

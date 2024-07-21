@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/20 11:55:00 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:01:10 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 		}
 		j = 0;
 		k = 0;
-		new_env = ft_malloc(sizeof(char *) * (ft_strlen_double(*env_lst) + 1), lst);
+		new_env = ft_malloc(sizeof(char *) * (ft_strlen_double(*env_lst)), lst);
 		while ((*env_lst)[j] != NULL)
 		{
 			if (ft_strcmp(get_key((*env_lst)[j], gc), key) != 0)

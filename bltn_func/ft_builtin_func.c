@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/20 12:51:42 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:11:01 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
+void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
 {
 	int i;
 
 	//FOR ECHO
 	i = 0;
+	if (argv == NULL || argv[i] == NULL)
+		return;
 	if (ft_strcmp(argv[i], "echo") == 0)
 	{
 		i++;
@@ -56,16 +58,16 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 			checker = ft_atoi_checker(argv[i]);
 			if (argc >= 2 && checker != -1 && checker != -2)
 			{
-				ft_putstr_fd("exit\n", 1);
-				ft_putstr_fd("minishell: exit: too many arguments\n", 1);
+				ft_putstr_fd("exit\n", 2);
+				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 				return;
 			}
 			else if (checker == -1 || checker == -2)
 			{
-				ft_putstr_fd("exit\n", 1);
-				ft_putstr_fd("minishell: exit: ", 1);
-				ft_putstr_fd(argv[i], 1);
-				ft_putstr_fd(": numeric argument required\n", 1);
+				ft_putstr_fd("exit\n", 2);
+				ft_putstr_fd("minishell: exit: ", 2);
+				ft_putstr_fd(argv[i], 2);
+				ft_putstr_fd(": numeric argument required\n", 2);
 				exit_0(255);
 			}
 			else
@@ -85,7 +87,7 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 	i = 0;
 	if (ft_strcmp(argv[i], "env") == 0)
 	{
-		env(*envpv, gc);
+		env(*envpv, gc, *bol);
 		return;
 	}
 
@@ -102,7 +104,7 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		ft_export(argv, envpv, gc, lst);
+		ft_export(argv, envpv, gc, lst, bol);
 		return;
 	}
 	

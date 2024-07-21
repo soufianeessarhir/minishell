@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/21 23:20:36 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:26:36 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
     t_gc *l_gc;
     t_cmd *cmd;
 	char **shelvl;
+	char **tmp;
+	int bol = 0;
     
     l_gc = NULL;
     token_lst = NULL;
@@ -87,6 +89,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
     cmd = NULL;
     token = NULL;
 
+	shelvl = NULL;
 	if (*env == NULL)
 	{
 		*env = ft_malloc(sizeof(char *) * 2, lst);
@@ -96,8 +99,22 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		shelvl[0] = ft_strdup("export", &l_gc);
 		shelvl[1] = ft_strdup("SHLVL=1", &l_gc);
 		shelvl[2] = NULL;
-		ft_export(shelvl, &env,  &l_gc, lst);
+		ft_export(shelvl, &env,  &l_gc, lst, &bol);
+	
+		tmp = ft_malloc(sizeof(char *) * 3, lst);
+		tmp[0] = ft_strdup("export", &l_gc);
+		tmp[1] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin", &l_gc);
+		tmp[2] = NULL;
+		ft_export(tmp, &env,  &l_gc, lst, &bol);
+	
+		bol = 1;
 	}
+	// tmp = NULL;
+	// tmp = ft_malloc(sizeof(char *) * 3, lst);
+	// tmp[0] = ft_strdup("export", &l_gc);
+	// tmp[1] = ft_strdup("exitstatus=0", &l_gc);
+	// tmp[2] = NULL;
+	// ft_export(tmp, &env,  &l_gc, lst);
     
     while (1) {
     	intit_env_list(&env_lst, env, lst);
@@ -110,7 +127,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		{
 			add_history(*line);
 			
-			sp_uq_handling(*line);
+			// sp_uq_handling(*line);
 			token = ft_tokinize(*line, &l_gc);
 			syntax_error(token, &token_lst, &l_gc);
 			env_handling(&token_lst, env_lst, &l_gc);
@@ -128,7 +145,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				}
 			}
 			if (cmd)
-			ft_builtin_func(cmd->args, &env, &l_gc,lst);
+			ft_builtin_func(cmd->args, &env, &l_gc,lst, &bol);
 		}
 	    free(*line);
 	    *line = NULL;
