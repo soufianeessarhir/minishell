@@ -6,12 +6,22 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 02:59:26 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:46:16 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+int spaces_included(char *str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			return 1;
+		i++;
+	}
+	return 0;
+}
 void her_doc_handling(t_token **token_lst, t_gc **l_gc)
 {
     t_token *tmp;
@@ -30,6 +40,9 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
         if (tmp->type == 2 && strcmp(tmp->value, "<<") == 0)
         {
     		fd = open(ft_strjoin("/tmp/",tmp->next->value,l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
+			if (fd == -1)
+		      return;
+			tmp->next->value = ft_strjoin("/tmp/",tmp->next->value,l_gc);
             while (1)
             {
                 line = readline(">");
@@ -40,7 +53,6 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
 				free(line);
             }
             close(fd);
-           tmp->next->value = ft_strjoin("/tmp/",tmp->next->value,l_gc);
         }
         if (tmp)
             tmp = tmp->next;

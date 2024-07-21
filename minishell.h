@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/20 12:52:06 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/20 23:10:15 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,15 @@ void    ft_dll_lstclear(t_token **lst);
 t_token *ft_dll_lstlast(t_token *lst);
 int     ft_dll_lstsize(t_token *lst);
 char    **ft_tokinize(char *line,t_gc **l_gc);
-void    help(char *line,char **sep_token,int *j,int *i);
-void    skip_quoted(char **sep_token,char *line, int *i,int *j);
 void  init_graph(int graph[4][3]);
 int syntax_error(char **args,t_token **token,t_gc **l_gc);
 int sp_uq_handling (char *line);
-
-
+void  init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
+void her_doc_handling(t_token **token_lst, t_gc **l_gc);
 t_env	*new_env(char *key, char *value, t_gc **lst);
 void env_add_back(t_env **env_lst, t_env *new);
 void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char *my_getenv(char *key, t_env *env_lst);
-int is_expandabe(char *str, int i, int j,t_gc **l_gc);
 int check_ex(char *str,int end);
 char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
 void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);

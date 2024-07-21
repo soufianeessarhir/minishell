@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/19 22:51:31 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:19:48 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,19 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
 {
     int i = 0, j = 0;
     char *result = ft_strdup("", l_gc);
+	int count_dollars = 0;
     if (!result)
         return NULL;
-
     while (str[i]) 
     {
         if (str[i] == '$')
         {
+			count_dollars++;
+			while (str[i] && str[i + 1] && str[i + 1] == '$')
+			{
+				count_dollars++;
+				i++;
+			}
             if (str[i + 1] == '?')
             {
                 result = ft_strjoin(result, ft_itoa(errno, l_gc), l_gc);
@@ -153,12 +159,16 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
                 continue;
             }
             j = ++i;
-            while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+            while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' ) )
                 i++;
-            if (is_expandable(str, j - 1, i, l_gc))
+            if (is_expandable(str, j - 1, i, l_gc) && str[j] != '\'' && str[j] != '\"' && count_dollars % 2 != 0)
                 result = ft_strjoin(result, my_getenv(ft_substr(str, j, i - j, l_gc), env_lst), l_gc);
             else
+			{
+				if (count_dollars % 2 == 0)
+					j++;
                 result = ft_strjoin(result, ft_substr(str, j - 1, i - j + 1, l_gc), l_gc);
+			}
         }
         else
         {
