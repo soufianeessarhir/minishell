@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/relamine/Desktop/minishellshell/bltn_func",
-      "program": "/Users/relamine/Desktop/minishellshell/bltn_func/build/Debug/outDebug"
+      "cwd": "/Users/relamine/Desktop/minishellshell",
+      "program": "/Users/relamine/Desktop/minishellshell/build/Debug/outDebug"
     }
   ]
 }

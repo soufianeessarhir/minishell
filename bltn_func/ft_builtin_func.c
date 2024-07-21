@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/20 13:25:40 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:11:01 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
+void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
 {
 	int i;
 
@@ -87,7 +87,7 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 	i = 0;
 	if (ft_strcmp(argv[i], "env") == 0)
 	{
-		env(*envpv, gc);
+		env(*envpv, gc, *bol);
 		return;
 	}
 
@@ -104,7 +104,7 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		ft_export(argv, envpv, gc, lst);
+		ft_export(argv, envpv, gc, lst, bol);
 		return;
 	}
 	
