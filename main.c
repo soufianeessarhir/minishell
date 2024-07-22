@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/22 15:46:52 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:53:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		tmp[1] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin", &l_gc);
 		tmp[2] = NULL;
 		ft_export(tmp, &env,  &l_gc, lst, &bol);
+
+		
 	
 		bol = 1;
 	}
