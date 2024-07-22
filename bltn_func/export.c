@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/21 10:48:30 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:25:41 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void print_exported_variables(char **envp, t_gc **gc, int bol) {
 			i++;
 			continue;
 		}
+		if (ft_strcmp(get_key(envp[i], gc), "exitstatus") == 0)
+		{
+			i++;
+			continue;
+		}
         ft_putstr_fd("declare -x ", 1);
         ft_putstr_fd(envp[i], 1);
 		if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
@@ -90,17 +95,19 @@ void print_exported_variables(char **envp, t_gc **gc, int bol) {
     }
 }
 
-void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
+int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 {
 	int g;
 	int i;
 	int j;
 	int bol;
 	char *tmp;
+	int status;
 
+	status = 0;
 	g = ft_strlen_double(argv);
 	if (g == 1)
-		return (print_exported_variables(*envp, gc, *boll));
+		return (print_exported_variables(*envp, gc, *boll), 0);
 	i = 1;
 	if (ft_strcmp(get_key(argv[i], gc), "PATH") == 0)
 		*boll = 0;
@@ -111,6 +118,7 @@ void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(argv[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			status = 1;
 		}
 		else
 		{
@@ -151,5 +159,5 @@ void ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 		}
 		i++;
 	}
-	return ;
+	return (status);
 }

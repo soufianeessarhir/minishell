@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/21 10:01:10 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:07:36 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,17 @@ char *get_key_unset(char *str, t_gc **gc)
 	return (key);
 }
 
-void unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
+int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 {
 	int i;
 	int j;
 	int k;
 	char *key;
 	char **new_env;
+	int status;
 
 	i = 1;
+	status = 0;
 	while (argv[i] != NULL)
 	{
 		key = get_key_unset(argv[i], gc);
@@ -47,6 +49,7 @@ void unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 			ft_putstr_fd("minishell: unset: `", 2);
 			ft_putstr_fd(argv[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
+			status = 1;
 			i++;
 			continue;
 		}
@@ -66,4 +69,5 @@ void unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 		*env_lst = new_env;
 		i++;
 	}
+	return (status);
 }	

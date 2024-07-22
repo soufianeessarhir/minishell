@@ -55,14 +55,15 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-"C_Cpp_Runner.msvcSecureNoWarnings": false,
-"files.associations": {
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "files.associations": {
 	"__functional_base": "c",
 	"array": "c",
 	"istream": "c",
 	"locale": "c",
 	"memory": "c",
 	"tuple": "c",
-	"utility": "c"
+	"utility": "c",
+	"minishell.h": "c"
 }
 }

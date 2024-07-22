@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/19 22:51:31 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:14:52 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,14 +141,13 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
     char *result = ft_strdup("", l_gc);
     if (!result)
         return NULL;
-
     while (str[i]) 
     {
         if (str[i] == '$')
         {
             if (str[i + 1] == '?')
             {
-                result = ft_strjoin(result, ft_itoa(errno, l_gc), l_gc);
+                result = ft_strjoin(result, my_getenv( "exitstatus", env_lst), l_gc);
                 i += 2;
                 continue;
             }
@@ -156,9 +155,13 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
             while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
                 i++;
             if (is_expandable(str, j - 1, i, l_gc))
+			{
                 result = ft_strjoin(result, my_getenv(ft_substr(str, j, i - j, l_gc), env_lst), l_gc);
+			}
             else
+			{
                 result = ft_strjoin(result, ft_substr(str, j - 1, i - j + 1, l_gc), l_gc);
+			}
         }
         else
         {

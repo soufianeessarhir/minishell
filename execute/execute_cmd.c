@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/21 11:09:40 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 12:02:39 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,12 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	if (childpid > 0)
 	{
 		wait(&status);
-		// num_shlvl = ft_strjoin("exitstatus=", ft_itoa(WEXITSTATUS(status), l_gc) ,l_gc);
-		// shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
-		// shelvl[0] = ft_strdup("export", l_gc);
-		// shelvl[1] = num_shlvl;
-		// shelvl[2] = NULL;
-		// printf("exitstatus=%d\n", WEXITSTATUS(status));	
-		// ft_export(shelvl, envp, l_gc, lst);
+		num_shlvl = ft_strjoin("exitstatus=", ft_itoa(WEXITSTATUS(status), l_gc) ,l_gc);
+		shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
+		shelvl[0] = ft_strdup("export", l_gc);
+		shelvl[1] = num_shlvl;
+		shelvl[2] = NULL;
+		ft_export(shelvl, envp, l_gc, lst, 0);
 	}
 	if (childpid == 0)
     {

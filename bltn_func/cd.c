@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/18 04:01:42 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:55:47 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*skip_slash(char *str, t_gc **l_gc)
 	return (command);
 }
 
-void cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
+int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 {
 	int		i;
 	int		j;
@@ -71,7 +71,9 @@ void cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 		ft_putstr_fd(argv[i], 1);
 		ft_putstr_fd(": ", 1);
 		perror("");
+		return (1);
 	}
 	// export PWD
 	export_pwd(envp, l_gc, lst);
+	return (0);
 }

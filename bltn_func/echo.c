@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 08:33:52 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/20 12:31:33 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:51:18 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_handling_n(const char *s1)
 	return (1);
 }
 
-int echo(int argc, char **argv, char **envp, t_gc **lst)
+int echo(int argc, char **argv, char ***envp, t_gc **lst)
 {
 	int flag_n;
 	int index;
@@ -38,7 +38,7 @@ int echo(int argc, char **argv, char **envp, t_gc **lst)
 	flag_n = 0;
 	index = 1;
 	env_lst = NULL;
-	intit_env_list(&env_lst, envp, lst);
+	intit_env_list(&env_lst, *envp, lst);
 	while (index < argc && ft_handling_n(argv[index]) == 0)
 	{
 		flag_n = 1;
@@ -55,5 +55,10 @@ int echo(int argc, char **argv, char **envp, t_gc **lst)
 	}
 	if (flag_n == 0)
 		ft_putstr_fd("\n", 1);
+	// while (env_lst)
+	// {
+	// 	printf("key: %s  valu: %s\n", env_lst->key , env_lst->value);
+	// 	env_lst = env_lst->next;
+	// }
 	return (0);
 }

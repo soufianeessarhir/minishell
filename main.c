@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/21 10:49:36 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:20:47 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	char **shelvl;
 	char **tmp;
 	int bol = 0;
+	char **exitstatus;
+	char **tmp_env;
     
     l_gc = NULL;
     token_lst = NULL;
     env_lst = NULL;
     cmd = NULL;
     token = NULL;
+	exitstatus = NULL;
+	tmp_env = NULL;
 
 	shelvl = NULL;
 	if (*env == NULL)
@@ -131,12 +135,20 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	
 		bol = 1;
 	}
-	// tmp = NULL;
-	// tmp = ft_malloc(sizeof(char *) * 3, lst);
-	// tmp[0] = ft_strdup("export", &l_gc);
-	// tmp[1] = ft_strdup("exitstatus=0", &l_gc);
-	// tmp[2] = NULL;
-	// ft_export(tmp, &env,  &l_gc, lst);
+	tmp_env = env;
+	int g = 0;
+	while (tmp_env != NULL && tmp_env[g])
+	{
+		if(ft_strcmp(tmp_env[g], "exitstatus") != 0 && tmp_env[g + 1] != NULL)
+		{
+			exitstatus = ft_malloc(sizeof(char *) * 3, &l_gc);
+			exitstatus[0] = ft_strdup("export", &l_gc);
+			exitstatus[1] = ft_strdup("exitstatus=0", &l_gc);
+			exitstatus[2] = NULL;
+			ft_export(exitstatus, &env, &l_gc, lst, &bol);
+		}
+		g++;
+	}
     
     while (1) {
     	intit_env_list(&env_lst, env, lst);
@@ -172,6 +184,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			ft_free(&l_gc);
 			cmd = NULL;
 			token_lst = NULL;
+			env_lst = NULL;
 			token = NULL;
 		}
     }

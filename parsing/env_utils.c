@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/21 09:52:20 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 12:32:04 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ void   intit_env_list(t_env **env_lst, char **env, t_gc **lst)
     }
 }
 char *my_getenv(char *key, t_env *env_lst) 
-{
+{	
     while (env_lst)
     {
         if (!ft_strcmp(key, env_lst->key))
+		{
             return env_lst->value;
+		}
         env_lst = env_lst->next;
     }
     return NULL;

@@ -6,18 +6,34 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/21 10:11:01 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:40:47 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
+{
+	char *tmp;
+	char **exitstatus;
+
+	tmp = ft_strjoin("exitstatus=", ft_itoa(status, l_gc) ,l_gc);
+	exitstatus = ft_malloc(sizeof(char *) * 3, l_gc);
+	exitstatus[0] = ft_strdup("export", l_gc);
+	exitstatus[1] = tmp;
+	exitstatus[2] = NULL;
+	ft_export(exitstatus, envp, l_gc, lst, 0);
+}
+
+
 void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
 {
 	int i;
+	int status;
 
 	//FOR ECHO
 	i = 0;
+	status = 0;
 	if (argv == NULL || argv[i] == NULL)
 		return;
 	if (ft_strcmp(argv[i], "echo") == 0)
@@ -25,7 +41,8 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		echo(i, argv, *envpv, lst);
+		status = echo(i, argv, envpv, lst);
+		export_status(status, envpv, gc, lst);
 		return;
 	}
 
@@ -37,6 +54,8 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
 		pwd();
+		status = pwd();
+		export_status(status, envpv, gc, lst);
 		return;
 	}
 
@@ -60,7 +79,7 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol
 			{
 				ft_putstr_fd("exit\n", 2);
 				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-				return;
+				exit_0(1);
 			}
 			else if (checker == -1 || checker == -2)
 			{
@@ -87,14 +106,16 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol
 	i = 0;
 	if (ft_strcmp(argv[i], "env") == 0)
 	{
-		env(*envpv, gc, *bol);
+		status = env(*envpv, gc, *bol);
+		export_status(status, envpv, gc, lst);
 		return;
 	}
 
 	//FOR CD
 	if (ft_strcmp(argv[i], "cd") == 0)
 	{
-		cd(argv, envpv, gc, lst);
+		status = cd(argv, envpv, gc, lst);
+		export_status(status, envpv, gc, lst);
 		return;
 	}
 
@@ -104,7 +125,8 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		ft_export(argv, envpv, gc, lst, bol);
+		status = ft_export(argv, envpv, gc, lst, bol);
+		export_status(status, envpv, gc, lst);
 		return;
 	}
 	
@@ -115,11 +137,12 @@ void ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol
 		i++;
 		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
 			i++;
-		unset(argv, envpv, gc, lst);
+		status = unset(argv, envpv, gc, lst);
+		export_status(status, envpv, gc, lst);
 		return;
 	}
+
 	//FOR EXUCUTE COMMAND
 	ft_execute(argv, envpv, gc, lst);
 
-	
 }
