@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/22 12:02:39 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:09:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	int i;
 
 	env_lst = NULL;
+	status = 0;
 	intit_env_list(&env_lst, *envp, l_gc);
 	if (strchr(argv[0], '/') == NULL)
 		path_cmd = get_path(argv, env_lst, l_gc);
@@ -63,17 +64,15 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	if (childpid == -1)
 	{
 		perror("fork");
-		return 1;
+		exit(1);
 	}
 	if (childpid > 0)
 	{
 		wait(&status);
-		num_shlvl = ft_strjoin("exitstatus=", ft_itoa(WEXITSTATUS(status), l_gc) ,l_gc);
-		shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
-		shelvl[0] = ft_strdup("export", l_gc);
-		shelvl[1] = num_shlvl;
-		shelvl[2] = NULL;
-		ft_export(shelvl, envp, l_gc, lst, 0);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		else
+			status = 128 + WTERMSIG(status);
 	}
 	if (childpid == 0)
     {
@@ -102,6 +101,6 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 			exit(127);
 		}
     }
-    return 0;
+	return (status);
 }
 
