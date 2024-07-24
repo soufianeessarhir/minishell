@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 13:18:13 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:36:27 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	}
 	if (childpid > 0)
 	{
+		g_a.stpsignal_inparent = 1;
 		wait(&status);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		else
 			status = 128 + WTERMSIG(status);
+		g_a.stpsignal_inparent = 0;
 	}
 	if (childpid == 0)
     {

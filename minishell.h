@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 12:24:53 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:36:40 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@
 
 #include "./gc/gc.h"
 
-typedef struct g_exitstatus_singnal
+typedef struct g_signalhandler
 {
 	int exitstatus_singnal;
-} 			 t_exitstatus_singnal;
+	int stpsignal_inparent;
+} 			 t_signalhandler;
 
-t_exitstatus_singnal g_a;
+t_signalhandler g_a;
 
 #define RESET "\033[0m"
 #define GOLD "\033[0;33m"
