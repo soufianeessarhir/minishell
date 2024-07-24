@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 11:51:41 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:34:41 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 	if (g == 1)
 		return (print_exported_variables(*envp, gc, *boll), 0);
 	i = 1;
-	if (ft_strcmp(get_key(argv[i], gc), "PATH") == 0)
+	if (ft_strcmp(get_key(argv[i], gc), "PATH") == 0 && boll != 0)
 		*boll = 0;
 	while (argv[i])
 	{	

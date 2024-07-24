@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 14:36:27 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:44:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 		else
 			status = 128 + WTERMSIG(status);
 		g_a.stpsignal_inparent = 0;
+		g_a.exitstatus_singnal = 0;
 	}
 	if (childpid == 0)
     {

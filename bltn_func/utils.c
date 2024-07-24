@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 12:25:07 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:19:37 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,4 +137,15 @@ void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 	shelvl[1] = tmp;
 	shelvl[2] = NULL;
 	ft_export(shelvl, envp, l_gc, lst, 0);
+}
+
+void ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
+{
+	char **tmp;
+
+	tmp = ft_malloc(sizeof(char *) * 3, lst);
+	tmp[0] = ft_strdup("export", l_gc);
+	tmp[1] = ft_strdup(argv, l_gc);
+	tmp[2] = NULL;
+	ft_export(tmp, env, l_gc, lst, 0);
 }
