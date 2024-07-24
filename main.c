@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 09:05:58 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 09:13:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			token = NULL;
 		}
     }
-   
 }
 
 void f() {
