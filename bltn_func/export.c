@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/22 14:25:41 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:51:41 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 }
 
 // Function to print exported environment variables
-void print_exported_variables(char **envp, t_gc **gc, int bol) {
+void print_exported_variables(char **envp, t_gc **gc, int bol)
+{
     int i = 0;
     while (envp[i] != NULL)
 	{

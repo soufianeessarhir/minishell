@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 09:01:29 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:25:07 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,43 @@ void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
 	exitstatus[1] = tmp;
 	exitstatus[2] = NULL;
 	ft_export(exitstatus, envp, l_gc, lst, 0);
+}
+
+
+void ft_export_(char **argv, char ***envpv, void *gc, void *lst)
+{
+    int q;
+    char **tmp;
+	char *arg;
+
+    q = ft_strlen_double(argv) - 1;
+    tmp = (char **)ft_malloc(sizeof(char *) * 3, lst);
+    tmp[0] = ft_strdup("export", gc);
+    arg = ft_strdup(argv[q], gc);
+    tmp[1] = ft_strjoin("_=", arg, gc);
+    tmp[2] = NULL;
+    ft_export(tmp, envpv, gc, lst, 0);
+}
+
+void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
+{
+	char *tmp;
+	char **shelvl;
+	char *num_shlvl;
+	int i;
+
+	num_shlvl = my_getenv("SHLVL", env_lst);
+	i = ft_atoi(num_shlvl);
+	if (i == 0 || i >= 10240)
+		i = 1;
+	else if (i < 0)
+		i = 0;
+	else
+		i++;
+	tmp = ft_strjoin("SHLVL=", ft_itoa(i, l_gc) ,l_gc);
+	shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
+	shelvl[0] = ft_strdup("export", l_gc);
+	shelvl[1] = tmp;
+	shelvl[2] = NULL;
+	ft_export(shelvl, envp, l_gc, lst, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 09:13:11 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:18:13 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,11 @@ static char *get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
     if (env_path == NULL)
         return (argv[0]);
 	path_env_copy = ft_strdup(env_path,l_gc);
-    if (path_env_copy == NULL)
-        return (NULL);
 	split_paths = ft_split(path_env_copy, ':',l_gc);
-	if (split_paths == NULL) 
-		return (NULL);
 	while (*split_paths)
 	{
 		path_check = ft_strjoin(*split_paths, "/",l_gc);
-		if (path_check == NULL)
-			return (NULL);
 		path_check = ft_strjoin(path_check, argv[0],l_gc);
-		if (path_check == NULL)
-			return (NULL);
 		if (access(path_check, X_OK) == 0)
             return (path_check);
 		split_paths++;
@@ -48,10 +40,7 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	char *path_cmd;
 	pid_t childpid;
 	t_env *env_lst;
-	char *num_shlvl;
-	char **shelvl;
 	int status;
-	int i;
 
 	env_lst = NULL;
 	status = 0;
@@ -78,20 +67,9 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
     {
 		if (ft_strcmp(path_cmd, "./minishell") == 0)
 		{
-			num_shlvl = my_getenv("SHLVL", env_lst);
-			i = ft_atoi(num_shlvl);
-			if (i == 0 || i >= 10240)
-				i = 1;
-			else if (i < 0)
-				i = 0;
-			else
-				i++;
-			num_shlvl = ft_strjoin("SHLVL=", ft_itoa(i, l_gc) ,l_gc);
-			shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
-			shelvl[0] = ft_strdup("export", l_gc);
-			shelvl[1] = num_shlvl;
-			shelvl[2] = NULL;
-			ft_export(shelvl, envp, l_gc, lst, 0);
+			export_shelvl(envp, l_gc, lst, env_lst);
+			if (ft_strcmp(getcwd(NULL, 0), "/Users/relamine/Desktop/minishell"))
+				path_cmd = ft_strjoin("/Users/relamine/Desktop/minishell/", path_cmd, l_gc);
 		}
 		if (execve(path_cmd, argv, *envp) == -1)
 		{

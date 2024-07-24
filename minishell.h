@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 08:59:24 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:24:53 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ char *get_value(char *str, t_gc **l_gc);
 char *get_key(char *str, t_gc **l_gc);
 int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
 void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst);
-
+void ft_export_(char **argv, char ***envpv, void *gc, void *lst);
+void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst);
 
 #endif

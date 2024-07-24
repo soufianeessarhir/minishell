@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 09:13:20 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:13:07 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	char **exitstatus;
 	char **tmp_env;
 	int stexit;
+	int flag_pipe;
     
     l_gc = NULL;
 	stexit = -9999;
@@ -55,8 +56,12 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		tmp[2] = NULL;
 		ft_export(tmp, &env,  &l_gc, lst, &bol);
 
-		
-	
+		tmp = ft_malloc(sizeof(char *) * 3, lst);
+		tmp[0] = ft_strdup("export", &l_gc);
+		tmp[1] = ft_strdup("_=/Users/relamine/Desktop/minishell/./minishell", &l_gc);
+		tmp[2] = NULL;
+		ft_export(tmp, &env,  &l_gc, lst, &bol);
+
 		bol = 1;
 	}
 
@@ -70,6 +75,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	}
     
     while (1) {
+		flag_pipe = 0;
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
         if (!*line) {
             write(0, "exit\n", 5);
@@ -104,6 +110,18 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			// }
 			while (cmd)
 			{
+				if (cmd->next)
+					flag_pipe = 1;
+				if (!flag_pipe)
+					ft_export_(cmd->args, &env, &l_gc, lst);
+				else
+				{
+					tmp = ft_malloc(sizeof(char *) * 3, lst);
+					tmp[0] = ft_strdup("export", &l_gc);
+					tmp[1] = ft_strdup("_=", &l_gc);
+					tmp[2] = NULL;
+					ft_export(tmp, &env,  &l_gc, lst, 0);
+				}
 				stexit = ft_builtin_func(cmd->args, &env, &l_gc,lst, &bol);
 				if (stexit != -9999)
 					export_status(stexit, &env, &l_gc, lst);

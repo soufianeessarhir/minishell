@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 09:08:39 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:04:19 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,24 @@ int ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
 	int i;
 	int status;
 
-	//FOR ECHO
 	i = 0;
 	status = 0;
 	if (argv == NULL || argv[i] == NULL)
 		return (-9999);
-	if (ft_strcmp(argv[i], "echo") == 0)
-	{
-		i++;
-		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
-			i++;
-		return (echo(i, argv, envpv, lst));
-	}
 
-	//FOR PWD
-	i = 0;
-	if (ft_strcmp(argv[i], "pwd") == 0)
-	{
-		i++;
-		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
-			i++;
-		pwd();
+	if (!ft_strcmp(argv[i], "echo"))
+		return (echo(ft_strlen_double(argv),argv, envpv, lst));
+	else if (!ft_strcmp(argv[i], "pwd"))
 		return (pwd());
-	}
-
-	//FOR EXIT
-	i = 0;
-	if(ft_strcmp(argv[i], "exit") == 0)
+	else if (!ft_strcmp(argv[i], "env"))
+		return (env(*envpv, gc, *bol));
+	else if (!ft_strcmp(argv[i], "cd"))
+		return (cd(argv, envpv, gc, lst));
+	else if (!ft_strcmp(argv[i], "export"))
+		return (ft_export(argv, envpv, gc, lst, bol));
+	else if (!ft_strncmp(argv[i], "unset", ft_strlen(argv[i])))
+		return (unset(argv, envpv, gc, lst));
+	else if(!ft_strcmp(argv[i], "exit"))
 	{
 		int j;
 		int k;
@@ -52,6 +43,7 @@ int ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
 
 		i++;
 		j = 0;
+	
 		argc = ft_strlen_double(argv + 1);
 		if (argv[i] != NULL && ft_strnstr(argv[i], "|", argc) == NULL)
 		{
@@ -76,53 +68,10 @@ int ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
 				ft_putstr_fd("exit\n", 1);
 				exit_0(checker);
 			}
-			i++;
 		}
 		ft_putstr_fd("exit\n", 1);
 		exit_0(0);
 	}
-
-
-	//FOR ENV
-	i = 0;
-	if (ft_strcmp(argv[i], "env") == 0)
-	{
-		return (env(*envpv, gc, *bol));
-	}
-
-	//FOR CD
-	if (ft_strcmp(argv[i], "cd") == 0)
-	{
-		return (cd(argv, envpv, gc, lst));
-	}
-
-	//FOR EXPORT
-	if (ft_strcmp(argv[i], "export") == 0)
-	{
-		i++;
-		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
-			i++;
-		return (ft_export(argv, envpv, gc, lst, bol));
-	}
-	
-	// FOR UNSET
-	i = 0;
-	if (ft_strncmp(argv[i], "unset", ft_strlen(argv[i])) == 0)
-	{
-		i++;
-		while (argv[i] != NULL && ft_strnstr(argv[i], "|", ft_strlen(argv[i])) == NULL)
-			i++;
-		return (unset(argv, envpv, gc, lst));
-	}
-
 	//FOR EXUCUTE COMMAND
 	return (ft_execute(argv, envpv, gc, lst));
-
-	// int j = ft_strlen_double(argv);
-	// char **tmp;
-	// tmp = ft_malloc(sizeof(char *) * 3, lst);
-	// tmp[0] = ft_strdup("export", gc);
-	// tmp[1] = ft_strjoin("_=", ft_strdup(argv[j], gc), gc);
-	// tmp[2] = NULL;
-	// ft_export(tmp, envpv, gc, lst, 0);
 }
