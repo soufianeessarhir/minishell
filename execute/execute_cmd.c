@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 16:44:54 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:10:11 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,13 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 		if (execve(path_cmd, argv, *envp) == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(argv[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
+			if (strchr(argv[0], '/'))
+				perror(argv[0]);
+			else
+			{
+				ft_putstr_fd(argv[0], 2);
+				ft_putstr_fd(": command not found\n", 2);
+			}
 			exit(127);
 		}
     }

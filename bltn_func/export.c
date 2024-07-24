@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 15:34:41 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:19:41 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,7 @@ void print_exported_variables(char **envp, t_gc **gc, int bol)
 			continue;
 		}
         ft_putstr_fd("declare -x ", 1);
-        ft_putstr_fd(envp[i], 1);
-		if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
-			ft_putstr_fd("\"\"", 1);
-        ft_putstr_fd("\n", 1);
+		printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
         i++;
     }
 }
@@ -106,6 +103,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 	int status;
 
 	status = 0;
+	
 	g = ft_strlen_double(argv);
 	if (g == 1)
 		return (print_exported_variables(*envp, gc, *boll), 0);
@@ -123,8 +121,8 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 		}
 		else
 		{
-			j = 0;
 			bol = 0;
+			j = 0;
 			while ((*envp)[j] != NULL)
 			{
 				if (ft_strcmp(get_key((*envp)[j], gc), get_key(argv[i], gc)) == 0)
@@ -135,9 +133,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 					if (ft_strchr(argv[i], '+') != NULL)
 					{
 						tmp = get_value(argv[i], gc);
-						argv[i] = ft_strjoin(get_key(argv[i], gc), "=", gc);
-						argv[i] = ft_strjoin(argv[i], tmp, lst);
-						(*envp)[j] = argv[i];
+						(*envp)[j] = ft_strjoin((*envp)[j], tmp, lst);
 					}
 					else
 						(*envp)[j] = ft_strdup(argv[i], lst);

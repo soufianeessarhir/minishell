@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 16:37:03 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:06:15 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	int g = 0;
 	while (tmp_env != NULL && tmp_env[g])
 	{
-		if(ft_strcmp(tmp_env[g], "exitstatus") != 0 && tmp_env[g + 1] != NULL)
+		if(ft_strcmp(tmp_env[g], "exitstatus") != 0 && tmp_env[g + 1] == NULL)
 			export_status(0, &env, &l_gc, lst);
 		g++;
 	}
-    
+    // printf("--argv[i]: %d\n", *line);
     while (1) {
 		flag_pipe = 0;
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
@@ -93,19 +93,21 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			// 	{
 			// 		printf("args[%d]: %s\n", i, tmp->args[i]);
 			// 	}
+			// }
 			// ft_lstlast(cmd)->next = NULL;
-			while (cmd)
+			t_cmd *tmp = cmd;
+			while (tmp && tmp->cmd)
 			{
-				if (cmd->next)
+				if (tmp->next)
 					flag_pipe = 1;
 				if (!flag_pipe)
-					ft_export_(cmd->args, &env, &l_gc, lst);
+					ft_export_(tmp->args, &env, &l_gc, lst);
 				else
 					ft_export_anything("_=", &l_gc, lst, &env);
-				stexit = ft_builtin_func(cmd->args, &env, &l_gc,lst, &bol);
+				stexit = ft_builtin_func(tmp->args, &env, &l_gc,lst, &bol);
 				if (stexit != -9999)
 					export_status(stexit, &env, &l_gc, lst);
-				cmd = cmd->next;
+				tmp = tmp->next;
 			}
 
 			free(*line);
