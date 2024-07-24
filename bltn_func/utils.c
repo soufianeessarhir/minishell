@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/21 11:09:10 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 09:01:29 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,17 @@ void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
 	args[1] = ft_strjoin("OLDPWD=", getcwd(NULL, 0), l_gc);
 	args[2] = NULL;
 	ft_export(args, envp, l_gc, lst, 0);
+}
+
+void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
+{
+	char *tmp;
+	char **exitstatus;
+
+	tmp = ft_strjoin("exitstatus=", ft_itoa(status, l_gc) ,l_gc);
+	exitstatus = ft_malloc(sizeof(char *) * 3, l_gc);
+	exitstatus[0] = ft_strdup("export", l_gc);
+	exitstatus[1] = tmp;
+	exitstatus[2] = NULL;
+	ft_export(exitstatus, envp, l_gc, lst, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 06:25:56 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/24 09:05:58 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	int bol = 0;
 	char **exitstatus;
 	char **tmp_env;
+	int stexit;
     
     l_gc = NULL;
+	stexit = -9999;
     token_lst = NULL;
     env_lst = NULL;
     cmd = NULL;
@@ -57,28 +59,28 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	
 		bol = 1;
 	}
+
 	tmp_env = env;
 	int g = 0;
 	while (tmp_env != NULL && tmp_env[g])
 	{
 		if(ft_strcmp(tmp_env[g], "exitstatus") != 0 && tmp_env[g + 1] != NULL)
-		{
-			exitstatus = ft_malloc(sizeof(char *) * 3, &l_gc);
-			exitstatus[0] = ft_strdup("export", &l_gc);
-			exitstatus[1] = ft_strdup("exitstatus=0", &l_gc);
-			exitstatus[2] = NULL;
-			ft_export(exitstatus, &env, &l_gc, lst, &bol);
-		}
+			export_status(0, &env, &l_gc, lst);
 		g++;
 	}
     
     while (1) {
-    	intit_env_list(&env_lst, env, lst);
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
         if (!*line) {
             write(0, "exit\n", 5);
             exit(0);
         }
+		if (g_a.exitstatus_singnal == 1)
+		{
+			export_status(g_a.exitstatus_singnal, &env, &l_gc, lst);
+			g_a.exitstatus_singnal = 0;
+		}
+    	intit_env_list(&env_lst, env, lst);
         if (*line[0] != '\0')
 		{
 			add_history(*line);
@@ -100,8 +102,13 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			// 		printf("args[%d]: %s\n", i, tmp->args[i]);
 			// 	}
 			// }
-			if (cmd)
-			ft_builtin_func(cmd->args, &env, &l_gc,lst, &bol);
+			while (cmd)
+			{
+				stexit = ft_builtin_func(cmd->args, &env, &l_gc,lst, &bol);
+				if (stexit != -9999)
+					export_status(stexit, &env, &l_gc, lst);
+				cmd = cmd->next;
+			}
 
 			free(*line);
 			*line = NULL;

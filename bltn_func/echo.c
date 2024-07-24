@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 08:33:52 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/22 11:51:18 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 09:03:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,5 @@ int echo(int argc, char **argv, char ***envp, t_gc **lst)
 	}
 	if (flag_n == 0)
 		ft_putstr_fd("\n", 1);
-	// while (env_lst)
-	// {
-	// 	printf("key: %s  valu: %s\n", env_lst->key , env_lst->value);
-	// 	env_lst = env_lst->next;
-	// }
 	return (0);
 }

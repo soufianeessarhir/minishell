@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 06:20:31 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/24 08:59:24 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 
 #include "./gc/gc.h"
 
+typedef struct g_exitstatus_singnal
+{
+	int exitstatus_singnal;
+} 			 t_exitstatus_singnal;
+
+t_exitstatus_singnal g_a;
 
 #define RESET "\033[0m"
 #define GOLD "\033[0;33m"
@@ -113,7 +119,7 @@ void open_redirection(t_cmd **cmd , t_gc **l_gc);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);
-void ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst, int *bol);
+int ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst, int *bol);
 int pwd(void);
 void exit_0(int j);
 int env(char **env, t_gc **lst, int bol);
@@ -128,6 +134,7 @@ void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);
 char *get_value(char *str, t_gc **l_gc);
 char *get_key(char *str, t_gc **l_gc);
 int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
+void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst);
 
 
 #endif
