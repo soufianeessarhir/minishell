@@ -3,75 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/22 15:53:09 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/24 06:25:56 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
 #include "minishell.h"
-void open_redirection(t_cmd **cmd , t_gc **l_gc)
-{
-    t_cmd *tmp;
-    char **args;
-    int i;
 
-    tmp = *cmd;
-    while (tmp)
-    {
-        if (tmp->red_in && tmp->red_in[0] != '\0')
-        {
-            args = ft_split(tmp->red_in, ' ', l_gc);
-            i = 0;
-            if (args[0] != NULL)
-			{
-	            while (args[i])
-	            {
-	                if (ft_strcmp(args[i], "<<") == 0 || ft_strcmp(args[i], "<") == 0)
-	                {
-	                    if (access(args[i + 1], F_OK) == -1)
-	                        return(printf("minishell: %s: No such file or directory\n", args[i + 1]),(void)0);
-	                    if (access(args[i + 1], R_OK) == -1)
-	                        return(printf("minishell: %s: Permission denied\n", args[i + 1]),(void)0);
-	                    tmp->red_in_fd = open(args[i + 1], O_RDONLY);
-	                    if (tmp->red_in_fd == -1)
-	                        return;
-	                    i+=2;
-	                }
-	            }
-			}
-        }
-		i = 0;
-        if (tmp->red_out && tmp->red_out[0] != '\0')
-        {
-            args = ft_split(tmp->red_out, ' ', l_gc);
-            if (args[0] == NULL)
-			{
-	            while (args[i])
-	            {
-	                if (ft_strcmp(args[i], ">>") == 0)
-	                {
-	                    tmp->red_out_fd = open(args[i + 1], O_APPEND | O_CREAT | O_RDWR, 0644);
-	                    if (tmp->red_out_fd == -1)
-	                        return;
-	                }
-	                if (ft_strcmp(args[i], ">") == 0)
-	                {
-	                    puts(args[i + 1]);
-	                    tmp->red_out_fd = open(args[i + 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	                    if (tmp->red_out_fd == -1)
-	                        return;
-	                }
-	                i+=2;
-	            }
-			}
-        }
-        tmp = tmp->next;
-    }
-}
 void readline_loop(char **line, t_gc **lst, char **env) 
 {
     t_token *token_lst;
@@ -148,16 +90,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			her_doc_handling(&token_lst, &l_gc);
 			init_cmd(&cmd, token_lst, &l_gc);
 			open_redirection(&cmd, &l_gc);
-			for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
-			{
-				printf("cmd: %s\n", tmp->cmd);
-				printf("red_in: %s\n", tmp->red_in);
-				printf("red_out: %s\n", tmp->red_out);
-				for (int i = 0; tmp->args[i]; i++) 
-				{
-					printf("args[%d]: %s\n", i, tmp->args[i]);
-				}
-			}
+			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
+			// {
+			// 	printf("cmd: %s\n", tmp->cmd);
+			// 	printf("red_in: %s\n", tmp->red_in);
+			// 	printf("red_out: %s\n", tmp->red_out);
+			// 	for (int i = 0; tmp->args[i]; i++) 
+			// 	{
+			// 		printf("args[%d]: %s\n", i, tmp->args[i]);
+			// 	}
+			// }
 			if (cmd)
 			ft_builtin_func(cmd->args, &env, &l_gc,lst, &bol);
 

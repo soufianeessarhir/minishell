@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:59:09 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/24 06:14:58 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,15 @@ int syntax_error(char **args,t_token **token,t_gc **l_gc)
     {
         state = graph[state][tmp->type - 1];
         if (state == -1)
-            return ( printf("syntax error\n"),1);
+            {
+				printf("syntax error near unexpected token `%s'\n", tmp->value);
+				break;
+			}
         tmp = tmp->next;
     }
     if (tmp == NULL && state == 1)
-        return (0);
-        
-    return (printf("syntax error\n"),1);
+        return (her_doc_handling(token, l_gc),0);	
+	else if (state != 1 && tmp != NULL)
+		return (tmp = NULL, her_doc_handling(token, l_gc), 1);
+	return (her_doc_handling(token, l_gc), printf("syntax error near unexpected token `newline'\n"), 1);
 }
