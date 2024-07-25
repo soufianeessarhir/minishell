@@ -14,7 +14,7 @@ LIB = libft/libft.a
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g -m64
 RM = rm -f
 
 all: $(NAME)

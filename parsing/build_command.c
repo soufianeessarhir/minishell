@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/20 22:34:59 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/25 04:53:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 	{
         new = new_cmd(l_gc);
         if (!new) 
-		{
-            printf("Failed to create new command\n");
             return;
-        }
         while (tmp && tmp->type != 3)
 		{
             if (tmp->type == 2) 

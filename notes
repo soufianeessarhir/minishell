@@ -1,0 +1,4 @@
+1--export a="ls -l"
+minishell: export: `-l': not a valid identifier
+
+2--handle ft_strcmp it cause segv in some cases 
