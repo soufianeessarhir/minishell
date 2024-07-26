@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 04:59:33 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/26 03:55:42 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int handle_red_in(t_cmd *tmp, char **args, t_gc **l_gc)
 {
     int i = 0;
-    args = ft_split(tmp->red_in, ' ', l_gc);
+    args = ft_split(tmp->red_in, ';', l_gc);
     if (args[0] != NULL)
     {
         while (args[i])
@@ -65,7 +65,7 @@ int handle_overwrite_redirection(t_cmd *tmp, char **args, int i)
 int handle_red_out(t_cmd *tmp, char **args, t_gc **l_gc)
 {
     int i = 0;
-    args = ft_split(tmp->red_out, ' ', l_gc);
+    args = ft_split(tmp->red_out, ';', l_gc);
     if (args[0] != NULL)
     {
         while (args[i])

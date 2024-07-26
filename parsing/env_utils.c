@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/22 12:32:04 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 04:01:54 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,20 @@ int check_ex(char *str, int end)
     int flag;
     char quote;
     
+    if (str == NULL)
+        return 0;
+
     i = 0;
     flag = 0;
-    while (str[i] && i <= end)
+    while (str[i] && i < end)
     {
         if (str[i] == '\"')
         {
             quote = str[i++];
             while (str[i] && str[i] != quote && i < end)
                 i++;
-            i++;
+            if (i < end)
+                i++;
         }
         else if (str[i] == '\'')
         {
@@ -98,7 +102,8 @@ int check_ex(char *str, int end)
                 i++;
             if (str[i] != quote)
                 flag = 1;
-            i++;
+            if (i < end)
+                i++;
         }
         else
         {

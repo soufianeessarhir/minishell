@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 15:19:22 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 03:55:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <sanitizer/lsan_interface.h>
 
 #include "./gc/gc.h"
+
 
 typedef struct g_signalhandler
 {
@@ -63,6 +64,7 @@ typedef struct s_token
     int type;
     struct s_token *next;
     struct s_token *prev;
+	int is_env;
 }               t_token;
 
 typedef struct s_env_vars
@@ -115,7 +117,7 @@ int check_ex(char *str,int end);
 char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
 void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 void open_redirection(t_cmd **cmd , t_gc **l_gc);
-
+char *clean_str(char *str, t_gc **l_gc); 
 
 
 void handle_sigint(int sig);

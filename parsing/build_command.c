@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/25 04:53:00 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/26 03:53:22 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new) {
 void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
     t_token *tmp = token_lst;
     t_cmd *new;
+	char **tmp_args;
 
     while (tmp) 
 	{
@@ -54,34 +55,47 @@ void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 	            if (ft_strcmp(tmp->value, ">") == 0 || ft_strcmp(tmp->value, ">>") == 0) 
 				{
 					new->red_out = ft_strjoin(new->red_out, tmp->value, l_gc);
-					new->red_out = ft_strjoin(new->red_out, " ", l_gc);
+					new->red_out = ft_strjoin(new->red_out, ";", l_gc);
 					if (tmp->next && tmp->next->type == 1) 
 					{
 						new->red_out = ft_strjoin(new->red_out, tmp->next->value, l_gc);
-						new->red_out = ft_strjoin(new->red_out, " ", l_gc);
+						new->red_out = ft_strjoin(new->red_out, ";", l_gc);
 						tmp = tmp->next;
 					}
 				} 
 				else if (ft_strcmp(tmp->value, "<") == 0 || ft_strcmp(tmp->value, "<<") == 0) 
 				{
 					new->red_in = ft_strjoin(new->red_in, tmp->value, l_gc);
-					new->red_in = ft_strjoin(new->red_in, " ", l_gc);
+					new->red_in = ft_strjoin(new->red_in, ";", l_gc);
 					if (tmp->next && tmp->next->type == 1) 
 					{
 						new->red_in = ft_strjoin(new->red_in, tmp->next->value, l_gc);
-						new->red_in = ft_strjoin(new->red_in, " ", l_gc);
+						new->red_in = ft_strjoin(new->red_in, ";", l_gc);
 						tmp = tmp->next;
 					}
 				}
             }
 			else 
 			{
-                new->cmd = ft_strjoin(new->cmd, tmp->value, l_gc);
-                new->cmd = ft_strjoin(new->cmd, " ", l_gc);
+				if (tmp->is_env == 1)
+				{
+					tmp_args = ft_split(tmp->value, ' ', l_gc);
+					while (tmp_args && *tmp_args)
+					{
+						new->cmd = ft_strjoin(new->cmd, *tmp_args, l_gc);
+						new->cmd = ft_strjoin(new->cmd, ";", l_gc);
+						tmp_args++;
+					}
+				}
+				else
+				{
+	                new->cmd = ft_strjoin(new->cmd,clean_str(tmp->value,l_gc), l_gc);
+	                new->cmd = ft_strjoin(new->cmd, ";", l_gc);
+				}
             }
             tmp = tmp->next;
         }
-		new->args = ft_split(new->cmd, ' ', l_gc);
+		new->args = ft_split(new->cmd, ';', l_gc);
         ft_lstadd_back_cmd(cmd, new);
         if (tmp)
 		tmp = tmp->next;

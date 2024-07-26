@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_handling.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/22 15:45:27 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 02:47:37 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,9 +293,12 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
         if (tmp->type == 1)
         {
             if (is_dollar(tmp->value) && (!tmp->prev || ft_strcmp(tmp->prev->value, "<<") != 0))
+			{
                 tmp->value = helper(tmp->value, l_gc, env_lst);
+				tmp->is_env = 1;
+			}
             else
-                tmp->value = clean_str(tmp->value, l_gc);
+				tmp->is_env = 0;
         }
         tmp = tmp->next;
     }

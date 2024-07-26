@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 20:06:15 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 03:17:18 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,32 @@
 
 #include "minishell.h"
 
+int parsing_part(char **line, t_env **env_lst, t_gc **l_gc, t_cmd **cmd) 
+{
+	t_token *token_lst;
+	char **token;
 
+	token_lst = NULL;
+	token = NULL;
+	sp_uq_handling(*line);
+	token = ft_tokinize(*line, l_gc);
+	syntax_error(token, &token_lst, l_gc);
+	env_handling(&token_lst, *env_lst, l_gc);
+	her_doc_handling(&token_lst, l_gc);
+	init_cmd(cmd, token_lst, l_gc);
+	open_redirection(cmd, l_gc);
+	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next) 
+	// {
+	// 	printf("cmd: %s\n", tmp->cmd);
+	// 	printf("red_in: %s\n", tmp->red_in);
+	// 	printf("red_out: %s\n", tmp->red_out);
+	// 	for (int i = 0; tmp->args[i]; i++) 
+	// 	{
+	// 		printf("args[%d]: %s\n", i, tmp->args[i]);
+	// 	}
+	// }
+	return 0;
+}
 void readline_loop(char **line, t_gc **lst, char **env) 
 {
     t_token *token_lst;
@@ -76,25 +101,10 @@ void readline_loop(char **line, t_gc **lst, char **env)
         if (*line[0] != '\0')
 		{
 			add_history(*line);
+			parsing_part(line, &env_lst, &l_gc, &cmd);
 			
-			// sp_uq_handling(*line);
-			token = ft_tokinize(*line, &l_gc);
-			syntax_error(token, &token_lst, &l_gc);
-			env_handling(&token_lst, env_lst, &l_gc);
-			her_doc_handling(&token_lst, &l_gc);
-			init_cmd(&cmd, token_lst, &l_gc);
-			open_redirection(&cmd, &l_gc);
-			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next) 
-			// {
-			// 	printf("cmd: %s\n", tmp->cmd);
-			// 	printf("red_in: %s\n", tmp->red_in);
-			// 	printf("red_out: %s\n", tmp->red_out);
-			// 	for (int i = 0; tmp->args[i]; i++) 
-			// 	{
-			// 		printf("args[%d]: %s\n", i, tmp->args[i]);
-			// 	}
-			// }
-			// ft_lstlast(cmd)->next = NULL;
+			
+			// ft_lstlast(*cmd)->next = NULL;
 			t_cmd *tmp = cmd;
 			while (tmp && tmp->cmd)
 			{
