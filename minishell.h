@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 03:55:00 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:47:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,11 @@ typedef struct s_cmd
 	char *red_out;
 	int red_in_fd;
 	int red_out_fd;
+
+	int *flag_pipe;
+	int *flag_display_env;
     struct s_cmd *next;
 }               t_cmd;
-
 
 
 t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc);
@@ -122,14 +124,14 @@ char *clean_str(char *str, t_gc **l_gc);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);
-int ft_builtin_func(char **token, char ***env, t_gc **l_gc,t_gc **lst, int *bol);
+int ft_builtin_func(t_cmd *cmd, char ***env, t_gc **l_gc,t_gc **lst);
 int pwd(void);
-void exit_0(int j);
+void exit_0(int i, int argc, char **argv);
 int env(char **env, t_gc **lst, int bol);
 int ft_strlen_double(char **str);
 long ft_atoi_checker(char *str);
 int cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
-int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst);
+int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst);
 int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll);
 int	ft_strcmp(const char *s1, const char *s2);
 void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst);
@@ -138,7 +140,7 @@ char *get_value(char *str, t_gc **l_gc);
 char *get_key(char *str, t_gc **l_gc);
 int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
 void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst);
-void ft_export_(char **argv, char ***envpv, void *gc, void *lst);
+void ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst);
 void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst);
 void ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/25 04:35:15 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:31:48 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 	i = 0;
 
+	if (!s1 || !s2)
+		return (1);
 	while ((s1[i] || s2[i]))
 	{
 		if (s1[i] != s2[i])
@@ -101,7 +103,7 @@ void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
 }
 
 
-void ft_export_(char **argv, char ***envpv, void *gc, void *lst)
+void ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 {
     int q;
     char **tmp;

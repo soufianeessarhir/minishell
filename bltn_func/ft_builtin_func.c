@@ -6,67 +6,62 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 18:49:48 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:05:49 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_builtin_func(char **argv, char ***envpv, t_gc **gc, t_gc **lst, int *bol)
+static int ft_is_bultin(char *argv, char **builtins)
 {
 	int i;
-	int status;
 
 	i = 0;
-	status = 0;
-	if (argv == NULL || argv[i] == NULL)
-		return (-9999);
-
-	if (!ft_strcmp(argv[i], "echo"))
-		return (echo(ft_strlen_double(argv),argv, envpv, lst));
-	else if (!ft_strcmp(argv[i], "pwd"))
-		return (pwd());
-	else if (!ft_strcmp(argv[i], "env"))
-		return (env(*envpv, gc, *bol));
-	else if (!ft_strcmp(argv[i], "cd"))
-		return (cd(argv, envpv, gc, lst));
-	else if (!ft_strcmp(argv[i], "export"))
-		return (ft_export(argv, envpv, gc, lst, bol));
-	else if (!ft_strncmp(argv[i], "unset", ft_strlen(argv[i])))
-		return (unset(argv, envpv, gc, lst));
-	else if(!ft_strcmp(argv[i], "exit"))
+	while (builtins[i])
 	{
-		int j;
-		int k;
-		long checker;
-		int argc;
-
+		if (!ft_strcmp(argv, builtins[i]))
+			return (i);
 		i++;
-		j = 0;
-	
-		ft_putstr_fd("exit\n", 1);
-		argc = ft_strlen_double(argv + 1);
-		if (argv[i] != NULL && ft_strnstr(argv[i], "|", argc) == NULL)
-		{
-			k = 0;
-			checker = ft_atoi_checker(argv[i]);
-			if (argc >= 2 && checker != -1 && checker != -2)
-			{
-				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-				exit_0(1);
-			}
-			else if (checker == -1 || checker == -2)
-			{
-				ft_putstr_fd("minishell: exit: ", 2);
-				ft_putstr_fd(argv[i], 2);
-				ft_putstr_fd(": numeric argument required\n", 2);
-				exit_0(255);
-			}
-			else
-				exit_0(checker);
-		}
-		exit_0(0);
 	}
-	//FOR EXUCUTE COMMAND
-	return (ft_execute(argv, envpv, gc, lst));
+	return (-1);
+}
+
+static int execute_bltncmd(int is_bultin, t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
+{
+	char **argv;
+
+	argv = cmd->args;
+	if (is_bultin == 0)
+		return (pwd());
+	else if (is_bultin == 1)
+		return (env(*envpv, gc, *cmd->flag_display_env));
+	else if (is_bultin == 2)
+		return (cd(argv, envpv, gc, lst));
+	else if (is_bultin ==  3)
+		return (ft_export(argv, envpv, gc, lst, cmd->flag_display_env));
+	else if (is_bultin == 4)
+		return (unset(argv, envpv, gc, lst));
+	else if(is_bultin ==  5)
+		exit_0(1, ft_strlen_double(argv + 1), argv);
+	else if (is_bultin == 6)
+		return (echo(ft_strlen_double(argv),argv, envpv, lst));
+	return (ft_execute(cmd, envpv, gc, lst));
+}
+int ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
+{
+	int i;
+	char **argv;
+	int is_bultin;
+	const char *builtins[8] = {"pwd", "env", "cd", "export", "unset", "exit", "echo", NULL};
+
+	i = 0;
+	argv = cmd->args;
+	if (argv == NULL || argv[i] == NULL)
+		return (ft_export_anything("_=", gc, lst, envpv), 0);
+	is_bultin = ft_is_bultin(argv[i], (char **)builtins);
+	if (*cmd->flag_pipe)
+		ft_export_anything("_=", gc, lst, envpv);
+	if (!*cmd->flag_pipe && ft_strlen_double(argv) && is_bultin != -1)
+		ft_export_(argv, envpv, gc, lst);
+	return (execute_bltncmd(is_bultin, cmd, envpv, gc, lst));
 }

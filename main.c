@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 03:17:18 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:04:12 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void readline_loop(char **line, t_gc **lst, char **env)
     t_gc *l_gc;
     t_cmd *cmd;
 	char **shelvl;
-	int bol = 0;
 	char **exitstatus;
 	char **tmp_env;
 	int stexit;
 	int flag_pipe;
+	int bol;
     
     l_gc = NULL;
 	stexit = -9999;
@@ -64,6 +64,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	tmp_env = NULL;
 
 	shelvl = NULL;
+	bol = 0;
 	if (*env == NULL)
 	{
 		*env = ft_malloc(sizeof(char *) * 2, lst);
@@ -99,24 +100,19 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		}
     	intit_env_list(&env_lst, env, lst);
         if (*line[0] != '\0')
-		{
+		{	
 			add_history(*line);
 			parsing_part(line, &env_lst, &l_gc, &cmd);
-			
-			
-			// ft_lstlast(*cmd)->next = NULL;
+
 			t_cmd *tmp = cmd;
-			while (tmp && tmp->cmd)
+			while (tmp)
 			{
+				tmp->flag_pipe = &flag_pipe;
+				tmp->flag_display_env = &bol;
 				if (tmp->next)
 					flag_pipe = 1;
-				if (!flag_pipe)
-					ft_export_(tmp->args, &env, &l_gc, lst);
-				else
-					ft_export_anything("_=", &l_gc, lst, &env);
-				stexit = ft_builtin_func(tmp->args, &env, &l_gc,lst, &bol);
-				if (stexit != -9999)
-					export_status(stexit, &env, &l_gc, lst);
+				stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+				export_status(stexit, &env, &l_gc, lst);
 				tmp = tmp->next;
 			}
 

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 21:10:11 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:48:50 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static char *get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 	return (argv[0]);
 }
 
-int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
+int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 {
+	char **argv;
 	char *path_cmd;
 	pid_t childpid;
 	t_env *env_lst;
@@ -44,6 +45,7 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 
 	env_lst = NULL;
 	status = 0;
+	argv = cmd->args;
 	intit_env_list(&env_lst, *envp, l_gc);
 	if (strchr(argv[0], '/') == NULL)
 		path_cmd = get_path(argv, env_lst, l_gc);
@@ -57,12 +59,16 @@ int ft_execute(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	}
 	if (childpid > 0)
 	{
+		if (*cmd->flag_pipe != 1)
+			ft_export_anything(ft_strjoin("_=", path_cmd, l_gc), l_gc, lst, envp);
 		g_a.stpsignal_inparent = 1;
 		wait(&status);
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		else
 			status = 128 + WTERMSIG(status);
+		if (status == 130)
+			printf("\n");
 		g_a.stpsignal_inparent = 0;
 		g_a.exitstatus_singnal = 0;
 	}

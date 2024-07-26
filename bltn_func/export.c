@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/24 20:19:41 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:48:03 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,12 @@ void print_exported_variables(char **envp, t_gc **gc, int bol)
 			continue;
 		}
         ft_putstr_fd("declare -x ", 1);
-		printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
+		if (strchr(envp[i], '=') == NULL)
+			printf("%s\n", envp[i]);
+		else if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
+			printf("%s\"\"\n", envp[i]);
+		else	
+			printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
         i++;
     }
 }
