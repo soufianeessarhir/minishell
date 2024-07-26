@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/26 15:48:50 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:40:10 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 	pid_t childpid;
 	t_env *env_lst;
 	int status;
+	struct stat statbuf;
 
 	env_lst = NULL;
 	status = 0;
@@ -83,7 +84,13 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		if (execve(path_cmd, argv, *envp) == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
-			if (strchr(argv[0], '/'))
+			stat(path_cmd, &statbuf);
+			if (S_ISDIR(statbuf.st_mode))
+			{
+				ft_putstr_fd(argv[0], 2);
+				ft_putstr_fd(": is a directory\n", 2);
+			}
+			else if (strchr(argv[0], '/'))
 				perror(argv[0]);
 			else
 			{

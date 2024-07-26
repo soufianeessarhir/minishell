@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 15:47:28 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:59:00 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sanitizer/lsan_interface.h>
+#include <sys/stat.h>
 
 #include "./gc/gc.h"
 
