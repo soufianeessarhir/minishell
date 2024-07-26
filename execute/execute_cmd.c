@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/26 17:40:10 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:36:45 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 			status = 128 + WTERMSIG(status);
 		if (status == 130)
 			printf("\n");
+		if (status == 131)
+			printf("Quit: 3\n");
 		g_a.stpsignal_inparent = 0;
 		g_a.exitstatus_singnal = 0;
 	}

@@ -1,4 +1,2 @@
 
 2--handle ft_strcmp it cause segv in some cases 
---echo $USER$=$USER
---- echo  "$a  $USER   "

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 16:04:12 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:34:02 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int	main(int ac, char **av, char **env)
         return (printf("Usage: %s\n", av[0]),1);
 	rl_catch_signals = 0;
     signal(SIGINT, handle_sigint);
+    signal(SIGQUIT, handle_sigint);
     readline_loop(&line, &lst, env);
     ft_free(&lst);
     return 0;
