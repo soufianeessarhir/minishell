@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 19:34:02 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/27 05:02:26 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ int parsing_part(char **line, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 
 	token_lst = NULL;
 	token = NULL;
-	sp_uq_handling(*line);
+	if (sp_uq_handling(*line))
+	  return 1;
 	token = ft_tokinize(*line, l_gc);
-	syntax_error(token, &token_lst, l_gc);
+	if (syntax_error(token, &token_lst, l_gc))
+		return 1;
 	env_handling(&token_lst, *env_lst, l_gc);
 	her_doc_handling(&token_lst, l_gc);
 	init_cmd(cmd, token_lst, l_gc);
-	open_redirection(cmd, l_gc);
+	if (open_redirection(cmd, l_gc))
+		return 1;
 	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next) 
 	// {
 	// 	printf("cmd: %s\n", tmp->cmd);
@@ -103,6 +106,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		{	
 			add_history(*line);
 			parsing_part(line, &env_lst, &l_gc, &cmd);
+				
 
 			t_cmd *tmp = cmd;
 			while (tmp)

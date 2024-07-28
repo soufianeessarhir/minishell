@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 02:47:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/28 05:53:58 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
                 i++;
             result = ft_strjoin(result, ft_substr(str, j, i - j, l_gc), l_gc);
         }
+		count_dollars = 0;
     }
     return result;
 }
@@ -281,7 +282,7 @@ char *helper(char *s, t_gc **l_gc, t_env *env_lst)
         new_value = ft_strjoin(new_value, tmp->value, l_gc);
         tmp = tmp->next;
     }
-    return clean_str(new_value, l_gc);
+    return new_value;
 }
 
 void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc) 

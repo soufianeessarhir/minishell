@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 22:38:11 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 03:22:48 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:18:01 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,15 @@ static char	**ft_strfill(const char *s, char c, int size, t_gc **gc)
     int		j;
     char	**ptr;
 
-    i = -1;
+    i = 0;
     j = -1;
     ptr = ft_malloc(sizeof(char *) * (size + 1), gc);
     if (!ptr)
         return (NULL);
     while (++j < ft_countwords(s, c))
     {
-        while (s[++i] == c)
-            ;
+        while (s[i] == c)
+            i++;
         ptr[j] = ft_substr(s, i, ft_countchars(s, c, i), gc);
         if (ptr[j] == NULL)
             return (my_free(ptr),NULL);
