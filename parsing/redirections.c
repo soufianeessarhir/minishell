@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/30 23:45:44 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:56:37 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int handle_red_in(t_cmd *tmp, char **args, t_gc **l_gc)
         {
             if (args[i] && (ft_strcmp(args[i], "<<") == 0 || ft_strcmp(args[i], "<") == 0))
             {
-                else if (args[i + 1] && access(args[i + 1], R_OK) == -1)
+               if (args[i + 1] && access(args[i + 1], R_OK) == -1)
                     return(printf("minishell: %s: Permission denied\n", args[i + 1]),1);
                 tmp->red_in_fd = open(args[i + 1], O_RDONLY);
                 if (tmp->red_in_fd == -1)
