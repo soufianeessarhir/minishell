@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/28 07:05:15 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:43:42 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new) {
     tmp->next = new;
 }
 
-void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
+int init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
     t_token *tmp = token_lst;
     t_cmd *new;
 	char **tmp_args;
@@ -61,7 +61,7 @@ void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 	{
         new = new_cmd(l_gc);
         if (!new) 
-            return;
+            return 1;
         while (tmp && tmp->type != 3)
 		{
             if (tmp->type == 2) 
@@ -72,6 +72,10 @@ void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 					new->red_out = ft_strjoin(new->red_out, " ", l_gc);
 					if (tmp->next && tmp->next->type == 1) 
 					{
+						if ((clean_str(tmp->next->value , l_gc) == NULL))
+							return (printf("ambiguous redirect\n"),1);
+						else if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
+							return (printf("minishell: %s: No such file or directory\n", clean_str(tmp->next->value,l_gc)),1);
 						new->red_out = ft_strjoin(new->red_out, clean_str(tmp->next->value , l_gc), l_gc);
 						new->red_out = ft_strjoin(new->red_out, " ", l_gc);
 						tmp = tmp->next;
@@ -83,6 +87,10 @@ void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 					new->red_in = ft_strjoin(new->red_in, " ", l_gc);
 					if (tmp->next && tmp->next->type == 1) 
 					{
+						if ((clean_str(tmp->next->value , l_gc) == NULL))
+							return (printf("ambiguous redirect\n"),1);
+						else if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
+							return (printf("minishell: %s: No such file or directory\n", clean_str(tmp->next->value,l_gc)),1);
 						new->red_in = ft_strjoin(new->red_in, clean_str(tmp->next->value,l_gc), l_gc);
 						new->red_in = ft_strjoin(new->red_in, " ", l_gc);
 						tmp = tmp->next;
@@ -115,4 +123,5 @@ void init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
         if (tmp)
 		tmp = tmp->next;
     }
+	return 0;
 }

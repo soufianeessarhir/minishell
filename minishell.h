@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/27 00:52:51 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:37:05 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char    **ft_tokinize(char *line,t_gc **l_gc);
 void  init_graph(int graph[4][3]);
 int syntax_error(char **args,t_token **token,t_gc **l_gc);
 int sp_uq_handling (char *line);
-void  init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
+int  init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
 void her_doc_handling(t_token **token_lst, t_gc **l_gc);
 t_env	*new_env(char *key, char *value, t_gc **lst);
 void env_add_back(t_env **env_lst, t_env *new);

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/24 06:24:08 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:30:17 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
         {
 			if (!tmp->next || !(tmp->next->type == 1))
 			   break;
-    		fd = open(ft_strjoin("/tmp/",tmp->next->value,l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
+			 if (ft_strcmp(clean_str(tmp->next->value,l_gc), "") ==  0)
+			    fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
+			else
+    			fd = open(ft_strjoin("/tmp/",clean_str(tmp->next->value,l_gc),l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (fd == -1)
 		      return;
             while (1)
             {
                 line = readline(">");
-                if (!line || ft_strcmp(line, tmp->next->value) == 0)
+                if (!line || ft_strcmp(line,clean_str(tmp->next->value,l_gc)) == 0)
                     break;
                 write(fd, line, ft_strlen(line));
                 write(fd, "\n", 1);
