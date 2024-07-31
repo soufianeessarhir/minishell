@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:53:28 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/27 00:44:34 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 03:19:15 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char *handle_quotes(char *line, int *i, char **sep_token, t_gc **l_gc)
         (*i)++;
     (*i)++;
     *sep_token = ft_strjoin(*sep_token, ft_substr(line, j, *i - j, l_gc), l_gc);
-
     return *sep_token;
 }
 
@@ -67,7 +66,7 @@ char **ft_tokinize(char *line, t_gc **l_gc)
     while (line[i])
     {
         j = i;
-        while (line[i] && line[i] != '|' && line[i] != '<' && line[i] != '>')
+        while (line[i] && line[i] != '|' && line[i] != '<' && line[i] != '>' && line[i] != '\'' && line[i] != '\"')
             i++;
         sep_token = ft_strjoin(sep_token, ft_substr(line, j, i - j, l_gc), l_gc);
 

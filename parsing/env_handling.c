@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/31 01:00:09 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 03:28:26 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
 				count_dollars++;
 				i++;
 			}
-            if (str[i + 1] == '?')
+            if (str[i + 1] == '?' && str[0] != '\'')
             {
                 result = ft_strjoin(result, my_getenv( "exitstatus", env_lst), l_gc);
                 i += 2;

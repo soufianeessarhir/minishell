@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/31 01:16:38 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 05:18:05 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,6 @@ int parsing_part(char **line, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 		return 1;
 	if (open_redirection(cmd, l_gc))
 		return 1;
-	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next) 
-	// {
-	// 	printf("cmd: %s\n", tmp->cmd);
-	// 	printf("red_in: %s\n", tmp->red_in);
-	// 	printf("red_out: %s\n", tmp->red_out);
-	// 	for (int i = 0; tmp->args[i]; i++) 
-	// 	{
-	// 		printf("args[%d]: %s\n", i, tmp->args[i]);
-	// 	}
-	// }
 	return 0;
 }
 void readline_loop(char **line, t_gc **lst, char **env) 
@@ -107,7 +97,18 @@ void readline_loop(char **line, t_gc **lst, char **env)
         if (*line[0] != '\0')
 		{	
 			add_history(*line);
-			parsing_part(line, &env_lst, &l_gc, &cmd);
+			if (parsing_part(line, &env_lst, &l_gc, &cmd))
+			{
+				free(*line);
+				*line = NULL;
+				ft_free(&l_gc);
+				cmd = NULL;
+				token_lst = NULL;
+				env_lst = NULL;
+				token = NULL;
+				continue;
+			}
+	
 				
 
 			t_cmd *tmp = cmd;

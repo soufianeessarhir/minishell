@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/30 23:56:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 04:57:47 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int handle_red_in(t_cmd *tmp, char **args, t_gc **l_gc)
         {
             if (args[i] && (ft_strcmp(args[i], "<<") == 0 || ft_strcmp(args[i], "<") == 0))
             {
-               if (args[i + 1] && access(args[i + 1], R_OK) == -1)
+			   if (args[i + 1] && access(args[i + 1], F_OK) == -1)
+					return(printf("minishell: %s: No such file or directory\n", args[i + 1]),1);
+               if (args[i + 1] && access(args[i + 1], F_OK) == 0 && access(args[i + 1], R_OK) == -1)
                     return(printf("minishell: %s: Permission denied\n", args[i + 1]),1);
                 tmp->red_in_fd = open(args[i + 1], O_RDONLY);
                 if (tmp->red_in_fd == -1)
@@ -57,6 +59,7 @@ int handle_overwrite_redirection(t_cmd *tmp, char **args, int i)
 int handle_red_out(t_cmd *tmp, char **args, t_gc **l_gc)
 {
     int i = 0;
+			
     args = ft_split(tmp->red_out, ' ', l_gc);
     if (args[0] != NULL)
     {
@@ -70,7 +73,8 @@ int handle_red_out(t_cmd *tmp, char **args, t_gc **l_gc)
             }
             else if (args[i] && ft_strcmp(args[i], ">") == 0)
             {
-                handle_overwrite_redirection(tmp, args, i);
+				if (handle_overwrite_redirection(tmp, args, i))
+			   		return 1;
                 i+=2;
             }
 			else
@@ -90,12 +94,15 @@ int  open_redirection(t_cmd **cmd , t_gc **l_gc)
     while (tmp)
     {
         if (tmp->red_in && tmp->red_in[0] != '\0')
+		{
 			if (handle_red_in(tmp, args, l_gc))
 	            return 1;
+		}
         if (tmp->red_out && tmp->red_out[0] != '\0')
 			if (handle_red_out(tmp, args, l_gc))
 				return 1;   
         tmp = tmp->next;
+		
     }
 	return 0;
 }
