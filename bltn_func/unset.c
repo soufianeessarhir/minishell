@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/31 00:40:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 07:12:37 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *get_key_unset(char *str, t_gc **gc)
 		return (NULL);
 	while (str[i])
 	{
-		if ((!ft_isalnum(str[i]) && str[i] != '_'))
+		if (!ft_isalpha(str[i]) && str[i] != '_')
 			return (NULL);
 		i++;
 	}
@@ -55,7 +55,7 @@ int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 		}
 		j = 0;
 		k = 0;
-		new_env = ft_malloc(sizeof(char *) * (ft_strlen_double(*env_lst)), lst);
+		new_env = ft_malloc(sizeof(char *) * (ft_strlen_double(*env_lst) + 1), lst);
 		while ((*env_lst)[j] != NULL)
 		{
 			if (ft_strcmp(get_key((*env_lst)[j], gc), key) != 0)

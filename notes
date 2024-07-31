@@ -6,15 +6,6 @@
 
 execpart --------------------------------------------------------------
 
-unset Hello    ---  heap buffer overflow int this case 
-export 123    --- expected   not a valid identifier but nothing happens
-
-
-
-
-
-
-
 
 
 

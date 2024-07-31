@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/26 12:48:03 by relamine         ###   ########.fr       */
+/*   Updated: 2024/07/31 07:00:51 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void print_exported_variables(char **envp, t_gc **gc, int bol)
     }
 }
 
+
 int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 {
 	int g;
@@ -117,7 +118,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 		*boll = 0;
 	while (argv[i])
 	{	
-		if (get_key(argv[i], gc) == NULL)
+		if (get_key(argv[i], gc) == NULL || ft_isonlydigit(get_key(argv[i], gc)))
 		{
 			ft_putstr_fd("minishell: export: `", 2);
 			ft_putstr_fd(argv[i], 2);

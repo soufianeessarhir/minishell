@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/28 06:41:55 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 07:00:58 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,4 +149,20 @@ void ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
 	tmp[1] = ft_strdup(argv, l_gc);
 	tmp[2] = NULL;
 	ft_export(tmp, env, l_gc, lst, 0);
+}
+
+int ft_isonlydigit(char *str)
+{
+	int i;
+	int flag;
+
+	i = 0;
+	flag = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]) || str[i] == '_')
+			return (0);
+		i++;
+	}
+	return (1);
 }
