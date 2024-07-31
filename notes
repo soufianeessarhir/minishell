@@ -1,2 +1,37 @@
 
-2--handle ft_strcmp it cause segv in some cases 
+                -----------------
+                |   error report |
+                -----------------
+
+
+execpart --------------------------------------------------------------
+
+unset Hello    ---  heap buffer overflow int this case 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+parsepart --------------------------------------------------------------
+
+
+
+
+
+
+

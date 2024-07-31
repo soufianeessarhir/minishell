@@ -1,5 +1,0 @@
-ls >> ""   ------------- bash: : No such file or directory
-
-spaced env
-if env doesn't quoted 
-					-splited if it is not in a string

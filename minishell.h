@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/30 23:37:05 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 00:14:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char *my_getenv(char *key, t_env *env_lst);
 int check_ex(char *str,int end);
 char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
-void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
+int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 int open_redirection(t_cmd **cmd , t_gc **l_gc);
 char *clean_str(char *str, t_gc **l_gc); 
 

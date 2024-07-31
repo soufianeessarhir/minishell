@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/30 23:42:29 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 01:16:38 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int parsing_part(char **line, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 	token = ft_tokinize(*line, l_gc);
 	if (syntax_error(token, &token_lst, l_gc))
 		return 1;
-	env_handling(&token_lst, *env_lst, l_gc);
 	her_doc_handling(&token_lst, l_gc);
+	if (env_handling(&token_lst, *env_lst, l_gc))
+		return 1;
 	if (init_cmd(cmd, token_lst, l_gc))
 		return 1;
 	if (open_redirection(cmd, l_gc))

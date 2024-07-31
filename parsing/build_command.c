@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/30 23:43:42 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 00:09:48 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ int init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 					new->red_out = ft_strjoin(new->red_out, " ", l_gc);
 					if (tmp->next && tmp->next->type == 1) 
 					{
-						if ((clean_str(tmp->next->value , l_gc) == NULL))
-							return (printf("ambiguous redirect\n"),1);
-						else if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
+						if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
 							return (printf("minishell: %s: No such file or directory\n", clean_str(tmp->next->value,l_gc)),1);
 						new->red_out = ft_strjoin(new->red_out, clean_str(tmp->next->value , l_gc), l_gc);
 						new->red_out = ft_strjoin(new->red_out, " ", l_gc);
@@ -87,9 +85,7 @@ int init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 					new->red_in = ft_strjoin(new->red_in, " ", l_gc);
 					if (tmp->next && tmp->next->type == 1) 
 					{
-						if ((clean_str(tmp->next->value , l_gc) == NULL))
-							return (printf("ambiguous redirect\n"),1);
-						else if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
+						if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
 							return (printf("minishell: %s: No such file or directory\n", clean_str(tmp->next->value,l_gc)),1);
 						new->red_in = ft_strjoin(new->red_in, clean_str(tmp->next->value,l_gc), l_gc);
 						new->red_in = ft_strjoin(new->red_in, " ", l_gc);

@@ -6,12 +6,22 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/28 05:53:58 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/07/31 01:00:09 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+int sp_in_it(char *str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			return 1;
+		i++;
+	}
+	return 0;
+}
 int all_dollar(char *str)
 {
     int i = 0;
@@ -208,10 +218,7 @@ char *remove_dollars(char *str, t_gc **l_gc, int flag)
 char *helper(char *s, t_gc **l_gc, t_env *env_lst)
 {
     t_env_vars *new = NULL, *tmp = NULL;
-    char *new_value = ft_strdup("", l_gc);
-    if (!new_value)
-        return NULL;
-
+    char *new_value = NULL;
     int i = 0, j;
     char *substr;
 
@@ -285,17 +292,20 @@ char *helper(char *s, t_gc **l_gc, t_env *env_lst)
     return new_value;
 }
 
-void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc) 
+int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc) 
 {
     t_token *tmp = *token_lst;
-
+	char *tmp_va;
     while (tmp) 
     {
         if (tmp->type == 1)
         {
             if (is_dollar(tmp->value) && (!tmp->prev || ft_strcmp(tmp->prev->value, "<<") != 0))
 			{
+				tmp_va = tmp->value;
                 tmp->value = helper(tmp->value, l_gc, env_lst);
+				if ((tmp->value == NULL || sp_in_it(tmp->value)) && tmp->prev && tmp->prev->type == 2)
+					return (printf("minishell: %s: ambiguous redirect\n", tmp_va),1);
 				tmp->is_env = 1;
 			}
             else
@@ -303,4 +313,5 @@ void env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
         }
         tmp = tmp->next;
     }
+	return 0;
 }
