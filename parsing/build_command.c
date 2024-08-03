@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/31 00:09:48 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 05:08:31 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_cmd *new_cmd(t_gc **l_gc) 
 {
@@ -73,7 +73,7 @@ int init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 					if (tmp->next && tmp->next->type == 1) 
 					{
 						if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
-							return (printf("minishell: %s: No such file or directory\n", clean_str(tmp->next->value,l_gc)),1);
+							return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", clean_str(tmp->next->value,l_gc), l_gc), "No such file or directory\n", l_gc),2),1);
 						new->red_out = ft_strjoin(new->red_out, clean_str(tmp->next->value , l_gc), l_gc);
 						new->red_out = ft_strjoin(new->red_out, " ", l_gc);
 						tmp = tmp->next;
@@ -86,7 +86,7 @@ int init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc) {
 					if (tmp->next && tmp->next->type == 1) 
 					{
 						if (ft_strcmp(clean_str(tmp->next->value , l_gc), "") == 0)
-							return (printf("minishell: %s: No such file or directory\n", clean_str(tmp->next->value,l_gc)),1);
+							return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", clean_str(tmp->next->value,l_gc), l_gc), "No such file or directory\n", l_gc),2),1);
 						new->red_in = ft_strjoin(new->red_in, clean_str(tmp->next->value,l_gc), l_gc);
 						new->red_in = ft_strjoin(new->red_in, " ", l_gc);
 						tmp = tmp->next;

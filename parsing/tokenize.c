@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:53:28 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/31 03:19:15 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:23:02 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char *handle_quotes(char *line, int *i, char **sep_token, t_gc **l_gc)
 {

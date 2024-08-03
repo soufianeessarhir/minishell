@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 20:50:02 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/28 00:09:32 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:22:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int  is_exist(char *str,char c,int *i)
 {

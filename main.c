@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/31 05:18:05 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 06:42:32 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,28 @@
 
 #include "minishell.h"
 
-int parsing_part(char **line, t_env **env_lst, t_gc **l_gc, t_cmd **cmd) 
+int parsing_part(t_help help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd) 
 {
 	t_token *token_lst;
 	char **token;
 
 	token_lst = NULL;
 	token = NULL;
-	if (sp_uq_handling(*line))
+	if (sp_uq_handling(help.line))
 	  return 1;
-	token = ft_tokinize(*line, l_gc);
+	token = ft_tokinize(help.line, l_gc);
 	if (syntax_error(token, &token_lst, l_gc))
-		return 1;
+		return(export_status(258,help.env,l_gc,help.lst),1);
 	her_doc_handling(&token_lst, l_gc);
 	if (env_handling(&token_lst, *env_lst, l_gc))
-		return 1;
+		return (export_status(1,help.env,l_gc,help.lst),1);
 	if (init_cmd(cmd, token_lst, l_gc))
-		return 1;
-	if (open_redirection(cmd, l_gc))
-		return 1;
+		return (export_status(1,help.env,l_gc,help.lst),1);
+	open_redirection(cmd, l_gc);
 	return 0;
 }
 void readline_loop(char **line, t_gc **lst, char **env) 
 {
-    t_token *token_lst;
-    char **token;
     t_env *env_lst;
     t_gc *l_gc;
     t_cmd *cmd;
@@ -48,13 +45,12 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	int stexit;
 	int flag_pipe;
 	int bol;
+	t_help help;
     
     l_gc = NULL;
 	stexit = -9999;
-    token_lst = NULL;
     env_lst = NULL;
     cmd = NULL;
-    token = NULL;
 	exitstatus = NULL;
 	tmp_env = NULL;
 
@@ -97,15 +93,17 @@ void readline_loop(char **line, t_gc **lst, char **env)
         if (*line[0] != '\0')
 		{	
 			add_history(*line);
-			if (parsing_part(line, &env_lst, &l_gc, &cmd))
+			help.line = *line;
+			help.env = &env;
+			help.lst = lst;
+			if (parsing_part(help, &env_lst, &l_gc, &cmd))
 			{
+				export_status(1, &env, &l_gc, lst);
 				free(*line);
 				*line = NULL;
 				ft_free(&l_gc);
 				cmd = NULL;
-				token_lst = NULL;
 				env_lst = NULL;
-				token = NULL;
 				continue;
 			}
 	
@@ -127,9 +125,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			*line = NULL;
 			ft_free(&l_gc);
 			cmd = NULL;
-			token_lst = NULL;
 			env_lst = NULL;
-			token = NULL;
 		}
     }
 }

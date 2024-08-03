@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 04:01:54 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:22:33 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_env	*new_env(char *key, char *value, t_gc **lst)
 {
@@ -73,42 +73,4 @@ char *my_getenv(char *key, t_env *env_lst)
         env_lst = env_lst->next;
     }
     return NULL;
-}
-int check_ex(char *str, int end) 
-{
-    int i;
-    int flag;
-    char quote;
-    
-    if (str == NULL)
-        return 0;
-
-    i = 0;
-    flag = 0;
-    while (str[i] && i < end)
-    {
-        if (str[i] == '\"')
-        {
-            quote = str[i++];
-            while (str[i] && str[i] != quote && i < end)
-                i++;
-            if (i < end)
-                i++;
-        }
-        else if (str[i] == '\'')
-        {
-            quote = str[i++];
-            while (str[i] && str[i] != quote && i < end)
-                i++;
-            if (str[i] != quote)
-                flag = 1;
-            if (i < end)
-                i++;
-        }
-        else
-        {
-            i++;
-        }
-    }
-    return flag;
 }

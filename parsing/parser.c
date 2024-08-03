@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/27 00:27:57 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 05:06:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	token_type(char *str)
 {
@@ -67,7 +67,7 @@ int	syntax_error(char **args, t_token **token, t_gc **l_gc)
 		state = graph[state][tmp->type - 1];
 		if (state == -1)
 		{
-			printf("syntax error near unexpected token `%s'\n", tmp->value);
+			ft_putstr_fd(ft_strjoin(ft_strjoin("syntax error near unexpected token `", tmp->value, l_gc),"\n",l_gc), 2);
 			break ;
 		}
 		tmp = tmp->next;
@@ -77,5 +77,5 @@ int	syntax_error(char **args, t_token **token, t_gc **l_gc)
 	else if (state != 1 && tmp != NULL)
 		return (tmp = NULL, her_doc_handling(token, l_gc), 1);
 	return (her_doc_handling(token, l_gc),
-		printf("syntax error near unexpected token `newline'\n"), 1);
+		ft_putstr_fd("syntax error near unexpected token `newline'\n",2), 1);
 }

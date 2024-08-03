@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/31 07:01:06 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:41:55 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ t_signalhandler g_a;
 #define BGCYAN "\033[46m"
 #define BGWHITE "\033[47m"
 
+typedef struct s_help
+{
+	char *line;
+	char ***env;
+	t_gc **lst;
+}t_help;
 typedef struct s_token
 {
     char *value;
@@ -119,7 +125,7 @@ char *my_getenv(char *key, t_env *env_lst);
 int check_ex(char *str,int end);
 char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
 int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
-int open_redirection(t_cmd **cmd , t_gc **l_gc);
+void open_redirection(t_cmd **cmd , t_gc **l_gc);
 char *clean_str(char *str, t_gc **l_gc); 
 
 

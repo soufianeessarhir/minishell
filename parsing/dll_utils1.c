@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:46:58 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/03 05:47:45 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:22:22 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token *ft_dll_lstlast(t_token *lst)
 {

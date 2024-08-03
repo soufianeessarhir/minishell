@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dll_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:38:06 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/18 03:23:43 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:22:17 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc)
 {

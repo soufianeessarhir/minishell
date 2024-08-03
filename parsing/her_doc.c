@@ -6,11 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/30 23:30:17 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 03:22:38 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void her_doc_handling(t_token **token_lst, t_gc **l_gc)
 {
