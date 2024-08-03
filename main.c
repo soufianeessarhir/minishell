@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 06:42:32 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/04 00:55:55 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			export_status(0, &env, &l_gc, lst);
 		g++;
 	}
-    // printf("--argv[i]: %d\n", *line);
     while (1) {
 		flag_pipe = 0;
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
@@ -106,9 +105,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
-	
-				
-
 			t_cmd *tmp = cmd;
 			while (tmp)
 			{

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 03:22:38 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/03 06:57:04 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
         return;
     i = 0;
     tmp = *token_lst;
+	line = NULL;
     if (!tmp->next)
         return;
     while (tmp)
@@ -37,14 +38,15 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
     			fd = open(ft_strjoin("/tmp/",clean_str(tmp->next->value,l_gc),l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (fd == -1)
 		      return;
+			line = readline(">");
             while (1)
             {
-                line = readline(">");
                 if (!line || ft_strcmp(line,clean_str(tmp->next->value,l_gc)) == 0)
                     break;
                 write(fd, line, ft_strlen(line));
                 write(fd, "\n", 1);
 				free(line);
+                line = readline(">");
             }
 			tmp->next->value = ft_strjoin("/tmp/",tmp->next->value,l_gc);
             close(fd);

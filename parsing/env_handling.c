@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 05:45:34 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/04 00:46:10 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char *expand_double_dollar(char *str, t_gc **l_gc)
 	{
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
-			tmp = ft_itoa(getpid(), l_gc);
+			tmp = ft_strdup("pid", l_gc);
 			result = ft_strjoin(result, tmp, l_gc);
 			i += 2;
 		}
