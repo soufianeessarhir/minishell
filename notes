@@ -7,10 +7,12 @@
 execpart --------------------------------------------------------------
 
 export ="ls -l"                                     	 
-'''''''''''''''' echo ok 
-""
+'''''''''''''''' echo ok    when PATH env unseted you shoud retrn "No such file or directory" not "command not found"
+""""
 exit ""
 exit 1 2 3 
+cd - cd --
+cd: ~/Desktop/
 
 
 
