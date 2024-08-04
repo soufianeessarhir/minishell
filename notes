@@ -13,7 +13,15 @@ exit ""
 exit 1 2 3 
 cd - cd --
 cd: ~/Desktop/
-
+cd /etc  		            should go to etc not private etc
+cd var                      ...
+export 1TEST=				env name should start with letter
+export TES!T=123			bash: !T=123: event not found
+export TES\~T=123          bash: export: `TES~T=123': not a valid identifier
+unset ""               	 bash: unset: `': not a valid identifier
+unset $""                bash: unset: `': not a valid identifier
+unset TES$?T             it is valid
+unset TES\~T             bash: unset: `TES~T': not a valid identifier
 
 
 

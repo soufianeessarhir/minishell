@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/04 00:55:55 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/04 08:48:36 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 #include "minishell.h"
 
-int parsing_part(t_help help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd) 
+int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd) 
 {
 	t_token *token_lst;
 	char **token;
 
 	token_lst = NULL;
 	token = NULL;
-	if (sp_uq_handling(help.line))
+	if (sp_uq_handling(help->line))
 	  return 1;
-	token = ft_tokinize(help.line, l_gc);
+	token = ft_tokinize(help->line, l_gc);
 	if (syntax_error(token, &token_lst, l_gc))
-		return(export_status(258,help.env,l_gc,help.lst),1);
+		return(export_status(2,help->env,l_gc,help->lst),1);
 	her_doc_handling(&token_lst, l_gc);
 	if (env_handling(&token_lst, *env_lst, l_gc))
-		return (export_status(1,help.env,l_gc,help.lst),1);
+		return (export_status(1,help->env,l_gc,help->lst),1);
 	if (init_cmd(cmd, token_lst, l_gc))
-		return (export_status(1,help.env,l_gc,help.lst),1);
-	open_redirection(cmd, l_gc);
+		return (export_status(1,help->env,l_gc,help->lst),1);
+	open_redirection(cmd, l_gc,help);
 	return 0;
 }
 void readline_loop(char **line, t_gc **lst, char **env) 
@@ -95,9 +95,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			help.line = *line;
 			help.env = &env;
 			help.lst = lst;
-			if (parsing_part(help, &env_lst, &l_gc, &cmd))
+			if (parsing_part(&help, &env_lst, &l_gc, &cmd))
 			{
-				export_status(1, &env, &l_gc, lst);
 				free(*line);
 				*line = NULL;
 				ft_free(&l_gc);

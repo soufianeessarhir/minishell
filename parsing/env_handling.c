@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/04 00:46:10 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/04 05:38:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,9 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
 	str = expand_double_dollar(str, l_gc); 
     while (str[i]) 
     {
-        if (str[i] == '$')
+        if (str[i] == '$' && str[i + 1] != '/')
         {
-            if (str[i + 1] == '?' && str[0] != '\'')
+			if (str[i + 1] == '?' && str[0] != '\'')
             {
                 result = ft_strjoin(result, my_getenv( "exitstatus", env_lst), l_gc);
                 i += 2;
@@ -150,6 +150,8 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc)
         else
         {
             j = i;
+			if (str[i] == '$')
+			   i++;
             while (str[i] != '$' && str[i])
                 i++;
             result = ft_strjoin(result, ft_substr(str, j, i - j, l_gc), l_gc);
@@ -215,6 +217,7 @@ char *helper(char *s, t_gc **l_gc, t_env *env_lst)
     tmp = new;
     while (tmp)
     {
+
 		if (!is_all_dollar(tmp->value) && !tmp->next)
 		     tmp->value = expand_double_dollar(tmp->value, l_gc);
         else if (is_dollar(tmp->value))

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 05:09:34 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/04 04:20:17 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int is_path(char *str)
 	}
 	return 0;
 }
-int not_directory(char *path)
+static int is_directory(char *path)
 {
 	struct stat path_stat;
 	stat(path, &path_stat);
@@ -41,6 +41,8 @@ int handle_red_in(t_cmd *tmp, char **args, t_gc **l_gc)
         {
             if (args[i] && (ft_strcmp(args[i], "<<") == 0 || ft_strcmp(args[i], "<") == 0))
             {
+				if (args[i + 1] &&  is_directory(args[i + 1]))
+					return(ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", args[i + 1], l_gc), ": Is a directory\n", l_gc),2),1);
 			   if (args[i + 1] && access(args[i + 1], F_OK) == -1)
 					return(ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", args[i + 1], l_gc), ": No such file or directory\n", l_gc),2),1);
                if (args[i + 1] && access(args[i + 1], F_OK) == 0 && access(args[i + 1], R_OK) == -1)
@@ -57,6 +59,8 @@ int handle_red_in(t_cmd *tmp, char **args, t_gc **l_gc)
 
 int handle_append_redirection(t_cmd *tmp, char **args, int i, t_gc **l_gc)
 {
+	if (args[i + 1] && is_directory(args[i + 1]))
+		return(ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", args[i + 1], l_gc), ": Is a directory\n", l_gc),2),1);
 	if(args[i + 1] && access(args[i + 1], F_OK) == -1 && is_path(args[i + 1]))
 		return(ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", args[i + 1], l_gc), ": No such file or directory\n", l_gc),2),1);
     if (args[i + 1] && access(args[i + 1], F_OK) == 0 && access(args[i + 1], W_OK) == -1)
@@ -69,6 +73,8 @@ int handle_append_redirection(t_cmd *tmp, char **args, int i, t_gc **l_gc)
 
 int handle_overwrite_redirection(t_cmd *tmp, char **args, int i, t_gc **l_gc)
 {
+	if (args[i + 1] && is_directory(args[i + 1]))
+		return(ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", args[i + 1], l_gc), ": Is a directory\n", l_gc),2),1);
 	if(args[i + 1] && access(args[i + 1], F_OK) == -1 && is_path(args[i + 1]))
 		return(ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ", args[i + 1], l_gc), ": No such file or directory\n", l_gc),2),1);
 	if (args[i + 1] && access(args[i + 1], F_OK) == 0 && access(args[i + 1], W_OK) == -1)
@@ -107,7 +113,7 @@ int handle_red_out(t_cmd *tmp, char **args, t_gc **l_gc)
 	return (0);
 }
 
-void  open_redirection(t_cmd **cmd , t_gc **l_gc)
+void  open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help)
 {
     t_cmd *tmp;
     char **args;
@@ -117,9 +123,15 @@ void  open_redirection(t_cmd **cmd , t_gc **l_gc)
     while (tmp)
     {
         if (tmp->red_in && tmp->red_in[0] != '\0')
-			handle_red_in(tmp, args, l_gc);
+		{
+			if (handle_red_in(tmp, args, l_gc))
+			export_status(1, help->env, l_gc, help->lst);
+		}
         if (tmp->red_out && tmp->red_out[0] != '\0')
-			handle_red_out(tmp, args, l_gc) ;  
+		{
+			if (handle_red_out(tmp, args, l_gc))
+			export_status(1, help->env, l_gc, help->lst);
+		}  
         tmp = tmp->next;
 		
     }
