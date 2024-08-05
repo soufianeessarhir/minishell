@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   her_doc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 06:57:04 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:11:16 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
         return;
     while (tmp)
     {
-        if (tmp->type == 2 && strcmp(tmp->value, "<<") == 0  )
+        if (tmp->type == 2 && strcmp(tmp->value, "<<") == 0)
         {
 			if (!tmp->next || !(tmp->next->type == 1))
 			   break;
@@ -38,8 +38,12 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
     			fd = open(ft_strjoin("/tmp/",clean_str(tmp->next->value,l_gc),l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (fd == -1)
 		      return;
-			line = readline(">");
-            while (1)
+			if (isatty(0))
+			{
+				g_a.stphedorc_insgin = 1;
+				line = readline(">");
+			}
+            while (isatty(0))
             {
                 if (!line || ft_strcmp(line,clean_str(tmp->next->value,l_gc)) == 0)
                     break;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/04 04:01:54 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:42:08 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct g_signalhandler
 {
 	int exitstatus_singnal;
 	int stpsignal_inparent;
+	int stphedorc_insgin;
 } 			 t_signalhandler;
 
 t_signalhandler g_a;
