@@ -47,3 +47,19 @@ minishell 99824 relamine    5r   REG    1,5       16            21473141 /privat
 
 you didn't close the file descriptors 3, 4, 5
 if you create a file unlink hime by this function unlink
+
+
+
+
+-------------
+
+
+export a="ls -l"
+
+argv[0]: export
+argv[1]: a=ls -l
+argv[2]: 
+minishell: export: `': not a valid identifier // this problem in parsepart
+
+sizeof cmd is 2 not 3 
+you allocate 3 
