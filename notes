@@ -6,23 +6,16 @@
 
 execpart --------------------------------------------------------------
 
-export ="ls -l"                                     	 
-'''''''''''''''' echo ok    when PATH env unseted you shoud retrn "No such file or directory" not "command not found"
-""""
 
 cd - cd --
-cd: ~/Desktop/
-cd /etc  		            should go to etc not private etc
-cd var                      ...
-export 1TEST=				env name should start with letter
+
 export TES!T=123			bash: !T=123: event not found
 export TES\~T=123          bash: export: `TES~T=123': not a valid identifier
-unset ""               	 bash: unset: `': not a valid identifier
-unset $""                bash: unset: `': not a valid identifier
-unset TES$?T             it is valid
+
 unset TES\~T             bash: unset: `TES~T': not a valid identifier
 
-
+cd var  \\this not absolute path or relative path 
+cd /var  \\this i must handle and this " etc   tmp " 
 
 parsepart --------------------------------------------------------------
 
@@ -62,3 +55,10 @@ minishell: export: `': not a valid identifier // this problem in parsepart
 
 sizeof cmd is 2 not 3 
 you allocate 3 
+
+
+
+
+if you want to fix this cd: ~/Desktop/
+must you expand in parsepart
+

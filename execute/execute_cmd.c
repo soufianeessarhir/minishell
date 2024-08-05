@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/26 19:36:45 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:40:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char *get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 	{
 		path_check = ft_strjoin(*split_paths, "/",l_gc);
 		path_check = ft_strjoin(path_check, argv[0],l_gc);
-		if (access(path_check, X_OK) == 0)
+		if (access(path_check, F_OK) == 0)
             return (path_check);
 		split_paths++;
 	}
@@ -48,7 +48,7 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 	status = 0;
 	argv = cmd->args;
 	intit_env_list(&env_lst, *envp, l_gc);
-	if (strchr(argv[0], '/') == NULL)
+	if (ft_strchr(argv[0], '/') == NULL && ft_strlen(argv[0]) != 0)
 		path_cmd = get_path(argv, env_lst, l_gc);
 	else
 		path_cmd = argv[0];
@@ -60,8 +60,6 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 	}
 	if (childpid > 0)
 	{
-		if (*cmd->flag_pipe != 1)
-			ft_export_anything(ft_strjoin("_=", path_cmd, l_gc), l_gc, lst, envp);
 		g_a.stpsignal_inparent = 1;
 		wait(&status);
 		if (WIFEXITED(status))
@@ -80,20 +78,34 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		if (ft_strcmp(path_cmd, "./minishell") == 0)
 		{
 			export_shelvl(envp, l_gc, lst, env_lst);
-			if (ft_strcmp(getcwd(NULL, 0), "/Users/relamine/Desktop/minishell"))
-				path_cmd = ft_strjoin("/Users/relamine/Desktop/minishell/", path_cmd, l_gc);
+			path_cmd = cmd->path_of_program;
 		}
+		if (*cmd->flag_pipe && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)) != NULL && cmd->num_cmd > 0)
+			close(1);
+		if (cmd->num_cmd == 0 && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)))
+			dup2(2, 1);
 		if (execve(path_cmd, argv, *envp) == -1)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			stat(path_cmd, &statbuf);
-			if (S_ISDIR(statbuf.st_mode))
+			if (ft_strchr(argv[0], '/') && argv[0][0] != '/')
 			{
 				ft_putstr_fd(argv[0], 2);
-				ft_putstr_fd(": is a directory\n", 2);
+				if (S_ISDIR(statbuf.st_mode))
+					ft_putstr_fd(": is a directory\n", 2);
+				else
+					ft_putstr_fd(": Not a directory\n", 2);
 			}
-			else if (strchr(argv[0], '/'))
-				perror(argv[0]);
+			else if (my_getenv("PATH", env_lst) == NULL || argv[0][0] == '/')
+			{
+				if (S_ISDIR(statbuf.st_mode))
+				{
+					ft_putstr_fd(argv[0], 2);
+					ft_putstr_fd(": is a directory\n", 2);
+				}
+				else
+					perror(argv[0]);
+			}
 			else
 			{
 				ft_putstr_fd(argv[0], 2);
@@ -104,4 +116,3 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
     }
 	return (status);
 }
-

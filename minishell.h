@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:55:29 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:59:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct s_cmd
 
 	int *flag_pipe;
 	int *flag_display_env;
+	int num_cmd;
+	char *path_of_program;
     struct s_cmd *next;
 }               t_cmd;
 

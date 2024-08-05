@@ -6,10 +6,9 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/05 17:45:22 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:59:13 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 
 #include "minishell.h"
@@ -39,14 +38,15 @@ void readline_loop(char **line, t_gc **lst, char **env)
     t_env *env_lst;
     t_gc *l_gc;
     t_cmd *cmd;
-	char **shelvl;
 	char **exitstatus;
 	char **tmp_env;
 	int stexit;
 	int flag_pipe;
 	int bol;
 	t_help help;
+	int childpid;
     
+	childpid = -1;
     l_gc = NULL;
 	stexit = -9999;
     env_lst = NULL;
@@ -54,17 +54,48 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	exitstatus = NULL;
 	tmp_env = NULL;
 
-	shelvl = NULL;
-	bol = 0;
-	if (*env == NULL)
+
+	char *path_of_program = NULL;
+
+	intit_env_list(&env_lst, env, lst);
+	int env_i = 0;
+	if (!path_of_program && !my_getenv("path_of_program", env_lst))
 	{
-		*env = ft_malloc(sizeof(char *) * 2, lst);
-		env[0] = NULL;
-		export_pwd(&env, &l_gc, lst);
+		char **tmp;
+		char *pwd = my_getenv("PWD", env_lst);
+		if (*env == NULL)
+		{
+			env_i = 1;
+			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
+			tmp[0] = ft_strdup("cd", &l_gc);
+			tmp[1] = ft_strdup("..", &l_gc);
+			tmp[2] = NULL;
+			cd(tmp, &env, &l_gc, lst);
+			intit_env_list(&env_lst, env, lst);
+			path_of_program = ft_strjoin(my_getenv("OLDPWD", env_lst), "/./minishell", lst);
+			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
+			tmp[0] = ft_strdup("unset", &l_gc);
+			tmp[1] = ft_strdup("OLDPWD", &l_gc);
+			tmp[2] = NULL;
+			unset(tmp, &env, &l_gc, lst);
+			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
+			tmp[0] = ft_strdup("unset", &l_gc);
+			tmp[1] = ft_strdup("_", &l_gc);
+			tmp[2] = NULL;
+			unset(tmp, &env, &l_gc, lst);
+			chdir(pwd);
+		}
+		else 
+			path_of_program = my_getenv("_", env_lst);
+		ft_export_anything(ft_strjoin("path_of_program=", path_of_program, lst), &l_gc, lst, &env);
+		env_lst = NULL;
+	}
 	
+	if (env_i)
+	{
 		ft_export_anything("SHLVL=1", &l_gc, lst, &env);
 		ft_export_anything("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin", &l_gc, lst, &env);
-		ft_export_anything("_=/Users/relamine/Desktop/minishell/./minishell", &l_gc, lst, &env);
+		ft_export_anything(ft_strjoin("_=", path_of_program, lst), &l_gc, lst, &env);
 		bol = 1;
 	}
 
@@ -76,6 +107,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			export_status(0, &env, &l_gc, lst);
 		g++;
 	}
+	
     while (1) {
 		flag_pipe = 0;
         *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
@@ -106,16 +138,124 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
+
 			t_cmd *tmp = cmd;
+
+			// number of pipe
+			int num_pipe;
+
+			num_pipe = 0;
+			while (tmp && tmp->next)
+			{
+				num_pipe += 1;
+				tmp = tmp->next;
+			}
+
+			// create pipes
+			tmp = cmd;
+			int *pipes_fds;
+			int i;
+	
+			pipes_fds = ft_malloc(sizeof(int) * num_pipe * 2, &l_gc);
+			i = 0;
+			while (i < num_pipe)
+			{
+				flag_pipe = 1;
+				if (pipe(&pipes_fds[i * 2]) == -1)
+				{
+					perror("pipe");
+					exit(1);
+				}
+				i++;
+			}
+			
+			int cmd_pipe;
+
+			cmd_pipe = 0;
 			while (tmp)
 			{
 				tmp->flag_pipe = &flag_pipe;
 				tmp->flag_display_env = &bol;
-				if (tmp->next)
+				tmp->num_cmd = cmd_pipe;
+				tmp->path_of_program =  my_getenv("path_of_program", env_lst);
+			
+				if (flag_pipe)
+				{
 					flag_pipe = 1;
-				stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
-				export_status(stexit, &env, &l_gc, lst);
+					childpid = fork();
+					if (childpid == -1)
+					{
+						perror("fork");
+						exit(1);
+					}
+					if (childpid == 0)
+					{
+						// if not the last command
+						if (tmp->next)
+						{
+							if (dup2(pipes_fds[(cmd_pipe * 2) + 1], STDOUT_FILENO) < 0)
+							{
+								perror("dup2");
+								exit(1);
+							}
+						}
+						
+						// if not the first command get input from the previous command
+						if (cmd_pipe > 0)
+						{
+							if (dup2(pipes_fds[(cmd_pipe - 1) * 2], STDIN_FILENO) < 0)
+							{
+								perror("dup2");
+								exit(1);
+							}
+							ft_export_anything("_=", &l_gc, lst, &env);
+							export_status(0, &env, &l_gc, lst);
+						}
+
+						i = 0;
+						while (i < num_pipe * 2)
+						{
+							close(pipes_fds[i]);
+							i++;
+						}
+						
+						stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+						exit(stexit);
+					}
+				}
+				else
+				{
+					stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+					export_status(stexit, &env, &l_gc, lst);	
+				}
 				tmp = tmp->next;
+				if (tmp)
+					cmd_pipe++;
+			}
+
+			if (flag_pipe)
+			{
+				int status;
+
+				i = 0;
+				export_status(0, &env, &l_gc, lst);	
+				while (i < num_pipe * 2)
+				{
+					close(pipes_fds[i]);
+					i++;
+				}
+				i = 0;
+				while (i <= num_pipe)
+				{
+					wait(&status);
+					if (cmd_pipe == num_pipe)
+					{
+						export_status(WEXITSTATUS(status), &env, &l_gc, lst);
+						cmd_pipe = 0;
+					}
+					i++;
+				}
+				ft_export_anything("_=", &l_gc, lst, &env);
 			}
 
 			free(*line);
