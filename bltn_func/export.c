@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/31 07:00:51 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:37:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *get_key(char *str, t_gc **gc)
 	char *key;
 
 	i = 0;
-	if (str[i] && str[i] == '=')
+	if (str && str[i] == '=')
 		return (NULL);
 	while (str[i] && str[i] != '=')
 	{
@@ -82,7 +82,7 @@ void print_exported_variables(char **envp, t_gc **gc, int bol)
 			i++;
 			continue;
 		}
-		if (ft_strcmp(get_key(envp[i], gc), "exitstatus") == 0)
+		if (ft_strcmp(get_key(envp[i], gc), "exitstatus") == 0 || ft_strcmp(get_key(envp[i], gc), "path_of_program") == 0 )
 		{
 			i++;
 			continue;

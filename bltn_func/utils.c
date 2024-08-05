@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/31 07:00:58 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:38:24 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ int ft_isonlydigit(char *str)
 
 	i = 0;
 	flag = 0;
+	if (ft_isdigit(str[0]))
+		return (1);
 	while (str[i])
 	{
 		if (ft_isalpha(str[i]) || str[i] == '_')
