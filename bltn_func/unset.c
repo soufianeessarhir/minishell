@@ -6,11 +6,18 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/07/31 07:12:37 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:47:52 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int ft_iswhitespace(char c)
+{
+	if (c == 32 || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
 
 char *get_key_unset(char *str, t_gc **gc)
 {
@@ -18,11 +25,13 @@ char *get_key_unset(char *str, t_gc **gc)
 	char *key;
 
 	i = 0;
-	if (str[i] && ft_strchr(str, '=') != NULL)
+	if (str && ft_strchr(str, '=') != NULL)
+		return (NULL);
+	if (ft_isdigit(str[0]) || str[0] == '\0')
 		return (NULL);
 	while (str[i])
 	{
-		if (!ft_isalpha(str[i]) && str[i] != '_')
+		if (!ft_isalnum(str[i]) && str[i] != '_' && ft_iswhitespace(str[i]))
 			return (NULL);
 		i++;
 	}
