@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/06 18:11:24 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:31:39 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				if (flag_pipe)
 				{
 					flag_pipe = 1;
-					if (l < 1 && cmd->num_cmd == 0 && ft_strnstr(tmp->args[0], "./minishell", ft_strlen(tmp->args[0])))
+					if (l < 1 && tmp->num_cmd == 0 && ft_strnstr(tmp->args[0], "./minishell", ft_strlen(tmp->args[0])))
 					{
 						l = 1;
 						path_program = tmp;
@@ -226,8 +226,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 								perror("dup2");
 								exit(1);
 							}
-						}
-						
+						}	
 						// if not the first command get input from the previous command
 						if (cmd_pipe > 0)
 						{
