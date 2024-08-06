@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/05 19:40:43 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:52:53 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		path_cmd = get_path(argv, env_lst, l_gc);
 	else
 		path_cmd = argv[0];
-	childpid = fork();
+	if (!*cmd->flag_pipe)
+		childpid = fork();
+	else
+		childpid = 0;
 	if (childpid == -1)
 	{
 		perror("fork");
@@ -80,7 +83,7 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 			export_shelvl(envp, l_gc, lst, env_lst);
 			path_cmd = cmd->path_of_program;
 		}
-		if (*cmd->flag_pipe && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)) != NULL && cmd->num_cmd > 0)
+		if (*cmd->flag_pipe && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)) && cmd->num_cmd > 0)
 			close(1);
 		if (cmd->num_cmd == 0 && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)))
 			dup2(2, 1);

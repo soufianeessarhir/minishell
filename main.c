@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/05 19:59:13 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:11:24 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 	open_redirection(cmd, l_gc,help);
 	return 0;
 }
+
 void readline_loop(char **line, t_gc **lst, char **env) 
 {
     t_env *env_lst;
@@ -138,9 +139,20 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
-
+			
 			t_cmd *tmp = cmd;
 
+			// while (tmp)
+			// {
+			// 	printf("cmd: %s\n", tmp->cmd);
+			// 	printf("args: %s\n", tmp->args[0]);
+			// 	printf("red_in: %s\n", tmp->red_in);
+			// 	printf("red_out: %s\n", tmp->red_out);
+			// 	printf("red_in_fd: %d\n", tmp->red_in_fd);
+			// 	printf("red_out_fd: %d\n", tmp->red_out_fd);
+			// 	tmp = tmp->next;
+			// }
+			// exit(0);
 			// number of pipe
 			int num_pipe;
 
@@ -170,28 +182,44 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			}
 			
 			int cmd_pipe;
+			int tmp_cmd_pipe;
+			int l = 0;
+			t_cmd *path_program;
+
 
 			cmd_pipe = 0;
+			path_program = NULL;
+			tmp_cmd_pipe =0;
 			while (tmp)
 			{
 				tmp->flag_pipe = &flag_pipe;
 				tmp->flag_display_env = &bol;
 				tmp->num_cmd = cmd_pipe;
 				tmp->path_of_program =  my_getenv("path_of_program", env_lst);
-			
+				
 				if (flag_pipe)
 				{
 					flag_pipe = 1;
+					if (l < 1 && cmd->num_cmd == 0 && ft_strnstr(tmp->args[0], "./minishell", ft_strlen(tmp->args[0])))
+					{
+						l = 1;
+						path_program = tmp;
+						tmp = tmp->next;
+						cmd_pipe++;
+						continue;
+					}
 					childpid = fork();
 					if (childpid == -1)
 					{
 						perror("fork");
 						exit(1);
 					}
+
 					if (childpid == 0)
 					{
 						// if not the last command
-						if (tmp->next)
+
+						if (tmp->next && l != 2)
 						{
 							if (dup2(pipes_fds[(cmd_pipe * 2) + 1], STDOUT_FILENO) < 0)
 							{
@@ -218,7 +246,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 							close(pipes_fds[i]);
 							i++;
 						}
-						
 						stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
 						exit(stexit);
 					}
@@ -228,17 +255,26 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
 					export_status(stexit, &env, &l_gc, lst);	
 				}
+				if (l == 2)
+					break;	
 				tmp = tmp->next;
 				if (tmp)
 					cmd_pipe++;
+				if (!tmp && l == 1)
+				{
+					l = 2;
+					tmp = path_program;
+					cmd_pipe = 0;
+				}
 			}
 
+			
 			if (flag_pipe)
 			{
 				int status;
-
-				i = 0;
 				export_status(0, &env, &l_gc, lst);	
+				
+				i = 0;
 				while (i < num_pipe * 2)
 				{
 					close(pipes_fds[i]);
@@ -247,12 +283,15 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				i = 0;
 				while (i <= num_pipe)
 				{
+					g_a.stpsignal_inparent = 1;
 					wait(&status);
 					if (cmd_pipe == num_pipe)
 					{
 						export_status(WEXITSTATUS(status), &env, &l_gc, lst);
 						cmd_pipe = 0;
 					}
+					g_a.stpsignal_inparent = 0;
+					g_a.exitstatus_singnal = 0;
 					i++;
 				}
 				ft_export_anything("_=", &l_gc, lst, &env);

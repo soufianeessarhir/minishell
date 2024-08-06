@@ -62,3 +62,6 @@ you allocate 3
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart
 
+
+
+i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem
