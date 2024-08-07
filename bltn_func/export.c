@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/05 19:38:48 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:04:18 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,28 +74,30 @@ void combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 // Function to print exported environment variables
 void print_exported_variables(char **envp, t_gc **gc, int bol)
 {
-    int i = 0;
-    while (envp[i] != NULL)
+	t_env *env_lst;
+	
+	env_lst = NULL;
+	intit_env_list(&env_lst, envp, gc);
+	sort_env_list(&env_lst);
+	while(env_lst)
 	{
-		if (ft_strcmp(get_key(envp[i], gc), "PATH") == 0 && bol == 1)
+		if (ft_strcmp(env_lst->key, "PATH") == 0 && bol == 1)
 		{
-			i++;
+			env_lst = env_lst->next;
 			continue;
 		}
-		if (ft_strcmp(get_key(envp[i], gc), "exitstatus") == 0 || ft_strcmp(get_key(envp[i], gc), "path_of_program") == 0 )
+		if (!ft_strcmp(env_lst->key, "exitstatus") || !ft_strcmp(env_lst->key, "path_of_program") || !ft_strcmp(env_lst->key, "_"))
 		{
-			i++;
+			env_lst = env_lst->next;
 			continue;
 		}
-        ft_putstr_fd("declare -x ", 1);
-		if (strchr(envp[i], '=') == NULL)
-			printf("%s\n", envp[i]);
-		else if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
-			printf("%s\"\"\n", envp[i]);
-		else	
-			printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
-        i++;
-    }
+		printf("declare -x ");
+		if (env_lst->value == NULL)
+			printf("%s\n", env_lst->key);
+		else
+			printf("%s=\"%s\"\n", env_lst->key, env_lst->value);
+		env_lst = env_lst->next;
+	}
 }
 
 

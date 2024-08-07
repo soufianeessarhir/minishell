@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 07:44:08 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:22:10 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 	// 	printf("red_out: %d\n", tmp->red_out_fd);
 		
 	// }
+	// exit(0);
 	return 0;
 }
 

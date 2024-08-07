@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 07:50:40 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:11:38 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,37 @@ int ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 	char **argv;
 	int is_bultin;
 	const char *builtins[8] = {"pwd", "env", "cd", "export", "unset", "exit", "echo", NULL};
+	int status;
 
 	i = 0;
 	argv = cmd->args;
 	if (argv == NULL || argv[i] == NULL)
-		return (ft_export_anything("_=", gc, lst, envpv), 0);
+		return (0);
+
+	printf("red_in_fd: %d\n", cmd->red_in_fd);
+	printf("red_out_fd: %d\n", cmd->red_out_fd);
 
 	if (cmd->red_in_fd > 0)
+	{
 		dup2(cmd->red_in_fd, 0);
+		close(cmd->red_in_fd);
+
+	}
 	if (cmd->red_out_fd > 1)
+	{
 		dup2(cmd->red_out_fd, 1);
+		close(cmd->red_out_fd);
+	}
 	
 	is_bultin = ft_is_bultin(argv[i], (char **)builtins);
-	if (*cmd->flag_pipe)
-		ft_export_anything("_=", gc, lst, envpv);
-	if (!*cmd->flag_pipe && ft_strlen_double(argv) && is_bultin != -1)
+	if (!*cmd->flag_pipe && ft_strlen_double(argv) && is_bultin != 1)
 		ft_export_(argv, envpv, gc, lst);
-	return (execute_bltncmd(is_bultin, cmd, envpv, gc, lst));
+	if (is_bultin == 1 && !*cmd->flag_pipe)
+		ft_export_anything("_=/usr/bin/env", gc, lst, envpv);
+	status = execute_bltncmd(is_bultin, cmd, envpv, gc, lst);
+	if (is_bultin == 1 && !*cmd->flag_pipe)
+		ft_export_anything("_=env", gc, lst, envpv);
+	dup2(2, 0);
+	dup2(2, 1);
+	return (status);
 }

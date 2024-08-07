@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 04:45:33 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/07 10:22:31 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ void open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help)
     tmp = *cmd;
     while (tmp)
     {
-        tmp->red_in_fd = -1;
-        tmp->red_out_fd = -1;
+        tmp->red_in_fd = 0;
+        tmp->red_out_fd = 1;
         next = tmp->next; 
         if (tmp->rd)
         {
