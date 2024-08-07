@@ -38,27 +38,16 @@ minishell 99824 relamine    5r   REG    1,5       16            21473141 /privat
 
 
 you didn't close the file descriptors 3, 4, 5
-if you create a file unlink hime by this function unlink
+if you create a file unlink it by this function unlink 
 
 
 
 
--------------
-
-
-export a="ls -l"
-
-argv[0]: export
-argv[1]: a=ls -l
-argv[2]: 
-minishell: export: `': not a valid identifier // this problem in parsepart
-
-sizeof cmd is 2 not 3 
-you allocate 3 
+------------------------------------------------------------------------
 
 
 
 
 if you want to fix this cd: ~/Desktop/
-must you expand in parsepart
+must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 

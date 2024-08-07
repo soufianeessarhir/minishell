@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 22:38:11 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/26 22:18:01 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/05 22:52:58 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ static char	**ft_strfill(const char *s, char c, int size, t_gc **gc)
     char	**ptr;
 
     i = 0;
-    j = -1;
+    j = 0;
     ptr = ft_malloc(sizeof(char *) * (size + 1), gc);
     if (!ptr)
         return (NULL);
-    while (++j < ft_countwords(s, c))
+    while (j < ft_countwords(s, c))
     {
         while (s[i] == c)
             i++;
@@ -98,6 +98,7 @@ static char	**ft_strfill(const char *s, char c, int size, t_gc **gc)
         if (ptr[j] == NULL)
             return (my_free(ptr),NULL);
         i = i + ft_countchars(s, c, i);
+		j++;
     }
     ptr[j] = NULL;
     return (ptr);

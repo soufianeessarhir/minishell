@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/05 19:59:13 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 01:32:15 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,29 @@
 int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd) 
 {
 	t_token *token_lst;
-	char **token;
 
 	token_lst = NULL;
-	token = NULL;
 	if (sp_uq_handling(help->line))
 	  return 1;
-	token = ft_tokinize(help->line, l_gc);
-	if (syntax_error(token, &token_lst, l_gc))
-		return(export_status(2,help->env,l_gc,help->lst),1);
+    ft_tokinize(help->line,&token_lst, l_gc);
+	if (syntax_error(&token_lst, l_gc))
+		return(export_status(258,help->env,l_gc,help->lst),1);
 	her_doc_handling(&token_lst, l_gc);
 	if (env_handling(&token_lst, *env_lst, l_gc))
 		return (export_status(1,help->env,l_gc,help->lst),1);
 	if (init_cmd(cmd, token_lst, l_gc))
 		return (export_status(1,help->env,l_gc,help->lst),1);
+	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next)
+	// {
+	// 	for (int i = 0; tmp->args[i]; i++)
+	// 	{
+	// 		printf("args[%d] = %s\n", i, tmp->args[i]);
+	// 	}
+	// 	for (t_redir *tmp2 = tmp->rd; tmp2; tmp2 = tmp2->next)
+	// 	{
+	// 		printf("redir = %s\n", tmp2->redio);
+	// 	}
+	// }
 	open_redirection(cmd, l_gc,help);
 	return 0;
 }

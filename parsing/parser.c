@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 05:06:00 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/06 01:08:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,6 @@ int	token_type(char *str)
 	if (str[0] == '>' || str[0] == '<')
 		return (2);
 	return (1);
-}
-
-t_token	*init_token(char **str, t_token **token, t_gc **l_gc)
-{
-	int		i;
-	t_token	*tmp;
-
-	i = 0;
-	while (str[i] != NULL)
-	{
-		tmp = ft_dll_lstnew(str[i], token_type(str[i]), l_gc);
-		ft_dll_lstadd_back(token, tmp);
-		i++;
-	}
-	return (*token);
 }
 
 void	init_graph(int graph[4][3])
@@ -52,7 +37,7 @@ void	init_graph(int graph[4][3])
 	graph[3][2] = -1;
 }
 
-int	syntax_error(char **args, t_token **token, t_gc **l_gc)
+int	syntax_error(t_token **token, t_gc **l_gc)
 {
 	int		graph[4][3];
 	int		state;
@@ -60,7 +45,6 @@ int	syntax_error(char **args, t_token **token, t_gc **l_gc)
 
 	state = 0;
 	init_graph(graph);
-	init_token(args, token, l_gc);
 	tmp = *token;
 	while (tmp)
 	{

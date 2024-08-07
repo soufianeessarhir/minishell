@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/05 18:59:43 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:56:18 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,24 @@ typedef struct s_env
     char *value;
     struct s_env *next;
 }               t_env;
+typedef struct s_redir
+{
+	char *redio;
+	struct s_redir *next;
+}               t_redir;
+
+typedef struct s_srgs
+{
+	char *arg;
+	struct s_srgs *next;
+}               t_args;
+
 
 typedef struct s_cmd
 {
-    char *cmd;
+    t_args *args_lst;
 	char **args;
-    char *red_in;
-	char *red_out;
+	t_redir *rd;
 	int red_in_fd;
 	int red_out_fd;
 
@@ -106,6 +117,7 @@ typedef struct s_cmd
 	int num_cmd;
 	char *path_of_program;
     struct s_cmd *next;
+	struct s_cmd *prev;
 }               t_cmd;
 
 
@@ -115,9 +127,9 @@ void    ft_dll_lstadd_back(t_token **lst, t_token *new);
 void    ft_dll_lstclear(t_token **lst);
 t_token *ft_dll_lstlast(t_token *lst);
 int     ft_dll_lstsize(t_token *lst);
-char    **ft_tokinize(char *line,t_gc **l_gc);
+void ft_tokinize(char *line,t_token **token_lst,t_gc **l_gc);
 void  init_graph(int graph[4][3]);
-int syntax_error(char **args,t_token **token,t_gc **l_gc);
+int syntax_error(t_token **token,t_gc **l_gc);
 int sp_uq_handling (char *line);
 int  init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
 void her_doc_handling(t_token **token_lst, t_gc **l_gc);
@@ -129,7 +141,7 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
 int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 void open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
 char *clean_str(char *str, t_gc **l_gc); 
-
+int is_dollar(char *str);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);
