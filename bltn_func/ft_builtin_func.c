@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/06 19:04:41 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 04:37:49 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 	if (argv == NULL || argv[i] == NULL)
 		return (ft_export_anything("_=", gc, lst, envpv), 0);
 
-	if (cmd->red_in_fd > 0)
-		dup2(cmd->red_in_fd, 0);
-	if (cmd->red_out_fd > 1)
-		dup2(cmd->red_out_fd, 1);
+	// if (cmd->red_in_fd > 0)
+	// 	dup2(cmd->red_in_fd, 0);
+	// if (cmd->red_out_fd > 1)
+	// 	dup2(cmd->red_out_fd, 1);
 	
 	is_bultin = ft_is_bultin(argv[i], (char **)builtins);
 	if (*cmd->flag_pipe)

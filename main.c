@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 01:47:49 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/07 05:05:52 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,19 @@ int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 	if (syntax_error(&token_lst, l_gc))
 		return(export_status(258,help->env,l_gc,help->lst),1);
 	her_doc_handling(&token_lst, l_gc);
-	if (env_handling(&token_lst, *env_lst, l_gc))
-		return (export_status(1,help->env,l_gc,help->lst),1);
-	if (init_cmd(cmd, token_lst, l_gc))
-		return (export_status(1,help->env,l_gc,help->lst),1);
+    env_handling(&token_lst, *env_lst, l_gc);
+    init_cmd(cmd, token_lst, l_gc);
+	open_redirection(cmd, l_gc,help);
 	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next)
 	// {
 	// 	for (int i = 0; tmp->args[i]; i++)
-	// 	{
-	// 		printf("args[%d] = %s\n", i, tmp->args[i]);
-	// 	}
+	// 	printf("args: %s\n", tmp->args[i]);
 	// 	for (t_redir *tmp2 = tmp->rd; tmp2; tmp2 = tmp2->next)
-	// 	{
-	// 		printf("redir = %s\n", tmp2->redio);
-	// 	}
+	// 	printf("redir: %s\n", tmp2->redio);
+	// 	printf("red_in: %d\n", tmp->red_in_fd);
+	// 	printf("red_out: %d\n", tmp->red_out_fd);
+		
 	// }
-	open_redirection(cmd, l_gc,help);
 	return 0;
 }
 
@@ -148,6 +145,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
+			// this is for printind the command you can use it to check the command
+			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next)
+			// {
+			// 	for (int i = 0; tmp->args[i]; i++)
+			// 	printf("args: %s\n", tmp->args[i]);
+			// 	for (t_redir *tmp2 = tmp->rd; tmp2; tmp2 = tmp2->next)
+			// 	printf("redir: %s\n", tmp2->redio);
+			// 	printf("red_in: %d\n", tmp->red_in_fd);
+			// 	printf("red_out: %d\n", tmp->red_out_fd);
+			// }
 			
 			t_cmd *tmp = cmd;
 
@@ -206,6 +213,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				tmp->num_cmd = cmd_pipe;
 				tmp->path_of_program =  my_getenv("path_of_program", env_lst);
 				
+				
 				if (flag_pipe)
 				{
 					flag_pipe = 1;
@@ -260,6 +268,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				}
 				else
 				{
+				    
 					stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
 					export_status(stexit, &env, &l_gc, lst);	
 				}
@@ -275,8 +284,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					cmd_pipe = 0;
 				}
 			}
-
-			
 			if (flag_pipe)
 			{
 				int status;
@@ -304,7 +311,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				}
 				ft_export_anything("_=", &l_gc, lst, &env);
 			}
-
+			
 			free(*line);
 			*line = NULL;
 			ft_free(&l_gc);

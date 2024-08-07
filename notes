@@ -16,6 +16,9 @@ unset TES\~T             bash: unset: `TES~T': not a valid identifier
 
 cd var  \\this not absolute path or relative path 
 cd /var  \\this i must handle and this " etc   tmp " 
+dup2 somrthing wrong at  this function it keep the program running and didn't stop it check it and if the 
+error from me report it to me
+also close the file descriptor after you use it
 
 parsepart --------------------------------------------------------------
 
@@ -38,9 +41,9 @@ minishell 99824 relamine    5r   REG    1,5       16            21473141 /privat
 
 
 you didn't close the file descriptors 3, 4, 5
-if you create a file unlink it by this function unlink 
+if you create a file unlink it by this function unlink       
 
-
+        #what is the proof to unlink the files?#
 
 
 ------------------------------------------------------------------------
@@ -53,81 +56,7 @@ must you expand in parsepart                       >> i just expand environment 
 
 
 
-i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem
+i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem   |>> give me an example
 
-
-
-
-
-
-
-________________________________________
-t_cmd *tmp = cmd;
-
-while (tmp)
-{
-	printf("cmd: %s\n", tmp->cmd);
-	printf("args: %s\n", tmp->args[0]);
-	printf("red_in: %s\n", tmp->red_in);
-	printf("red_out: %s\n", tmp->red_out);
-	printf("red_in_fd: %d\n", tmp->red_in_fd);
-	printf("red_out_fd: %d\n", tmp->red_out_fd);
-	tmp = tmp->next;
-}
-
-minishell$ ls > a < a
-cmd: ls 
-args: ls
-red_in: < a 
-red_out: > a 
-red_in_fd: 3
-red_out_fd: 4
-➜  oo git:(master) ✗ ./minishell
-minishell$ ls > c < c
-minishell: c: No such file or directory
-cmd: ls 
-args: ls
-red_in: < c 
-red_out: > c 
-red_in_fd: -1094795586
-red_out_fd: 3
-➜  oo git:(master) ✗ ./minishell
-minishell$ ls > c < c
-cmd: ls 
-args: ls
-red_in: < c 
-red_out: > c 
-red_in_fd: 3
-red_out_fd: 4
-➜  oo git:(master) ✗ ./minishell
-minishell$ ls > m < m
-minishell: m: No such file or directory
-cmd: ls 
-args: ls
-red_in: < m 
-red_out: > m 
-red_in_fd: -1094795586
-red_out_fd: 3
-➜  oo git:(master) ✗ ./minishell
-minishell$ ls > g | < g cat
-cmd: ls 
-args: ls
-red_in: 
-red_out: > g 
-red_in_fd: -1094795586
-red_out_fd: 3
-cmd: cat 
-args: cat
-red_in: < g 
-red_out: 
-red_in_fd: 4
-
-minishell$ ls
-cmd: ls 
-args: ls
-red_in: 
-red_out: 
-red_in_fd: -1094795586
-red_out_fd: -1094795586
-
-there a problem in red_in_fd and red_out_fd when i use < or > or  &&  you must fix this problem and intialize red_in_fd and red_out_fd  by 0 or 1 and -1 when fd is not valid
+------------------------------------------------------------------------
+recheck if the problem still apears
