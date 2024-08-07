@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 05:05:52 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/07 07:44:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
     cmd = NULL;
 	exitstatus = NULL;
 	tmp_env = NULL;
-
 
 	char *path_of_program = NULL;
 

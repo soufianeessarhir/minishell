@@ -19,6 +19,10 @@ cd /var  \\this i must handle and this " etc   tmp "
 dup2 somrthing wrong at  this function it keep the program running and didn't stop it check it and if the 
 error from me report it to me
 also close the file descriptor after you use it
+cd "doesntexist" 2>/dev/null  deffirent behavior in bash and minishell
+                     |-> make sure that you print the error message in the stderr
+minishell$ ./missing.out     output: bash: ./missing.out: No such file or directory 
+$PWD exit status is 126
 
 parsepart --------------------------------------------------------------
 
@@ -56,7 +60,7 @@ must you expand in parsepart                       >> i just expand environment 
 
 
 
-i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem   |>> give me an example
+i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem   |>> give me an example (do you mean exit status)
 
 ------------------------------------------------------------------------
 recheck if the problem still apears

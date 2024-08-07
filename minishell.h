@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 00:56:18 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/07 07:43:56 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ t_signalhandler g_a;
 #define BGMAGENTA "\033[45m"
 #define BGCYAN "\033[46m"
 #define BGWHITE "\033[47m"
-
+#define BOLDMAGENTA "\033[1;35m"
+#define RESET "\033[0m"
+#define BOLDYELLOW "\033[1;33m"
+#define BOLDGREEN "\033[1;32m"
 typedef struct s_help
 {
 	char *line;
@@ -120,7 +123,7 @@ typedef struct s_cmd
 	struct s_cmd *prev;
 }               t_cmd;
 
-
+// void print_full_art();
 t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc);
 void    ft_dll_lstadd_front(t_token **lst, t_token *new);
 void    ft_dll_lstadd_back(t_token **lst, t_token *new);
