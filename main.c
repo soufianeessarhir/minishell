@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 12:22:10 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:56:44 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,9 +234,24 @@ void readline_loop(char **line, t_gc **lst, char **env)
 
 					if (childpid == 0)
 					{
-						// if not the last command
+						int in_fd = -1;
+						int out_fd = -1;
 
-						if (tmp->next && l != 2)
+						if (tmp->red_in_fd > 0)
+						{
+							in_fd = dup(0);
+							dup2(tmp->red_in_fd, 0);
+							close(tmp->red_in_fd);
+						}
+						if (tmp->red_out_fd > 1)
+						{
+							out_fd = dup(1);
+							dup2(tmp->red_out_fd, 1);
+							close(tmp->red_out_fd);
+						}
+						
+						// if not the last command
+						if (tmp->next && l != 2 && tmp->red_out_fd == 1)
 						{
 							if (dup2(pipes_fds[(cmd_pipe * 2) + 1], STDOUT_FILENO) < 0)
 							{
@@ -245,13 +260,14 @@ void readline_loop(char **line, t_gc **lst, char **env)
 							}
 						}	
 						// if not the first command get input from the previous command
-						if (cmd_pipe > 0)
+						if (cmd_pipe > 0 && tmp->red_in_fd == 0)
 						{
 							if (dup2(pipes_fds[(cmd_pipe - 1) * 2], STDIN_FILENO) < 0)
 							{
 								perror("dup2");
 								exit(1);
 							}
+							
 							ft_export_anything("_=", &l_gc, lst, &env);
 							export_status(0, &env, &l_gc, lst);
 						}
@@ -263,13 +279,48 @@ void readline_loop(char **line, t_gc **lst, char **env)
 							i++;
 						}
 						stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+
+						if (tmp->red_in_fd > 0)
+						{
+							dup2(in_fd, 0);
+							close(in_fd);
+						}
+						if (tmp->red_out_fd > 1)
+						{
+							dup2(out_fd, 1);
+							close(out_fd);
+						}
 						exit(stexit);
 					}
 				}
 				else
 				{
-				    
+				    int in_fd = -1;
+					int out_fd = -1;
+
+					if (tmp->red_in_fd > 0)
+					{
+						in_fd = dup(0);
+						dup2(tmp->red_in_fd, 0);
+						close(tmp->red_in_fd);
+					}
+					if (tmp->red_out_fd > 1)
+					{
+						out_fd = dup(1);
+						dup2(tmp->red_out_fd, 1);
+						close(tmp->red_out_fd);
+					}
 					stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+					if (tmp->red_in_fd > 0)
+					{
+						dup2(in_fd, 0);
+						close(in_fd);
+					}
+					if (tmp->red_out_fd > 1)
+					{
+						dup2(out_fd, 1);
+						close(out_fd);
+					}
 					export_status(stexit, &env, &l_gc, lst);	
 				}
 				if (l == 2)

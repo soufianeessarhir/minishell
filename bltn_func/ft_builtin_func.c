@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 13:11:38 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:12:35 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int ft_is_bultin(char *argv, char **builtins)
+static int ft_is_builtin(char *argv, char **builtins)
 {
 	int i;
 
@@ -26,24 +26,24 @@ static int ft_is_bultin(char *argv, char **builtins)
 	return (-1);
 }
 
-static int execute_bltncmd(int is_bultin, t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
+static int execute_bltncmd(int is_builtin, t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 {
 	char **argv;
 
 	argv = cmd->args;
-	if (is_bultin == 0)
+	if (is_builtin == 0)
 		return (pwd());
-	else if (is_bultin == 1)
+	else if (is_builtin == 1)
 		return (env(*envpv, gc, *cmd->flag_display_env));
-	else if (is_bultin == 2)
+	else if (is_builtin == 2)
 		return (cd(argv, envpv, gc, lst));
-	else if (is_bultin ==  3)
+	else if (is_builtin ==  3)
 		return (ft_export(argv, envpv, gc, lst, cmd->flag_display_env));
-	else if (is_bultin == 4)
+	else if (is_builtin == 4)
 		return (unset(argv, envpv, gc, lst));
-	else if(is_bultin ==  5)
+	else if(is_builtin ==  5)
 		exit_0(1, ft_strlen_double(argv + 1), argv);
-	else if (is_bultin == 6)
+	else if (is_builtin == 6)
 		return (echo(ft_strlen_double(argv),argv, envpv, lst));
 	return (ft_execute(cmd, envpv, gc, lst));
 }
@@ -51,7 +51,7 @@ int ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 {
 	int i;
 	char **argv;
-	int is_bultin;
+	int is_builtin;
 	const char *builtins[8] = {"pwd", "env", "cd", "export", "unset", "exit", "echo", NULL};
 	int status;
 
@@ -59,31 +59,15 @@ int ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 	argv = cmd->args;
 	if (argv == NULL || argv[i] == NULL)
 		return (0);
-
-	printf("red_in_fd: %d\n", cmd->red_in_fd);
-	printf("red_out_fd: %d\n", cmd->red_out_fd);
-
-	if (cmd->red_in_fd > 0)
-	{
-		dup2(cmd->red_in_fd, 0);
-		close(cmd->red_in_fd);
-
-	}
-	if (cmd->red_out_fd > 1)
-	{
-		dup2(cmd->red_out_fd, 1);
-		close(cmd->red_out_fd);
-	}
 	
-	is_bultin = ft_is_bultin(argv[i], (char **)builtins);
-	if (!*cmd->flag_pipe && ft_strlen_double(argv) && is_bultin != 1)
+	is_builtin = ft_is_builtin(argv[i], (char **)builtins);
+	if (!*cmd->flag_pipe && ft_strlen_double(argv) && is_builtin != 1)
 		ft_export_(argv, envpv, gc, lst);
-	if (is_bultin == 1 && !*cmd->flag_pipe)
+	if (is_builtin == 1 && !*cmd->flag_pipe)
 		ft_export_anything("_=/usr/bin/env", gc, lst, envpv);
-	status = execute_bltncmd(is_bultin, cmd, envpv, gc, lst);
-	if (is_bultin == 1 && !*cmd->flag_pipe)
+	status = execute_bltncmd(is_builtin, cmd, envpv, gc, lst);
+	if (is_builtin == 1 && !*cmd->flag_pipe)
 		ft_export_anything("_=env", gc, lst, envpv);
-	dup2(2, 0);
-	dup2(2, 1);
+
 	return (status);
 }

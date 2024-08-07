@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/05 18:55:43 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:57:11 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void exit_0(int i, int argc, char **argv)
 	int error_msg;
 
 	j = 0;
-	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit\n", 2);
 	if (argv[i] != NULL)
 	{
 		error_msg = 0;

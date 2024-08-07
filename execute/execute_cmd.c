@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/06 17:52:53 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:00:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 			{
 				ft_putstr_fd(argv[0], 2);
 				if (S_ISDIR(statbuf.st_mode))
+				{
 					ft_putstr_fd(": is a directory\n", 2);
+					exit(126);
+				}
 				else
 					ft_putstr_fd(": Not a directory\n", 2);
 			}
@@ -105,6 +108,7 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 				{
 					ft_putstr_fd(argv[0], 2);
 					ft_putstr_fd(": is a directory\n", 2);
+					exit(126);
 				}
 				else
 					perror(argv[0]);
