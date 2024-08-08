@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 12:04:18 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:24:38 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 
 	new_env[i] = NULL;
     *envp = new_env;
-	i=0;
 }
 
 // Function to print exported environment variables

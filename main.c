@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/08 09:09:17 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:59:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ void readline_loop(char **line, t_gc **lst, char **env)
 
 	intit_env_list(&env_lst, env, lst);
 	int env_i = 0;
-	if (!path_of_program && !my_getenv("path_of_program", env_lst))
+	if (!path_of_program && !my_getenv("@path_of_program", env_lst))
 	{
 		char **tmp;
-		char *pwd = my_getenv("PWD", env_lst);
+		char *pwd;
+
 		if (*env == NULL)
 		{
+			pwd = my_getenv("PWD", env_lst);
 			env_i = 1;
 			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
 			tmp[0] = ft_strdup("cd", &l_gc);
@@ -94,7 +96,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		}
 		else 
 			path_of_program = my_getenv("_", env_lst);
-		ft_export_anything(ft_strjoin("path_of_program=", path_of_program, lst), &l_gc, lst, &env);
+		ft_export_path_program(path_of_program, &env, lst);
 		env_lst = NULL;
 	}
 	
@@ -210,7 +212,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				tmp->flag_pipe = &flag_pipe;
 				tmp->flag_display_env = &bol;
 				tmp->num_cmd = cmd_pipe;
-				tmp->path_of_program =  my_getenv("path_of_program", env_lst);
+				tmp->path_of_program =  my_getenv("@path_of_program", env_lst);
 				
 				
 				if (flag_pipe)

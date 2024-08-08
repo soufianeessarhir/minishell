@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 11:50:19 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:56:56 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,6 @@ int ft_isonlydigit(char *str)
 	return (1);
 }
 
-
-
 void sort_env_list(t_env **env_lst)
 {
 	t_env *tmp;
@@ -202,4 +200,24 @@ void sort_env_list(t_env **env_lst)
 		}
 		tmp = tmp->next;
 	}
+}
+
+
+void ft_export_path_program(char *argv, char ***envp, t_gc **lst)
+{
+	size_t env_count;
+	char **new_env;
+	int i;
+
+	i = 0;
+    env_count = ft_strlen_double(*envp);
+	new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
+	while ((*envp)[i])
+	{
+		new_env[i] = ft_strdup((*envp)[i], lst);
+		i++;
+	}
+	new_env[i] = ft_strjoin("@path_of_program=", argv, lst);
+	new_env[i + 1] = NULL;
+	*envp = new_env;
 }
