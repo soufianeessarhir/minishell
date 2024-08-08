@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:53:28 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/06 01:22:06 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/08 09:11:02 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void handle_word(char *line, int *i,t_token **token_lst, t_gc **l_gc)
 		else
 		(*i)++;
 	}
-	ft_dll_lstadd_back(token_lst, ft_dll_lstnew(ft_substr(line, j, *i - j, l_gc), 1, l_gc));
+	if (j != *i)
+		ft_dll_lstadd_back(token_lst, ft_dll_lstnew(ft_substr(line, j, *i - j, l_gc), 1, l_gc));
 	
 }
 
@@ -66,7 +67,7 @@ void ft_tokinize(char *line,t_token **token_lst, t_gc **l_gc)
 			handle_pipe(&i, token_lst, l_gc);
         else if (line[i] == '>' || line[i] == '<')
             handle_redirect(line, &i, token_lst, l_gc);
-		else
+		else if (line[i])
 			handle_word(line, &i, token_lst, l_gc);
     }
 }

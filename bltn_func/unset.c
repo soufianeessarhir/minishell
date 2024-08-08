@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/05 18:47:52 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/08 08:46:42 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char *get_key_unset(char *str, t_gc **gc)
 		return (NULL);
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_' && ft_iswhitespace(str[i]))
+		if ((!ft_isalnum(str[i]) && str[i] != '_') || ft_iswhitespace(str[i]))
 			return (NULL);
 		i++;
 	}

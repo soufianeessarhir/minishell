@@ -7,8 +7,6 @@
 
 execpart --------------------------------------------------------------
 
-
-export TES!T=123			bash: !T=123: event not found
 "."    check this error if you can fix it or not
 
 
