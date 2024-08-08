@@ -8,11 +8,8 @@
 execpart --------------------------------------------------------------
 
 
-cd - cd --
-
-//in subject didn't tell us that we must handle this case that we have !
 export TES!T=123			bash: !T=123: event not found
-
+"."    check this error if you can fix it or not
 
 
 
@@ -50,7 +47,20 @@ if you create a file unlink it by this function unlink
 
         #what is the proof to unlink the files?#
 		if sameone go to tmp and remove permission of the file and run the minishell and try to create a file with the same name he will get an error that the file is already exist
+		i think he will get permission denied error if not give an example because bash didn't remove files 
 
+			minishell$ touch /tmp/ll
+			minishell$ echo haha > /tmp/ll
+			minishell$ chmod 000 /tmp/ll
+			minishell$ ls > /tmp/ll
+			minishell: /tmp/ll: Permission denied
+
+			bash-3.2$ touch /tmp/ll
+			bash-3.2$ echo haha > /tmp/ll
+			bash-3.2$ chmod 000 /tmp/ll
+			bash-3.2$ ls > /tmp/ll
+			bash: /tmp/ll: Permission denied
+			if you mean something else told me
 		i will explain more tomorrow
 
 
@@ -65,12 +75,12 @@ must you expand in parsepart                       >> i just expand environment 
 
 
 i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem   |>> give me an example (do you mean exit status)
-
-
+if you mean export name=value | echo $name for example it will not work so the value will be NULL 
+export GHOST=123 | env | grep GHOST           GHOST will not be exported in the env command
 when i finish the pipe i will explain to you what we need to do to fix this problem
 
 ------------------------------------------------------------------------
-recheck if the problem still apears // is still exist 
+recheck again
 
 
 
@@ -81,22 +91,7 @@ recheck if the problem still apears // is still exist
 
 
 
-// report error 
-exepected :  syntax error
-
-minishell$ export a="ls           - 
-minishell$ 
- 
-// this behavior of bash
-
-bash-3.2$ export a="ls           -
-> bash: unexpected EOF while looking for matching `"'
-bash: syntax error: unexpected end of file
-
-
-------------------------------------------------------------------------
-
-
+--------------------------------------------------------------------------------
 // report error in expand 
 this small error you can fix it or not , because it is not a big problem
 
@@ -106,78 +101,12 @@ minishell$ export
 
 declare -x a="ls  "
 declare -x h="ls"
-
-
-
-
-
-------------------------------------------------------------------------
-urget fix this problem to i can see if my part working good
-
-minishell$ cat > p | cat < c
-args: cat
-red_in: 0
-red_out: 3
-args: cat
-red_in: 0
-red_out: 1
-
-expected output:
-
-minishell$ cat > p | cat < c
-args: cat
-red_in: 0
-red_out: 3
-args: cat
-red_in: 4
-red_out: 1
-
-
+this happen because i split spassed values befor built_ins executed it's a matter of order i will look at it later
 
 ------------------------------------------------------------------------
 
-cd "doesntexist" 2>/dev/null  deffirent behavior in bash and minishell
-                     |-> make sure that you print the error message in the stderr 
+i add a variable in the cmd structer to endicate the exit status because we need just to export the exit status of the last command
+and also we need to not execute the command if it include an error so i will set the default value of the exit status to 0 and if there is an error i will set it to 1
+if you find 1 don't execute the command just expand it and skip it
 
-
-this you error because you didn't handle the error message in the stderr
-i already handle the error message in the stderr you can check
-
-args: cd
-args: doesntexist
-args: 2
-red_in: 0
-red_out: 3
-
-
-how i know that i must redirect the error message to the stderr
-you return to me red_out not red_stderr ? and i already display the error message in the stderr
-
-
-and in subject you don't tell you must redirect the error message to the stderr
-
-
-if you want to handling this error you must return to retokenize the command
-expected output: 
-
-args: cd
-args: doesntexist
-args: 2
-red_in: 0
-red_out: 1
-red_err: 3
-
-
-
-
-------------------------------------------------------------------------
-
-// in this case you have error 
-minishell$ TES\~T
-minishell$ 
-
-you didn't send me any argument that way i can't print this message : not a valid identifier  
-if you fix this problem otuomaticly problem will be fixed in this case
-
-export TES\~T=123          bash: export: `TES~T=123': not a valid identifier
-unset TES\~T             bash: unset: `TES~T': not a valid identifier
+                                  |if you have a note about this tell me|

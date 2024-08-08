@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/07 18:56:44 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/08 02:43:30 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			// 	printf("red_in: %d\n", tmp->red_in_fd);
 			// 	printf("red_out: %d\n", tmp->red_out_fd);
 			// }
-			
 			t_cmd *tmp = cmd;
 
 			// while (tmp)
@@ -280,16 +279,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						}
 						stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
 
-						if (tmp->red_in_fd > 0)
-						{
-							dup2(in_fd, 0);
-							close(in_fd);
-						}
-						if (tmp->red_out_fd > 1)
-						{
-							dup2(out_fd, 1);
-							close(out_fd);
-						}
+						// if (tmp->red_in_fd > 0)
+						// {
+						// 	dup2(in_fd, 0);
+						// 	close(in_fd);
+						// }
+						// if (tmp->red_out_fd > 1)
+						// {
+						// 	dup2(out_fd, 1);
+						// 	close(out_fd);
+						// }
 						exit(stexit);
 					}
 				}
