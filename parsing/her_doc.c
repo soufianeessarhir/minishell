@@ -6,11 +6,29 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/08 07:08:24 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/09 01:05:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int ft_split_here_doc(char *str, int fd,t_gc **l_gc,char *delimiter)
+{
+	char **args;
+	int i;
+
+	args = ft_split(str, '\n',l_gc);
+	i = 0;
+	while (args[i])
+	{
+		if (ft_strcmp (args[i],delimiter) == 0)
+			return (1);
+		write(fd, args[i], ft_strlen(args[i]));
+		write(fd, "\n", 1);
+		i++;
+	}
+	return (0);
+}
 
 void her_doc_handling(t_token **token_lst, t_gc **l_gc)
 {
@@ -42,7 +60,7 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc)
 			}
             while (isatty(0))
             {
-                if (!line || ft_strcmp(line,clean_str(tmp->next->value,l_gc)) == 0)
+                if (!line || ft_split_here_doc(line, fd,l_gc,clean_str(tmp->next->value,l_gc)))
                     break;
                 write(fd, line, ft_strlen(line));
                 write(fd, "\n", 1);

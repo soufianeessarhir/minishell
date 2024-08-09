@@ -8,14 +8,19 @@
 execpart --------------------------------------------------------------
 
 "."    check this error if you can fix it or not
-
+bash-3.2$ unset ?
+bash-3.2$ unset ??
+bash-3.2$ unset ??????
+bash: unset: `main.c': not a valid identifier
+bash: unset: `main.o': not a valid identifier
+bash-3.2$ unset ?????
+bash-3.2$ unset ???????
+bash-3.2$ unset ???????        i think it is undefined behavior if agree remove it from the notes
 
 
 
 cd /var  \\this i must handle and this " etc   tmp " 
 
-dup2 somrthing wrong at  this function it keep the program running and didn't stop it check it and if the 
-error from me report it to me ---- > where ?
 
 // i will fix this problem in the next commit
 minishell$ ./missing.out     output: bash: ./missing.out: No such file or directory 
@@ -100,6 +105,7 @@ minishell$ export
 declare -x a="ls  "
 declare -x h="ls"
 this happen because i split spassed values befor built_ins executed it's a matter of order i will look at it later
+report all behaviors like this one to fix them all at once
 
 ------------------------------------------------------------------------
 
