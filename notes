@@ -7,23 +7,14 @@
 
 execpart --------------------------------------------------------------
 
+i will see
 "."    check this error if you can fix it or not
-bash-3.2$ unset ?
-bash-3.2$ unset ??
-bash-3.2$ unset ??????
-bash: unset: `main.c': not a valid identifier
-bash: unset: `main.o': not a valid identifier
-bash-3.2$ unset ?????
-bash-3.2$ unset ???????
-bash-3.2$ unset ???????        i think it is undefined behavior if agree remove it from the notes
+
 
 
 
 cd /var  \\this i must handle and this " etc   tmp " 
 
-
-// i will fix this problem in the next commit
-minishell$ ./missing.out     output: bash: ./missing.out: No such file or directory 
 
 parsepart --------------------------------------------------------------
 
@@ -75,13 +66,6 @@ if you create a file unlink it by this function unlink
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 
-
-
-i have problem in pipe when i change envairoment variable in pipe he didn't change  because we expand before pipe and we didn't expand after pipe we need to fix this problem   |>> give me an example (do you mean exit status)
-if you mean export name=value | echo $name for example it will not work so the value will be NULL 
-export GHOST=123 | env | grep GHOST           GHOST will not be exported in the env command
-when i finish the pipe i will explain to you what we need to do to fix this problem
-
 ------------------------------------------------------------------------
 recheck again
 
@@ -109,8 +93,48 @@ report all behaviors like this one to fix them all at once
 
 ------------------------------------------------------------------------
 
+
 i add a variable in the cmd structer to endicate the exit status because we need just to export the exit status of the last command
 and also we need to not execute the command if it include an error so i will set the default value of the exit status to 0 and if there is an error i will set it to 1
 if you find 1 don't execute the command just expand it and skip it
+
+
+
+
+i understand that you want to fix the problem in this cmd
+< o gsfggs
+you didn't want to execute the last cmd 
+
+
+
+the solution is simple just add return in your function that return 1 and  free all the memory 
+
+like this :
+
+if (open_redirection(cmd, l_gc,help))
+	return (1);
+
+i think you didn't need this exit_status
+
+i fix problem but you can optimize
+
+
+------------------------------------------------------------------------
+
+
+
+
+i fix exitstatus in pipe but $_  not 
+
+
+do like me
+
+char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd) 
+if (numcmd == 0)
+	result = ft_strjoin(result, my_getenv( "exitstatus", env_lst), l_gc);
+else
+	result = ft_strjoin(result, "0", l_gc);
+
+if your numcmd not equal 0 you must expand $_ to empty string
 
                                   |if you have a note about this tell me|

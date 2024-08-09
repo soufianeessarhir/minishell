@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/08 16:59:28 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:21:22 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
     env_handling(&token_lst, *env_lst, l_gc);
     init_cmd(cmd, token_lst, l_gc);
 	open_redirection(cmd, l_gc,help);
+
+	//--------you can optimize this part by adding the return value in your function
+	if ((*cmd)->exit_status == 1)
+		return 1;
+
+		
 	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next)
 	// {
-	// 	for (int i = 0; tmp->args[i]; i++)
-	// 	printf("args: %s\n", tmp->args[i]);
-	// 	for (t_redir *tmp2 = tmp->rd; tmp2; tmp2 = tmp2->next)
-	// 	printf("redir: %s\n", tmp2->redio);
-	// 	printf("red_in: %d\n", tmp->red_in_fd);
-	// 	printf("red_out: %d\n", tmp->red_out_fd);
-		
+	// 	printf("%d",tmp->exit_status);
 	// }
 	// exit(0);
 	return 0;
@@ -207,6 +207,9 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			cmd_pipe = 0;
 			path_program = NULL;
 			tmp_cmd_pipe =0;
+			int last_childpid;
+
+			last_childpid = 0;
 			while (tmp)
 			{
 				tmp->flag_pipe = &flag_pipe;
@@ -232,7 +235,9 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						perror("fork");
 						exit(1);
 					}
-
+					if (childpid > 0)
+						if (!tmp->next)
+							last_childpid = childpid;
 					if (childpid == 0)
 					{
 						int in_fd = -1;
@@ -268,9 +273,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 								perror("dup2");
 								exit(1);
 							}
-							
-							ft_export_anything("_=", &l_gc, lst, &env);
-							export_status(0, &env, &l_gc, lst);
 						}
 
 						i = 0;
@@ -280,17 +282,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 							i++;
 						}
 						stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
-
-						// if (tmp->red_in_fd > 0)
-						// {
-						// 	dup2(in_fd, 0);
-						// 	close(in_fd);
-						// }
-						// if (tmp->red_out_fd > 1)
-						// {
-						// 	dup2(out_fd, 1);
-						// 	close(out_fd);
-						// }
 						exit(stexit);
 					}
 				}
@@ -351,12 +342,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				while (i <= num_pipe)
 				{
 					g_a.stpsignal_inparent = 1;
-					wait(&status);
-					if (cmd_pipe == num_pipe)
-					{
+					if (wait(&status) == last_childpid)
 						export_status(WEXITSTATUS(status), &env, &l_gc, lst);
-						cmd_pipe = 0;
-					}
 					g_a.stpsignal_inparent = 0;
 					g_a.exitstatus_singnal = 0;
 					i++;

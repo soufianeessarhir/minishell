@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 14:00:28 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:23:26 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,12 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			stat(path_cmd, &statbuf);
-			if (ft_strchr(argv[0], '/') && argv[0][0] != '/')
+			if (argv[0][0] == '.' && argv[0][1] == '/')
+			{
+				ft_putstr_fd(argv[0], 2);
+				ft_putstr_fd(": No such file or directory\n", 2);
+			}
+			else if (ft_strchr(argv[0], '/') && argv[0][0] != '/')
 			{
 				ft_putstr_fd(argv[0], 2);
 				if (S_ISDIR(statbuf.st_mode))

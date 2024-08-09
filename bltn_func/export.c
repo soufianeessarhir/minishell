@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/08 16:24:38 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/09 10:17:14 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void print_exported_variables(char **envp, t_gc **gc, int bol)
 			env_lst = env_lst->next;
 			continue;
 		}
-		if (!ft_strcmp(env_lst->key, "exitstatus") || !ft_strcmp(env_lst->key, "path_of_program") || !ft_strcmp(env_lst->key, "_"))
+		if (!ft_strcmp(env_lst->key, "exitstatus") || !ft_strcmp(env_lst->key, "@path_of_program") || !ft_strcmp(env_lst->key, "_"))
 		{
 			env_lst = env_lst->next;
 			continue;

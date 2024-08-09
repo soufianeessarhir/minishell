@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 15:12:35 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:00:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,5 @@ int ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 	status = execute_bltncmd(is_builtin, cmd, envpv, gc, lst);
 	if (is_builtin == 1 && !*cmd->flag_pipe)
 		ft_export_anything("_=env", gc, lst, envpv);
-
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/08 16:25:12 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:26:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ t_env	*new_env(char *key, char *value, t_gc **lst);
 void env_add_back(t_env **env_lst, t_env *new);
 void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char *my_getenv(char *key, t_env *env_lst);
-char *env_search(char *str, t_env *env_lst, t_gc **l_gc);
+char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
 int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 void open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
 char *clean_str(char *str, t_gc **l_gc); 
