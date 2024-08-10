@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/06 01:08:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/10 05:13:37 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,14 @@ int	syntax_error(t_token **token, t_gc **l_gc)
 	if (tmp == NULL && state == 1)
 		return (her_doc_handling(token, l_gc), 0);
 	else if (state != 1 && tmp != NULL)
-		return (tmp = NULL, her_doc_handling(token, l_gc), 1);
+	{
+		if (tmp->prev != NULL)
+			tmp->prev->next = NULL;
+		else
+			*token = NULL;
+		return (her_doc_handling(token, l_gc), 1);
+		
+	}
 	return (her_doc_handling(token, l_gc),
 		ft_putstr_fd("syntax error near unexpected token `newline'\n",2), 1);
 }

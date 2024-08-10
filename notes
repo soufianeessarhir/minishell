@@ -9,6 +9,14 @@ execpart --------------------------------------------------------------
 
 i will see
 "."    check this error if you can fix it or not
+exit 42 42 42 42 42 
+exit
+minishell: exit: too many arguments
+minishell: exit: command not found    if an error in the command you must skip it and not execute it
+unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
+
+ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls
+incrrect result
 
 
 
@@ -99,26 +107,6 @@ and also we need to not execute the command if it include an error so i will set
 if you find 1 don't execute the command just expand it and skip it
 
 
-
-
-i understand that you want to fix the problem in this cmd
-< o gsfggs
-you didn't want to execute the last cmd 
-
-
-
-the solution is simple just add return in your function that return 1 and  free all the memory 
-
-like this :
-
-if (open_redirection(cmd, l_gc,help))
-	return (1);
-
-i think you didn't need this exit_status
-
-i fix problem but you can optimize
-
-
 ------------------------------------------------------------------------
 
 
@@ -136,5 +124,7 @@ else
 	result = ft_strjoin(result, "0", l_gc);
 
 if your numcmd not equal 0 you must expand $_ to empty string
+i don't understand and there are functons called before env_search and exitstatus make a confusion in there 
+if we can fix that out of expand it will be better because exand code is sensitive
 
                                   |if you have a note about this tell me|

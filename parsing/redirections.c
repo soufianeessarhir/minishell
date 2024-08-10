@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/08 03:59:06 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/10 01:37:18 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int handle_red_out(t_cmd *tmp, t_gc **l_gc,t_redir *rd)
 	}
 	return 0;
 }
-void open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help)
+int open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help)
 {
     t_cmd *tmp;
 
@@ -146,6 +146,9 @@ void open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help)
     				tmp->rd = tmp->rd->next->next;
             }
         }
+		if (!tmp->next && tmp->exit_status == 1)
+		   return 1;
         tmp = tmp->next;
     }
+	return 0;
 }

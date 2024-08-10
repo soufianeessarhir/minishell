@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/09 13:26:54 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/10 03:01:17 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <sanitizer/lsan_interface.h>
 #include <sys/stat.h>
+#include <termios.h>
 
 #include "./gc/gc.h"
 
@@ -143,7 +144,7 @@ void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char *my_getenv(char *key, t_env *env_lst);
 char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
 int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
-void open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
+int open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
 char *clean_str(char *str, t_gc **l_gc); 
 int is_dollar(char *str);
 
