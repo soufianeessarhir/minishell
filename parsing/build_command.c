@@ -6,13 +6,11 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 02:47:10 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 07:17:32 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 void ft_lstadd_back_redir(t_redir **lst, t_redir *new)
 {

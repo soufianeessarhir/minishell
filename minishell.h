@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 04:24:41 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 07:24:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ t_env_vars	*new_env_vars(char *value, t_gc **l_gc);
 void		env_lstadd_back(t_env_vars **alst, t_env_vars *new);
 int			is_dollar(char *str);
 char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
+char *helper(char *s, t_gc **l_gc, t_env *env_lst, int numcmd);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);
