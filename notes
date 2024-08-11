@@ -10,7 +10,7 @@ execpart --------------------------------------------------------------
 i will see
 "."    check this error if you can fix it or not
 
-
+//this working good must be 1 not 258
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
 
 
@@ -111,22 +111,6 @@ if you find 1 don't execute the command just expand it and skip it
 ------------------------------------------------------------------------
 
 
-
-
-i fix exitstatus in pipe but $_  not 
-
-
-do like me
-
-char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd) 
-if (numcmd == 0)
-	result = ft_strjoin(result, my_getenv( "exitstatus", env_lst), l_gc);
-else
-	result = ft_strjoin(result, "0", l_gc);
-
-if your numcmd not equal 0 you must expand $_ to empty string
-i don't understand and there are functons called before env_search and exitstatus make a confusion in there 
-if we can fix that out of expand it will be better because exand code is sensitive
 
                                   |if you have a note about this tell me|
 bash-3.2$ ls << 'aa'

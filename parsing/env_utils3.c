@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 03:17:23 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 06:39:04 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,22 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
     {
         if (str[i] == '$' && str[i + 1] != '/')
         {
-            if (str[i + 1] == '?' && str[0] != '\'')
+            if (str[i + 1] == '?')
             {
                 result = handle_exit_status(result, env_lst, l_gc, numcmd);
                 i += 2;
             }
-            else
+            else if (str[i] == '$' && !ft_strcmp(&str[i + 1], "_"))
+			{
+				if (numcmd == 0)
+					result = handle_env_variable(str, &i, result, env_lst, l_gc);
+				else
+				{
+					result = ft_strjoin(result, "", l_gc);
+					i += 2;
+				}
+			}
+			else
                 result = handle_env_variable(str, &i, result, env_lst, l_gc);
         }
         else
