@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/09 12:23:26 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/11 03:56:50 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,15 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 			stat(path_cmd, &statbuf);
 			if (argv[0][0] == '.' && argv[0][1] == '/')
 			{
-				ft_putstr_fd(argv[0], 2);
-				ft_putstr_fd(": No such file or directory\n", 2);
+				if (S_ISDIR(statbuf.st_mode))
+				{
+					ft_putstr_fd(argv[0], 2);
+					ft_putstr_fd(": is a directory\n", 2);
+					exit(126);
+				}
+				perror(argv[0]);
+				if(errno == 13 && S_ISDIR(statbuf.st_mode) == 0)
+					exit(126);
 			}
 			else if (ft_strchr(argv[0], '/') && argv[0][0] != '/')
 			{

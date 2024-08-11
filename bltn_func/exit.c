@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/10 02:20:46 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 04:08:59 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void exit_0(int i, int argc, char **argv)
+int exit_0(int i, int argc, char **argv)
 {
 	int j;
 	long checker;
@@ -28,7 +28,7 @@ void exit_0(int i, int argc, char **argv)
 		{
 			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			if (argc > 2)
-				return ;
+				return (1);
 			exit(1);
 		}
 		else if ((error_msg == -1 || error_msg == -2))
