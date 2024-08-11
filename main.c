@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 03:52:08 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/11 05:00:29 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
 							last_childpid = childpid;
 					if (childpid == 0)
 					{
+						if (tmp->exit_status == 1)
+						{
+							i = 0;
+							while (i < num_pipe * 2)
+							{
+								close(pipes_fds[i]);
+								i++;
+							}
+							exit(1);
+						}
 						int in_fd = -1;
 						int out_fd = -1;
 
