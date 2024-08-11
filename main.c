@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/10 01:49:27 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 03:52:08 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,9 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			help.lst = lst;
 			if (parsing_part(&help, &env_lst, &l_gc, &cmd) || g_a.stphedorc_insgin == 2)
 			{
+				if (g_a.stphedorc_insgin == 1)
+					dup2(1, 0);
 				g_a.stphedorc_insgin = 0;
-				dup2(1, 0);
 				free(*line);
 				*line = NULL;
 				ft_free(&l_gc);

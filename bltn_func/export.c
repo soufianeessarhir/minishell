@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/09 10:17:14 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/11 01:48:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,33 +70,59 @@ void combine_env_and_args(char ***envp, char *argv, t_gc **lst)
     *envp = new_env;
 }
 
+void sort_env_list(char ***env_lst, t_gc **gc)
+{
+	char **tmp;
+	char **tmp2;
+	char *swap;
+
+	tmp = *env_lst;
+	int i = 0;
+	int j = 0;
+	while (tmp[i])
+	{
+		tmp2 = &tmp[i + 1];
+		j = 0;
+		while (tmp2 && tmp2[j])
+		{
+			if (ft_strcmp(tmp[i], tmp2[j]) > 0)
+			{
+				swap = tmp2[j];
+				tmp2[j] = ft_strdup(tmp[i] , gc);
+				tmp[i] = ft_strdup(swap , gc);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 // Function to print exported environment variables
 void print_exported_variables(char **envp, t_gc **gc, int bol)
 {
-	t_env *env_lst;
-	
-	env_lst = NULL;
-	intit_env_list(&env_lst, envp, gc);
-	sort_env_list(&env_lst);
-	while(env_lst)
+	int i = 0;
+	sort_env_list(&envp , gc);
+    while (envp[i])
 	{
-		if (ft_strcmp(env_lst->key, "PATH") == 0 && bol == 1)
+		if (ft_strcmp(get_key(envp[i], gc), "PATH") == 0 && bol == 1)
 		{
-			env_lst = env_lst->next;
+			i++;
 			continue;
 		}
-		if (!ft_strcmp(env_lst->key, "exitstatus") || !ft_strcmp(env_lst->key, "@path_of_program") || !ft_strcmp(env_lst->key, "_"))
+		if (!ft_strcmp(get_key(envp[i], gc), "exitstatus")|| !ft_strncmp(envp[i], "@path_of_program", 16) || !ft_strcmp(get_key(envp[i], gc), "_"))
 		{
-			env_lst = env_lst->next;
+			i++;
 			continue;
 		}
-		printf("declare -x ");
-		if (env_lst->value == NULL)
-			printf("%s\n", env_lst->key);
-		else
-			printf("%s=\"%s\"\n", env_lst->key, env_lst->value);
-		env_lst = env_lst->next;
-	}
+		ft_putstr_fd("declare -x ", 1);
+		if (strchr(envp[i], '=') == NULL)
+			printf("%s\n", envp[i]);
+		else if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
+			printf("%s\"\"\n", envp[i]);
+		else	
+			printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
+        i++;
+    }
 }
 
 

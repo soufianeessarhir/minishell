@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/10 05:13:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 02:18:46 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	syntax_error(t_token **token, t_gc **l_gc)
 		state = graph[state][tmp->type - 1];
 		if (state == -1)
 		{
-			ft_putstr_fd(ft_strjoin(ft_strjoin("syntax error near unexpected token `", tmp->value, l_gc),"\n",l_gc), 2);
+			ft_putstr_fd(ft_strjoin(ft_strjoin("syntax error near unexpected token `", tmp->value, l_gc),"\'\n",l_gc), 2);
 			break ;
 		}
 		tmp = tmp->next;
@@ -68,5 +68,5 @@ int	syntax_error(t_token **token, t_gc **l_gc)
 		
 	}
 	return (her_doc_handling(token, l_gc),
-		ft_putstr_fd("syntax error near unexpected token `newline'\n",2), 1);
+		ft_putstr_fd("syntax error near unexpected token `newline\' \n",2), 1);
 }

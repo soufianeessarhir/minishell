@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/10 03:01:17 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 01:49:23 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst);
 void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst);
 void ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env);
 int ft_isonlydigit(char *str);
-void sort_env_list(t_env **env_lst);
+// void sort_env_list(t_env **env_lst);
 void ft_export_path_program(char *argv, char ***envp, t_gc **lst);
 
 #endif

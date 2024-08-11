@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/08 16:56:56 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/11 01:49:02 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,34 +172,6 @@ int ft_isonlydigit(char *str)
 		i++;
 	}
 	return (1);
-}
-
-void sort_env_list(t_env **env_lst)
-{
-	t_env *tmp;
-	t_env *tmp2;
-	char *key;
-	char *value;
-
-	tmp = *env_lst;
-	while (tmp)
-	{
-		tmp2 = tmp->next;
-		while (tmp2)
-		{
-			if (ft_strcmp(tmp->key, tmp2->key) > 0)
-			{
-				key = tmp->key;
-				value = tmp->value;
-				tmp->key = tmp2->key;
-				tmp->value = tmp2->value;
-				tmp2->key = key;
-				tmp2->value = value;
-			}
-			tmp2 = tmp2->next;
-		}
-		tmp = tmp->next;
-	}
 }
 
 
