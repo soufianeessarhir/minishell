@@ -6,12 +6,28 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:53:28 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/08 09:11:02 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 08:08:56 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char *trem_white_spaces(char *line,t_gc **l_gc)
+{
+	int i;
+	int j;
+	char *new_line;
+
+	i = 0;
+   j = ft_strlen(line) - 1;
+	new_line = NULL;
+	while (line[i] && (line[i] == ' ' || line[i] == '\t' || line[i] == '\n'))
+		i++;
+	while (j >= 0 && (line[j] == ' ' || line[j] == '\t' || line[j] == '\n'))
+		j--;
+	new_line = ft_substr(line, i, j - i + 1, l_gc);
+	return (new_line);
+}
 void handle_word(char *line, int *i,t_token **token_lst, t_gc **l_gc)
 {
     int j;
@@ -59,6 +75,7 @@ void ft_tokinize(char *line,t_token **token_lst, t_gc **l_gc)
     int i;
 
     i = 0;
+	line = trem_white_spaces(line, l_gc);
     while (line[i])
     {
 		while (line[i] && (line[i] == ' ' || line[i] == '\t'))

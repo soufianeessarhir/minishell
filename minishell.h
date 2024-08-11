@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 07:24:50 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 08:51:23 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void		env_add_back(t_env **env_lst, t_env *new);
 void		intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char		*my_getenv(char *key, t_env *env_lst);
 char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
-int			env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
+void			env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 int			open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
 char		*clean_str(char *str, t_gc **l_gc); 
 int			is_dollar(char *str);
@@ -158,7 +158,7 @@ t_env_vars	*new_env_vars(char *value, t_gc **l_gc);
 void		env_lstadd_back(t_env_vars **alst, t_env_vars *new);
 int			is_dollar(char *str);
 char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
-char *helper(char *s, t_gc **l_gc, t_env *env_lst, int numcmd);
+char		*helper(char *s, t_gc **l_gc, t_env *env_lst, int numcmd);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);
