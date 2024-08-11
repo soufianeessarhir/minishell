@@ -43,9 +43,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": -9446.663267924469,
-			"y": -38009.85241563728,
-			"lastActivityTimestamp": 1722995929078,
+			"x": -5940.755871714842,
+			"y": -26309.29821641853,
+			"lastActivityTimestamp": 1723343923706,
 			"meta": {}
 		},
 		{
@@ -59,7 +59,7 @@
 			"followingUserId": null,
 			"opacityForNextShape": 1,
 			"stylesForNextShape": {
-				"tldraw:color": "light-blue",
+				"tldraw:color": "red",
 				"tldraw:geo": "rectangle",
 				"tldraw:size": "xl",
 				"tldraw:font": "mono",
@@ -68,7 +68,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "cross",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -78,8 +78,8 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1956,
-				"h": 920
+				"w": 1916,
+				"h": 875
 			},
 			"insets": [
 				false,
@@ -120,8 +120,8 @@
 			"typeName": "instance_page_state"
 		},
 		{
-			"x": 18165.96014292447,
-			"y": 41802.82116563728,
+			"x": 14202.630871714842,
+			"y": 34419.53259141853,
 			"z": 0.1,
 			"meta": {},
 			"id": "camera:page:page",

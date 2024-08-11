@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/03 03:22:33 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 02:48:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,15 @@ char *my_getenv(char *key, t_env *env_lst)
         env_lst = env_lst->next;
     }
     return NULL;
+}
+int sp_in_it(char *str)
+{
+	int i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			return 1;
+		i++;
+	}
+	return 0;
 }

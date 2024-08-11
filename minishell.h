@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/10 03:01:17 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/11 03:10:04 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,28 +125,39 @@ typedef struct s_cmd
 	struct s_cmd *prev;
 }               t_cmd;
 
-// void print_full_art();
-t_token *ft_dll_lstnew(char *content, int type, t_gc **l_gc);
-void    ft_dll_lstadd_front(t_token **lst, t_token *new);
-void    ft_dll_lstadd_back(t_token **lst, t_token *new);
-void    ft_dll_lstclear(t_token **lst);
-t_token *ft_dll_lstlast(t_token *lst);
-int     ft_dll_lstsize(t_token *lst);
-void ft_tokinize(char *line,t_token **token_lst,t_gc **l_gc);
-void  init_graph(int graph[4][3]);
-int syntax_error(t_token **token,t_gc **l_gc);
-int sp_uq_handling (char *line);
-int  init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
-void her_doc_handling(t_token **token_lst, t_gc **l_gc);
-t_env	*new_env(char *key, char *value, t_gc **lst);
-void env_add_back(t_env **env_lst, t_env *new);
-void  intit_env_list(t_env **env_lst, char **env, t_gc **lst);
-char *my_getenv(char *key, t_env *env_lst);
-char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
-int env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
-int open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
-char *clean_str(char *str, t_gc **l_gc); 
-int is_dollar(char *str);
+t_token		*ft_dll_lstnew(char *content, int type, t_gc **l_gc);
+void		ft_dll_lstadd_front(t_token **lst, t_token *new);
+void		ft_dll_lstadd_back(t_token **lst, t_token *new);
+void		ft_dll_lstclear(t_token **lst);
+t_token		*ft_dll_lstlast(t_token *lst);
+int			ft_dll_lstsize(t_token *lst);
+void		ft_tokinize(char *line,t_token **token_lst,t_gc **l_gc);
+void		init_graph(int graph[4][3]);
+int			syntax_error(t_token **token,t_gc **l_gc);
+int			sp_uq_handling (char *line);
+int			init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
+void		her_doc_handling(t_token **token_lst, t_gc **l_gc);
+t_env		*new_env(char *key, char *value, t_gc **lst);
+void		env_add_back(t_env **env_lst, t_env *new);
+void		intit_env_list(t_env **env_lst, char **env, t_gc **lst);
+char		*my_getenv(char *key, t_env *env_lst);
+char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
+int			env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
+int			open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
+char		*clean_str(char *str, t_gc **l_gc); 
+int			is_dollar(char *str);
+t_redir		*new_redir(char *red_in, t_gc **l_gc);
+t_args		*new_args(char *arg, t_gc **l_gc);
+void		ft_lstadd_back_args(t_args **lst, t_args *new);
+t_cmd		*new_cmd(t_gc **l_gc);
+char		**ft_fill_args(t_args *args_lst, t_gc **l_gc);
+int			sp_in_it(char *str);
+int			is_all_dollar(char *str);
+char		*expand_double_dollar(char *str, t_gc **l_gc);
+t_env_vars	*new_env_vars(char *value, t_gc **l_gc);
+void		env_lstadd_back(t_env_vars **alst, t_env_vars *new);
+int			is_dollar(char *str);
+char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);

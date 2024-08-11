@@ -128,3 +128,17 @@ i don't understand and there are functons called before env_search and exitstatu
 if we can fix that out of expand it will be better because exand code is sensitive
 
                                   |if you have a note about this tell me|
+bash-3.2$ ls << 'aa'
+> 
+bash-3.2$ cat << a
+> $USER
+> a
+sessarhi
+bash-3.2$ cat << 'a'
+> $USER
+> a
+$USER
+bash-3.2$ cat << "a"
+> $USER
+> a
+$USER
