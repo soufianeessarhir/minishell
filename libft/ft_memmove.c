@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 19:34:17 by sessarhi          #+#    #+#             */
-/*   Updated: 2023/11/13 06:13:44 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 06:16:27 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	else if (d > s)
 	{
 		while (len --)
-			d[len] = s[len]; 
+			d[len] = s[len];
 	}
 	return (dst);
 }

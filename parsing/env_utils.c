@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 02:48:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 06:59:49 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,50 +38,52 @@ void	env_add_back(t_env **env_lst, t_env *new)
 	}
 }
 
-void   intit_env_list(t_env **env_lst, char **env, t_gc **lst) 
+void	intit_env_list(t_env **env_lst, char **env, t_gc **lst)
 {
-    int i;
-    int j;
-    char *key;
-    char *value;
+	int		i;
+	int		j;
+	char	*key;
+	char	*value;
 
-    if (!env)
-        return;
-    i = 0;
-    while (env[i])
-    {
-        j = 0;
-        while (env[i] && env[i][j] != '=' && env[i][j] != '\0')
-            j++;
-        key = ft_substr(env[i], 0, j, lst);
-        value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1, lst);
-        if (!*env_lst)
-            *env_lst = new_env(key, value, lst);
-        else
-        	env_add_back(env_lst, new_env(key, value, lst));
-        i++;
-    }
+	if (!env)
+		return ;
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i] && env[i][j] != '=' && env[i][j] != '\0')
+			j++;
+		key = ft_substr(env[i], 0, j, lst);
+		value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1, lst);
+		if (!*env_lst)
+			*env_lst = new_env(key, value, lst);
+		else
+			env_add_back(env_lst, new_env(key, value, lst));
+		i++;
+	}
 }
-char *my_getenv(char *key, t_env *env_lst) 
-{	
-    while (env_lst)
-    {
-        if (!ft_strcmp(key, env_lst->key))
-		{
-            return env_lst->value;
-		}
-        env_lst = env_lst->next;
-    }
-    return NULL;
-}
-int sp_in_it(char *str)
+
+char	*my_getenv(char *key, t_env *env_lst)
 {
-	int i = 0;
+	while (env_lst)
+	{
+		if (!ft_strcmp(key, env_lst->key))
+			return (env_lst->value);
+		env_lst = env_lst->next;
+	}
+	return (NULL);
+}
+
+int	sp_in_it(char *str)
+{
+	int	i;
+
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == ' ')
-			return 1;
+			return (1);
 		i++;
 	}
-	return 0;
+	return (0);
 }

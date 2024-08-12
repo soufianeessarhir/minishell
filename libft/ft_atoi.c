@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:43:03 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/17 23:52:46 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/12 06:15:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 #define MAX 922337203685477580
 
@@ -36,7 +35,7 @@ int	ft_atoi(const char *str)
 		{
 			if (s == 1)
 				return (-1);
-			return (0); 
+			return (0);
 		}
 		nb = nb * 10 + (*str - '0');
 		str++;

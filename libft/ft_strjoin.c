@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:48:57 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/07/14 17:07:30 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 06:28:06 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2, t_gc **gc)
 	ft_memset(newstr, 0, ft_strlen(s1) + ft_strlen(s2) + 1);
 	while (*s1)
 	{
-		newstr[i] = *s1++; 
+		newstr[i] = *s1++;
 		i++;
 	}
 	while (*s2)
@@ -38,6 +38,5 @@ char	*ft_strjoin(char const *s1, char const *s2, t_gc **gc)
 		newstr[i] = *s2++;
 		i++;
 	}
-	*(newstr + i) = '\0';
-	return (newstr);
+	return (*(newstr + i) = '\0', newstr);
 }
