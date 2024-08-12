@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 02:18:46 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/12 00:43:34 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_graph(int graph[4][3])
 	graph[3][2] = -1;
 }
 
-int	syntax_error(t_token **token, t_gc **l_gc)
+int	syntax_error(t_token **token, t_gc **l_gc ,t_env *env_lst)
 {
 	int		graph[4][3];
 	int		state;
@@ -57,16 +57,16 @@ int	syntax_error(t_token **token, t_gc **l_gc)
 		tmp = tmp->next;
 	}
 	if (tmp == NULL && state == 1)
-		return (her_doc_handling(token, l_gc), 0);
+		return (her_doc_handling(token, l_gc,env_lst), 0);
 	else if (state != 1 && tmp != NULL)
 	{
 		if (tmp->prev != NULL)
 			tmp->prev->next = NULL;
 		else
 			*token = NULL;
-		return (her_doc_handling(token, l_gc), 1);
+		return (her_doc_handling(token, l_gc,env_lst), 1);
 		
 	}
-	return (her_doc_handling(token, l_gc),
+	return (her_doc_handling(token, l_gc,env_lst),
 		ft_putstr_fd("syntax error near unexpected token `newline\' \n",2), 1);
 }

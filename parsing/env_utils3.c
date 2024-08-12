@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 06:39:04 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/12 01:14:57 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char *env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 
 	i = 0;
 	result = NULL;
-    if (str[0] == '\'')
+    if (str[0] == '\'' && numcmd != -1)
         return ft_strdup(str, l_gc);
     str = expand_double_dollar(str, l_gc); 
     while (str[i]) 

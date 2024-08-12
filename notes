@@ -2,7 +2,7 @@
                 -----------------
                 |   error report |
                 -----------------
-			remove  the notes that you agree with me if not explain to me why
+	remove  the notes that you agree with me if not explain to me why
 
 
 execpart --------------------------------------------------------------
@@ -11,25 +11,12 @@ i will see
 "."    check this error if you can fix it or not
 
 //this working good must be 1 not 258
-unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
-
-
-it is working ????
-
-ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | lsls | ls | ls | 
-incrrect result
-
-
-
 
 cd /var  \\this i must handle and this " etc   tmp " 
-
-
+cd /var  \\this i must handle and this " etc   tmp "
 parsepart --------------------------------------------------------------
 
-
-
-
+unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
 ➜  tty git:(master) ✗ lsof -p 99824
 COMMAND     PID     USER   FD   TYPE DEVICE SIZE/OFF                NODE NAME
 minishell 99824 relamine  cwd    DIR    1,9      782             8549785 /Users/relamine/Desktop/tty
@@ -74,56 +61,16 @@ if you create a file unlink it by this function unlink
 
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
-
-------------------------------------------------------------------------
-recheck again
-
-
-
-
-
-
-
-
-
-
 --------------------------------------------------------------------------------
 // report error in expand 
 this small error you can fix it or not , because it is not a big problem
-
 minishell$ export a="ls  "
 minishell$ export h=$a
 minishell$ export
-
 declare -x a="ls  "
 declare -x h="ls"
 this happen because i split spassed values befor built_ins executed it's a matter of order i will look at it later
 report all behaviors like this one to fix them all at once
 
 ------------------------------------------------------------------------
-
-
-i add a variable in the cmd structer to endicate the exit status because we need just to export the exit status of the last command
-and also we need to not execute the command if it include an error so i will set the default value of the exit status to 0 and if there is an error i will set it to 1
-if you find 1 don't execute the command just expand it and skip it
-
-
-------------------------------------------------------------------------
-
-
-
-                                  |if you have a note about this tell me|
-bash-3.2$ ls << 'aa'
-> 
-bash-3.2$ cat << a
-> $USER
-> a
-sessarhi
-bash-3.2$ cat << 'a'
-> $USER
-> a
-$USER
-bash-3.2$ cat << "a"
-> $USER
-> a
-$USER
+                                 |if you have a note about this tell me|

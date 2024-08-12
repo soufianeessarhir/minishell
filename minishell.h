@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/11 08:51:23 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 00:43:11 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,16 +133,16 @@ t_token		*ft_dll_lstlast(t_token *lst);
 int			ft_dll_lstsize(t_token *lst);
 void		ft_tokinize(char *line,t_token **token_lst,t_gc **l_gc);
 void		init_graph(int graph[4][3]);
-int			syntax_error(t_token **token,t_gc **l_gc);
+int			syntax_error(t_token **token,t_gc **l_gc,t_env *env_lst);
 int			sp_uq_handling (char *line);
 int			init_cmd(t_cmd **cmd, t_token *token_lst, t_gc **l_gc);
-void		her_doc_handling(t_token **token_lst, t_gc **l_gc);
+void		her_doc_handling(t_token **token_lst, t_gc **l_gc, t_env *env_lst);
 t_env		*new_env(char *key, char *value, t_gc **lst);
 void		env_add_back(t_env **env_lst, t_env *new);
 void		intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char		*my_getenv(char *key, t_env *env_lst);
 char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
-void			env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
+void		env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
 int			open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
 char		*clean_str(char *str, t_gc **l_gc); 
 int			is_dollar(char *str);
