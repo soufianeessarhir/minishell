@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 00:42:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 01:47:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,9 +374,14 @@ void f() {
 
 int	main(int ac, char **av, char **env)
 {
+	struct termios term, term_orig;
+	tcgetattr(STDIN_FILENO, &term);
+	term_orig = term;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
     t_gc *lst;
     char *line;
 	// atexit(f);
+	rl_variable_bind("enable-bracketed-paste", "off");
 	lst = NULL;
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);
@@ -384,6 +389,7 @@ int	main(int ac, char **av, char **env)
     signal(SIGINT, handle_sigint);
     signal(SIGQUIT, handle_sigint);
     readline_loop(&line, &lst, env);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term_orig);
     ft_free(&lst);
     return 0;
 }
