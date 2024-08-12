@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 00:43:11 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 05:15:53 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void		intit_env_list(t_env **env_lst, char **env, t_gc **lst);
 char		*my_getenv(char *key, t_env *env_lst);
 char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
 void		env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc);
-int			open_redirection(t_cmd **cmd , t_gc **l_gc,t_help *help);
+int			open_redirection(t_cmd **cmd , t_gc **l_gc);
 char		*clean_str(char *str, t_gc **l_gc); 
 int			is_dollar(char *str);
 t_redir		*new_redir(char *red_in, t_gc **l_gc);
@@ -159,6 +159,12 @@ void		env_lstadd_back(t_env_vars **alst, t_env_vars *new);
 int			is_dollar(char *str);
 char		*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd);
 char		*helper(char *s, t_gc **l_gc, t_env *env_lst, int numcmd);
+int			handle_red_in(t_cmd *tmp, t_gc **l_gc, t_redir *rd);
+int			handle_append_redirection(t_cmd *tmp,char *redout, t_gc **l_gc);
+int			handle_overwrite_redirection(t_cmd *tmp,char *redout, t_gc **l_gc);
+int			handle_red_out(t_cmd *tmp, t_gc **l_gc,t_redir *rd);
+int			handle_redirections(t_cmd *tmp, t_gc **l_gc);
+int			is_path(char *str);
 
 void handle_sigint(int sig);
 int echo(int argc, char **argv, char ***envp, t_gc **lst);

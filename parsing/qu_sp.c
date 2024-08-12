@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 20:50:02 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/04 00:29:08 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 04:17:05 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int  is_exist(char *str,char c,int *i)
     {
         if (str[*i] == c)
             return (1);
+		if (str[*i] == '\\')
+			return (0);
     }
     return (0);
 }
@@ -30,10 +32,10 @@ int sp_uq_handling (char *line)
     {
         if ((line[i] == '\'' && !is_exist(line,'\'',&i))
             || (line[i] == '\"' && !is_exist(line,'\"',&i)))
-			
-            return (1);
+            return (printf("minishell: input not allowed\n"),1);
 		 if (line[i] == '\\' || line[i] == ';')
-		    return (1);
+		    return (printf("minishell: input not allowed\n"),1);
+			
     }
     return (0);
 }

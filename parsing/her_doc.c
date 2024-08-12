@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 01:15:16 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 05:47:03 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,21 @@ int ft_split_here_doc(t_heredoc herdoc,t_gc **l_gc, t_env *env_lst)
 	}
 	return (0);
 }
+void herdoc_h(t_heredoc heredoc,t_token **tmp,t_gc **l_gc, t_env *env_lst)
+{
+	heredoc.line = readline(">");
+	while (isatty(0))
+	{
+		heredoc.delimiter = (*tmp)->next->value;
+		if (!heredoc.line || ft_split_here_doc(heredoc,l_gc,env_lst))
+			break;
+		free(heredoc.line);
+		heredoc.line = NULL;
+		heredoc.line= readline(">");
+	}
+	(*tmp)->next->value = ft_strjoin("/tmp/heredoc",clean_str((*tmp)->next->value,l_gc),l_gc);
+	close(heredoc.fd);
+}
 
 void her_doc_handling(t_token **token_lst, t_gc **l_gc, t_env *env_lst)
 {
@@ -60,18 +75,7 @@ void her_doc_handling(t_token **token_lst, t_gc **l_gc, t_env *env_lst)
 		      return;
 			if (isatty(0))
 				g_a.stphedorc_insgin = 1;
-			heredoc.line = readline(">");
-            while (isatty(0))
-            {
-					heredoc.delimiter = tmp->next->value;
-                if (!heredoc.line || ft_split_here_doc(heredoc,l_gc,env_lst))
-                    break;
-				free(heredoc.line);
-				heredoc.line = NULL;
-                heredoc.line= readline(">");
-            }
-			tmp->next->value = ft_strjoin("/tmp/heredoc",clean_str(tmp->next->value,l_gc),l_gc);
-            close(heredoc.fd);
+			herdoc_h(heredoc,&tmp,l_gc,env_lst);
         }
         if (tmp)
             tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 01:47:00 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/12 05:07:49 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,8 @@ int parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 	her_doc_handling(&token_lst, l_gc, *env_lst);
     env_handling(&token_lst, *env_lst, l_gc);
     init_cmd(cmd, token_lst, l_gc);
-	if (open_redirection(cmd, l_gc,help))
+	if (open_redirection(cmd, l_gc))
 		return (export_status(1,help->env,l_gc,help->lst),1);
-
-		
-	// for (t_cmd *tmp = *cmd; tmp; tmp = tmp->next)
-	// {
-	// 	printf("%d",tmp->exit_status);
-	// }
-	// exit(0);
 	return 0;
 }
 
