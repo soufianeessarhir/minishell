@@ -6,23 +6,23 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/08 08:46:42 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 07:19:48 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_iswhitespace(char c)
+int	ft_iswhitespace(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
 
-char *get_key_unset(char *str, t_gc **gc)
+char	*get_key_unset(char *str, t_gc **gc)
 {
-	int i;
-	char *key;
+	int		i;
+	char	*key;
 
 	i = 0;
 	if (str && ft_strchr(str, '=') != NULL)
@@ -39,14 +39,14 @@ char *get_key_unset(char *str, t_gc **gc)
 	return (key);
 }
 
-int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
+int	unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 {
-	int i;
-	int j;
-	int k;
-	char *key;
-	char **new_env;
-	int status;
+	int		i;
+	int		j;
+	int		k;
+	char	*key;
+	char	**new_env;
+	int		status;
 
 	i = 1;
 	status = 0;
@@ -60,7 +60,7 @@ int unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			status = 1;
 			i++;
-			continue;
+			continue ;
 		}
 		j = 0;
 		k = 0;

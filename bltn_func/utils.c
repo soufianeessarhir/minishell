@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/11 01:49:02 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/13 07:22:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-long ft_atoi_checker(char *str, int *error_msg)
+long	ft_atoi_checker(char *str, int *error_msg)
 {
 	int		signe;
 	long	res;
@@ -25,7 +25,7 @@ long ft_atoi_checker(char *str, int *error_msg)
 	{
 		str++;
 		if (*str == '\0')
-			return(*error_msg = -1);
+			return (*error_msg = -1);
 	}
 	if (*str == '-' || *str == '+')
 	{
@@ -46,10 +46,9 @@ long ft_atoi_checker(char *str, int *error_msg)
 	return (res * signe);
 }
 
-
-int ft_strlen_double(char **str)
+int	ft_strlen_double(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != NULL)
@@ -73,19 +72,19 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-void export_pwd(char ***envp, t_gc **l_gc, t_gc **lst)
+void	export_pwd(char ***envp, t_gc **l_gc, t_gc **lst)
 {
-    char **args = ft_malloc(sizeof(char *) * 3, l_gc);
+	char	**args = ft_malloc(sizeof(char *) * 3, l_gc);
 
-    args[0] = ft_strdup("export ", l_gc);
-    args[1] = ft_strjoin("PWD=", getcwd(NULL, 0), l_gc);
-    args[2] = NULL;
-    ft_export(args, envp, l_gc, lst, 0);
+	args[0] = ft_strdup("export ", l_gc);
+	args[1] = ft_strjoin("PWD=", getcwd(NULL, 0), l_gc);
+	args[2] = NULL;
+	ft_export(args, envp, l_gc, lst, 0);
 }
 
-void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
+void	export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
 {
-	char **args = ft_malloc(sizeof(char *) * 3, l_gc);
+	char	**args = ft_malloc(sizeof(char *) * 3, l_gc);
 
 	args[0] = ft_strdup("export ", l_gc);
 	args[1] = ft_strjoin("OLDPWD=", getcwd(NULL, 0), l_gc);
@@ -93,12 +92,12 @@ void export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
 	ft_export(args, envp, l_gc, lst, 0);
 }
 
-void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
+void	export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
 {
-	char *tmp;
-	char **exitstatus;
+	char	*tmp;
+	char	**exitstatus;
 
-	tmp = ft_strjoin("exitstatus=", ft_itoa(status, l_gc) ,l_gc);
+	tmp = ft_strjoin("exitstatus=", ft_itoa(status, l_gc) , l_gc);
 	exitstatus = ft_malloc(sizeof(char *) * 3, l_gc);
 	exitstatus[0] = ft_strdup("export", l_gc);
 	exitstatus[1] = tmp;
@@ -106,28 +105,27 @@ void export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
 	ft_export(exitstatus, envp, l_gc, lst, 0);
 }
 
-
-void ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
+void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 {
-    int q;
-    char **tmp;
-	char *arg;
+	int		q;
+	char	**tmp;
+	char	*arg;
 
-    q = ft_strlen_double(argv) - 1;
-    tmp = (char **)ft_malloc(sizeof(char *) * 3, lst);
-    tmp[0] = ft_strdup("export", gc);
-    arg = ft_strdup(argv[q], gc);
-    tmp[1] = ft_strjoin("_=", arg, gc);
-    tmp[2] = NULL;
-    ft_export(tmp, envpv, gc, lst, 0);
+	q = ft_strlen_double(argv) - 1;
+	tmp = (char **)ft_malloc(sizeof(char *) * 3, lst);
+	tmp[0] = ft_strdup("export", gc);
+	arg = ft_strdup(argv[q], gc);
+	tmp[1] = ft_strjoin("_=", arg, gc);
+	tmp[2] = NULL;
+	ft_export(tmp, envpv, gc, lst, 0);
 }
 
-void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
+void	export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 {
-	char *tmp;
-	char **shelvl;
-	char *num_shlvl;
-	int i;
+	char	*tmp;
+	char	**shelvl;
+	char	*num_shlvl;
+	int		i;
 
 	num_shlvl = my_getenv("SHLVL", env_lst);
 	i = ft_atoi(num_shlvl);
@@ -137,7 +135,7 @@ void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 		i = 0;
 	else
 		i++;
-	tmp = ft_strjoin("SHLVL=", ft_itoa(i, l_gc) ,l_gc);
+	tmp = ft_strjoin("SHLVL=", ft_itoa(i, l_gc), l_gc);
 	shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
 	shelvl[0] = ft_strdup("export", l_gc);
 	shelvl[1] = tmp;
@@ -145,9 +143,9 @@ void export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 	ft_export(shelvl, envp, l_gc, lst, 0);
 }
 
-void ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
+void	ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
 {
-	char **tmp;
+	char	**tmp;
 
 	tmp = ft_malloc(sizeof(char *) * 3, lst);
 	tmp[0] = ft_strdup("export", l_gc);
@@ -156,10 +154,10 @@ void ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
 	ft_export(tmp, env, l_gc, lst, 0);
 }
 
-int ft_isonlydigit(char *str)
+int	ft_isonlydigit(char *str)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
 
 	i = 0;
 	flag = 0;
@@ -174,15 +172,14 @@ int ft_isonlydigit(char *str)
 	return (1);
 }
 
-
-void ft_export_path_program(char *argv, char ***envp, t_gc **lst)
+void	ft_export_path_program(char *argv, char ***envp, t_gc **lst)
 {
-	size_t env_count;
-	char **new_env;
-	int i;
+	size_t	env_count;
+	char	**new_env;
+	int		i;
 
 	i = 0;
-    env_count = ft_strlen_double(*envp);
+	env_count = ft_strlen_double(*envp);
 	new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
 	while ((*envp)[i])
 	{

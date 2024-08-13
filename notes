@@ -56,21 +56,7 @@ if you create a file unlink it by this function unlink
 
 ------------------------------------------------------------------------
 
-
-
-
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 --------------------------------------------------------------------------------
-// report error in expand 
-this small error you can fix it or not , because it is not a big problem
-minishell$ export a="ls  "
-minishell$ export h=$a
-minishell$ export
-declare -x a="ls  "
-declare -x h="ls"
-this happen because i split spassed values befor built_ins executed it's a matter of order i will look at it later
-report all behaviors like this one to fix them all at once
 
-------------------------------------------------------------------------
-                                 |if you have a note about this tell me|

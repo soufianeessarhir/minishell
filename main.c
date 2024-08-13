@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/13 00:23:10 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 07:29:38 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@ int	parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 
 void readline_loop(char **line, t_gc **lst, char **env) 
 {
-    t_env *env_lst;
-    t_gc *l_gc;
-    t_cmd *cmd;
-	char **exitstatus;
-	char **tmp_env;
-	int stexit;
-	int flag_pipe;
-	int bol;
-	t_help help;
-	int childpid;
-    
+	t_env	*env_lst;
+	t_gc	*l_gc;
+	t_cmd	*cmd;
+	char	**exitstatus;
+	char	**tmp_env;
+	int		stexit;
+	int		flag_pipe;
+	int		bol;
+	t_help	help;
+	int		childpid;
+
 	childpid = -1;
-    l_gc = NULL;
+	l_gc = NULL;
 	stexit = -9999;
-    env_lst = NULL;
-    cmd = NULL;
+	env_lst = NULL;
+	cmd = NULL;
 	exitstatus = NULL;
 	tmp_env = NULL;
 
@@ -370,19 +370,18 @@ int	main(int ac, char **av, char **env)
 	tcgetattr(STDIN_FILENO, &term);
 	term_orig = term;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-    t_gc *lst;
-    char *line;
+	t_gc *lst;
+	char *line;
 	// atexit(f);
 	// rl_variable_bind("enable-bracketed-paste", "off");
 	lst = NULL;
-    if (ac != 1)
-        return (printf("Usage: %s\n", av[0]),1);
+	if (ac != 1)
+	    return (printf("Usage: %s\n", av[0]),1);
 	rl_catch_signals = 0;
-    signal(SIGINT, handle_sigint);
-    signal(SIGQUIT, handle_sigint);
-    readline_loop(&line, &lst, env);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigint);
+	readline_loop(&line, &lst, env);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_orig);
-    ft_free(&lst);
-    return 0;
+	ft_free(&lst);
+	return 0;
 }
-

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/11 04:08:59 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/13 07:13:16 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int exit_0(int i, int argc, char **argv)
+int	exit_0(int i, int argc, char **argv)
 {
-	int j;
-	long checker;
-	int error_msg;
+	int		j;
+	long	checker;
+	int		error_msg;
 
 	j = 0;
 	ft_putstr_fd("exit\n", 1);

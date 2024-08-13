@@ -3,46 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/11 03:56:50 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/13 07:24:30 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
+static char	*get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 {
-	char *env_path;
-	char *path_env_copy;
-	char **split_paths;
-	char *path_check;
+	char	*env_path;
+	char	*path_env_copy;
+	char	**split_paths;
+	char	*path_check;
 
 	env_path = my_getenv("PATH", env_lst);
-    if (env_path == NULL)
-        return (argv[0]);
-	path_env_copy = ft_strdup(env_path,l_gc);
-	split_paths = ft_split(path_env_copy, ':',l_gc);
+	if (env_path == NULL)
+		return (argv[0]);
+	path_env_copy = ft_strdup(env_path, l_gc);
+	split_paths = ft_split(path_env_copy, ':', l_gc);
 	while (*split_paths)
 	{
-		path_check = ft_strjoin(*split_paths, "/",l_gc);
-		path_check = ft_strjoin(path_check, argv[0],l_gc);
+		path_check = ft_strjoin(*split_paths, "/", l_gc);
+		path_check = ft_strjoin(path_check, argv[0], l_gc);
 		if (access(path_check, F_OK) == 0)
-            return (path_check);
+			return (path_check);
 		split_paths++;
 	}
 	return (argv[0]);
 }
 
-int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
+int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 {
-	char **argv;
-	char *path_cmd;
-	pid_t childpid;
-	t_env *env_lst;
-	int status;
-	struct stat statbuf;
+	char		**argv;
+	char		*path_cmd;
+	pid_t		childpid;
+	t_env		*env_lst;
+	int			status;
+	struct stat	statbuf;
 
 	env_lst = NULL;
 	status = 0;
@@ -77,7 +77,7 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		g_a.exitstatus_singnal = 0;
 	}
 	if (childpid == 0)
-    {
+	{
 		if (ft_strcmp(path_cmd, "./minishell") == 0)
 		{
 			export_shelvl(envp, l_gc, lst, env_lst);
@@ -100,7 +100,7 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 					exit(126);
 				}
 				perror(argv[0]);
-				if(errno == 13 && S_ISDIR(statbuf.st_mode) == 0)
+				if (errno == 13 && S_ISDIR(statbuf.st_mode) == 0)
 					exit(126);
 			}
 			else if (ft_strchr(argv[0], '/') && argv[0][0] != '/')
@@ -132,6 +132,6 @@ int ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 			}
 			exit(127);
 		}
-    }
+	}
 	return (status);
 }

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/11 01:48:43 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/13 07:17:23 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *get_key(char *str, t_gc **gc)
+char	*get_key(char *str, t_gc **gc)
 {
-	int i;
-	char *key;
+	int		i;
+	char	*key;
 
 	i = 0;
 	if (str && str[i] == '=')
@@ -23,7 +23,7 @@ char *get_key(char *str, t_gc **gc)
 	while (str[i] && str[i] != '=')
 	{
 		if (ft_strlen(str) >= 3 && i != 0 && str[i] == '+' && str[i + 1] == '=')
-			break;
+			break ;
 		if ((!ft_isalnum(str[i]) && str[i] != '_'))
 			return (NULL);
 		i++;
@@ -31,10 +31,11 @@ char *get_key(char *str, t_gc **gc)
 	key = ft_substr(str, 0, i, gc);
 	return (key);
 }
-char *get_value(char *str, t_gc **gc)
+
+char	*get_value(char *str, t_gc **gc)
 {
-	int i;
-	char *value;
+	int		i;
+	char	*value;
 
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -48,37 +49,33 @@ char *get_value(char *str, t_gc **gc)
 	return (value);
 }
 
-
 // Function to combine environment variables and arguments
-void combine_env_and_args(char ***envp, char *argv, t_gc **lst)
+void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 {
-    size_t env_count = ft_strlen_double(*envp);
-    char **new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
-    // Copy existing environment variables
-	size_t i = 0;
+	size_t	env_count = ft_strlen_double(*envp);
+	char	**new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
+	size_t	i = 0;
 
 	while (i < env_count)
 	{
 		new_env[i] = ft_strdup((*envp)[i], lst);
 		i++;
 	}
-    
-  	new_env[i] = ft_strdup(argv, lst);
+	new_env[i] = ft_strdup(argv, lst);
 	i++;
-
 	new_env[i] = NULL;
-    *envp = new_env;
+	*envp = new_env;
 }
 
-void sort_env_list(char ***env_lst, t_gc **gc)
+void	sort_env_list(char ***env_lst, t_gc **gc)
 {
-	char **tmp;
-	char **tmp2;
-	char *swap;
+	char	**tmp;
+	char	**tmp2;
+	char	*swap;
 
 	tmp = *env_lst;
-	int i = 0;
-	int j = 0;
+	int	i = 0;
+	int	j = 0;
 	while (tmp[i])
 	{
 		tmp2 = &tmp[i + 1];
@@ -88,8 +85,8 @@ void sort_env_list(char ***env_lst, t_gc **gc)
 			if (ft_strcmp(tmp[i], tmp2[j]) > 0)
 			{
 				swap = tmp2[j];
-				tmp2[j] = ft_strdup(tmp[i] , gc);
-				tmp[i] = ft_strdup(swap , gc);
+				tmp2[j] = ft_strdup(tmp[i], gc);
+				tmp[i] = ft_strdup(swap, gc);
 			}
 			j++;
 		}
@@ -98,45 +95,43 @@ void sort_env_list(char ***env_lst, t_gc **gc)
 }
 
 // Function to print exported environment variables
-void print_exported_variables(char **envp, t_gc **gc, int bol)
+void	print_exported_variables(char **envp, t_gc **gc, int bol)
 {
-	int i = 0;
-	sort_env_list(&envp , gc);
-    while (envp[i])
+	int	i = 0;
+	sort_env_list(&envp, gc);
+	while (envp[i])
 	{
 		if (ft_strcmp(get_key(envp[i], gc), "PATH") == 0 && bol == 1)
 		{
 			i++;
-			continue;
+			continue ;
 		}
-		if (!ft_strcmp(get_key(envp[i], gc), "exitstatus")|| !ft_strncmp(envp[i], "@path_of_program", 16) || !ft_strcmp(get_key(envp[i], gc), "_"))
+		if (!ft_strcmp(get_key(envp[i], gc), "exitstatus") || !ft_strncmp(envp[i], "@path_of_program", 16) || !ft_strcmp(get_key(envp[i], gc), "_"))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		ft_putstr_fd("declare -x ", 1);
 		if (strchr(envp[i], '=') == NULL)
 			printf("%s\n", envp[i]);
 		else if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
 			printf("%s\"\"\n", envp[i]);
-		else	
+		else
 			printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
-        i++;
-    }
+		i++;
+	}
 }
 
-
-int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
+int	ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 {
-	int g;
-	int i;
-	int j;
-	int bol;
-	char *tmp;
-	int status;
+	int		g;
+	int		i;
+	int		j;
+	int		bol;
+	char	*tmp;
+	int		status;
 
 	status = 0;
-	
 	g = ft_strlen_double(argv);
 	if (g == 1)
 		return (print_exported_variables(*envp, gc, *boll), 0);
@@ -144,7 +139,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 	if (ft_strcmp(get_key(argv[i], gc), "PATH") == 0 && boll != 0)
 		*boll = 0;
 	while (argv[i])
-	{	
+	{
 		if (get_key(argv[i], gc) == NULL || ft_isonlydigit(get_key(argv[i], gc)))
 		{
 			ft_putstr_fd("minishell: export: `", 2);
@@ -162,7 +157,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 				{
 					bol = 1;
 					if (ft_strchr(argv[i], '=') == NULL)
-						break;
+						break ;
 					if (ft_strchr(argv[i], '+') != NULL)
 					{
 						tmp = get_value(argv[i], gc);
@@ -170,7 +165,7 @@ int ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 					}
 					else
 						(*envp)[j] = ft_strdup(argv[i], lst);
-					break;
+					break ;
 				}
 				j++;
 			}
