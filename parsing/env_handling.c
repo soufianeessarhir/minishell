@@ -6,11 +6,23 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 06:55:49 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 02:55:36 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	is_export_arg(t_token *token_lst, t_gc **l_gc)
+{
+	t_token	*tmp;
+
+	tmp = token_lst;
+	while (tmp->prev && tmp->prev->type != 3)
+		tmp = tmp->prev;
+	if (tmp && tmp->value && strcmp(clean_str(tmp->value, l_gc), "export") == 0)
+		return (1);
+	return (0);
+}
 
 void	norm_helper(char *tmp_va, t_gc **l_gc, char **value)
 {
@@ -51,7 +63,7 @@ void	env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
 				if ((tmp->value == NULL || sp_in_it(tmp->value))
 					&& tmp->prev && tmp->prev->type == 2)
 					norm_helper(tmp_va, l_gc, &tmp->value);
-				else
+				else if (!is_export_arg(tmp, l_gc))
 					tmp->is_env = 1;
 			}
 		}

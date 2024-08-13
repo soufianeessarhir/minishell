@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 09:15:29 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 02:54:26 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*clean_str(char *str, t_gc **l_gc)
 	tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
 	i = 0;
 	j = 0;
-	if (!tmp)
+	if (!tmp || !str)
 		return (NULL);
 	while (str[i])
 	{

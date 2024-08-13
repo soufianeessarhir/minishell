@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 09:28:40 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 00:23:10 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,7 +373,7 @@ int	main(int ac, char **av, char **env)
     t_gc *lst;
     char *line;
 	// atexit(f);
-	rl_variable_bind("enable-bracketed-paste", "off");
+	// rl_variable_bind("enable-bracketed-paste", "off");
 	lst = NULL;
     if (ac != 1)
         return (printf("Usage: %s\n", av[0]),1);

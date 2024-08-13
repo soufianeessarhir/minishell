@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 06:59:49 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 02:48:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	intit_env_list(t_env **env_lst, char **env, t_gc **lst)
 	while (env[i])
 	{
 		j = 0;
-		while (env[i] && env[i][j] != '=' && env[i][j] != '\0')
+		while (env[i] && env[i][j] != '\0' && env[i][j] != '=' )
 			j++;
 		key = ft_substr(env[i], 0, j, lst);
 		value = ft_substr(env[i], j + 1, ft_strlen(env[i]) - j - 1, lst);
