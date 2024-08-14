@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 07:38:05 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:24:53 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			int last_childpid;
 
 			last_childpid = 0;
+			int process_group_id = 0;
 			while (tmp)
 			{
 				tmp->flag_pipe = &flag_pipe;
@@ -226,11 +227,16 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					if (childpid == -1)
 					{
 						perror("fork");
-						exit(1);
+						kill(process_group_id, SIGKILL);
+						break;
 					}
 					if (childpid > 0)
+					{
 						if (!tmp->next)
 							last_childpid = childpid;
+						if (cmd_pipe == 0)
+							process_group_id = childpid;
+					}
 					if (childpid == 0)
 					{
 						if (tmp->exit_status == 1)
@@ -349,6 +355,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					g_a.exitstatus_singnal = 0;
 					i++;
 				}
+				if (childpid == -1)
+					export_status(1, &env, &l_gc, lst);
 				ft_export_anything("_=", &l_gc, lst, &env);
 			}
 			free(*line);
