@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/13 07:29:38 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 02:13:25 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
+
+			exit(0);
 			// this is for printind the command you can use it to check the command
 			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next)
 			// {
@@ -285,8 +287,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						exit(stexit);
 					}
 				}
-				else
-				{
+				else 
+				{					
 				    int in_fd = -1;
 					int out_fd = -1;
 

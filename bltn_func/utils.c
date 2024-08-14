@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/13 07:22:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 01:16:09 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ long	ft_atoi_checker(char *str, int *error_msg)
 	}
 	while (*str)
 	{
+		while ((*str >= 9 && *str <= 13) || *str == 32)
+		{
+			str++;
+			if (*str == '\0')
+				return (res * signe);
+		}
 		if (!ft_isdigit(*str))
 			return (*error_msg = -1);
 		if (res > 922337203685477580 || (res == 922337203685477580 && *str > '7' && signe == 1) ||
@@ -190,3 +196,11 @@ void	ft_export_path_program(char *argv, char ***envp, t_gc **lst)
 	new_env[i + 1] = NULL;
 	*envp = new_env;
 }
+
+
+
+
+
+
+
+////////

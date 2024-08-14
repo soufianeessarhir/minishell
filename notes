@@ -10,7 +10,6 @@ execpart --------------------------------------------------------------
 i will see
 "."    check this error if you can fix it or not
 
-//this working good must be 1 not 258
 
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
@@ -32,26 +31,7 @@ minishell 99824 relamine    4r   REG    1,5       16            21487862 /privat
 minishell 99824 relamine    5r   REG    1,5       16            21473141 /private/tmp/h
 
 
-you didn't close the file descriptors 3, 4, 5
-if you create a file unlink it by this function unlink       
 
-        #what is the proof to unlink the files?#
-		if sameone go to tmp and remove permission of the file and run the minishell and try to create a file with the same name he will get an error that the file is already exist
-		i think he will get permission denied error if not give an example because bash didn't remove files 
-
-			minishell$ touch /tmp/ll
-			minishell$ echo haha > /tmp/ll
-			minishell$ chmod 000 /tmp/ll
-			minishell$ ls > /tmp/ll
-			minishell: /tmp/ll: Permission denied
-
-			bash-3.2$ touch /tmp/ll
-			bash-3.2$ echo haha > /tmp/ll
-			bash-3.2$ chmod 000 /tmp/ll
-			bash-3.2$ ls > /tmp/ll
-			bash: /tmp/ll: Permission denied
-			if you mean something else told me
-		i will explain more tomorrow
 
 
 ------------------------------------------------------------------------
@@ -60,3 +40,52 @@ if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 --------------------------------------------------------------------------------
 
+
+
+
+minishell$ export a="l's"
+minishell$ $a
+Makefile                hamid1.tldr             minishell_42_tester     signals.c
+bltn_func               libft                   minishell_tester        tests
+execute                 main.c                  notes
+gc                      minishell               parcing_errors
+hamid.tldr              minishell.h             parsing
+
+//expected output
+
+bash-3.2$ export a="l's"
+bash-3.2$ $a
+bash: l's: command not found
+
+
+
+
+------------------------------------------------------------------------
+
+
+minishell$ echo dfsf > $sfdasf
+minishell: $sfdasf: ambiguous redirect
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==15107==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0001050405bf bp 0x7ffeeabdbb40 sp 0x7ffeeabdbb10 T0)
+==15107==The signal is caused by a READ memory access.
+==15107==Hint: address points to the zero page.
+    #0 0x1050405bf in ft_strdup+0x5f (minishell:x86_64+0x10001d5bf)
+    #1 0x10503152e in new_redir cmd_utils.c:20
+    #2 0x10502dfce in process_token build_command.c:58
+    #3 0x10502daf1 in process_command build_command.c:86
+    #4 0x10502d847 in init_cmd build_command.c:101
+    #5 0x105025eb7 in parsing_part main.c:27
+    #6 0x1050270c3 in readline_loop main.c:128
+    #7 0x10502768b in main main.c:385
+    #8 0x7fff673a9cc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
+
+==15107==Register values:
+rax = 0x0000000000000000  rbx = 0x00007ffeeabdbdc0  rcx = 0x0000000000000000  rdx = 0x0000100000000000  
+rdi = 0x00007ffeeabdc060  rsi = 0x0000100000000000  rbp = 0x00007ffeeabdbb40  rsp = 0x00007ffeeabdbb10  
+ r8 = 0x0000200000000000   r9 = 0x0000000000000000  r10 = 0xffffffffffffffff  r11 = 0x00000fffffffffff  
+r12 = 0x0000000000000000  r13 = 0x0000000000000000  r14 = 0x0000000000000000  r15 = 0x0000000000000000  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV (minishell:x86_64+0x10001d5bf) in ft_strdup+0x5f
+==15107==ABORTING
+Abort trap: 6

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/07 05:33:33 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 01:46:59 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*skip_slash(char *str, t_gc **l_gc)
 			i++;
 	}
 	i = ft_strlen(command) - 1;
-	if (i != 0 && command[i - 1] != '.' && command[i] == '/' && command[i + 1] == '\0')
+	if (i > 0 && command[i - 1] != '.' && command[i] == '/' && command[i + 1] == '\0')
 		command[i] = '\0';
 	return (command);
 }
@@ -65,7 +65,7 @@ int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	// export OLDPWD
 	export_oldpwd(envp, l_gc, lst);
 	// change directory
-	if (chdir(path) == -1)
+	if (path && chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 1);
 		ft_putstr_fd(argv[i], 1);
