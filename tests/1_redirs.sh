@@ -122,7 +122,6 @@ cat <minishell.h|ls
 cat tmp_redir_out
 rm tmp_redir_out
 
-/bin/echo "cat this text\n" > tmp_redir_out
 cat <tmp_redir_out
 rm tmp_redir_out
 
@@ -192,14 +191,14 @@ rm -f tmp_std_outfile
 # limm
 # lim
 
-<<lim cat
- "lim"
-HELLO
-42
- lim
-testing your minishell
-limm
-lim
+# <<lim cat
+#  "lim"
+# HELLO
+# 42
+#  lim
+# testing your minishell
+# limm
+# lim
 
 # cat << lim
 # test

@@ -6,16 +6,16 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 03:12:24 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 04:25:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_qu_exist(char *str ,int i)
+int	is_qu_exist(char *str, int i)
 {
-	int j;
-	char quote;
+	int		j;
+	char	quote;
 
 	j = i;
 	quote = str[j++];

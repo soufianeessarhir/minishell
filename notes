@@ -10,12 +10,10 @@ execpart --------------------------------------------------------------
 i will see
 "."    check this error if you can fix it or not
 
-
+//this working good must be 1 not 258
+exit when no errors maybe should print to stdout
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
-
-
-exit you must print the message "exit" to stdout
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
@@ -34,11 +32,31 @@ minishell 99824 relamine    4r   REG    1,5       16            21487862 /privat
 minishell 99824 relamine    5r   REG    1,5       16            21473141 /private/tmp/h
 
 
+you didn't close the file descriptors 3, 4, 5
+if you create a file unlink it by this function unlink       
 
+        #what is the proof to unlink the files?#
+		if sameone go to tmp and remove permission of the file and run the minishell and try to create a file with the same name he will get an error that the file is already exist
+		i think he will get permission denied error if not give an example because bash didn't remove files 
+
+			minishell$ touch /tmp/ll
+			minishell$ echo haha > /tmp/ll
+			minishell$ chmod 000 /tmp/ll
+			minishell$ ls > /tmp/ll
+			minishell: /tmp/ll: Permission denied
+
+			bash-3.2$ touch /tmp/ll
+			bash-3.2$ echo haha > /tmp/ll
+			bash-3.2$ chmod 000 /tmp/ll
+			bash-3.2$ ls > /tmp/ll
+			bash: /tmp/ll: Permission denied
+			if you mean something else told me
+		i will explain more tomorrow
 
 
 ------------------------------------------------------------------------
 
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
+--------------------------------------------------------------------------------
 
