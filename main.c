@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 02:13:25 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/14 02:21:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				continue;
 			}
 
-			exit(0);
+			// exit(0);
 			// this is for printind the command you can use it to check the command
 			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next)
 			// {

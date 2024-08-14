@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/13 07:27:33 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 02:28:40 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void		handle_sigint(int sig);
 int			echo(int argc, char **argv, char ***envp, t_gc **lst);
 int			ft_builtin_func(t_cmd *cmd, char ***env, t_gc **l_gc, t_gc **lst);
 int			pwd(void);
-int			exit_0(int i, int argc, char **argv);
+int			exit_0(int i, int argc, char **argv, int *flag_pipe);
 int			env(char **env, t_gc **lst, int bol);
 int			ft_strlen_double(char **str);
 long		ft_atoi_checker(char *str, int *error_msg);
