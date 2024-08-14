@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:22:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 06:39:24 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 03:17:06 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_redir	*new_redir(char *red_in, t_gc **l_gc)
 	t_redir	*new;
 
 	new = (t_redir *)ft_malloc(sizeof(t_redir), l_gc);
-	new->redio = ft_strdup(red_in, l_gc);
+	new->redio = red_in;
 	new->next = NULL;
 	return (new);
 }

@@ -6,11 +6,25 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/13 02:54:26 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 03:12:24 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int is_qu_exist(char *str ,int i)
+{
+	int j;
+	char quote;
+
+	j = i;
+	quote = str[j++];
+	while (str[j] && str[j] != quote)
+		j++;
+	if (str[j] == quote)
+		return (1);
+	return (0);
+}
 
 char	*clean_str(char *str, t_gc **l_gc)
 {
@@ -26,7 +40,7 @@ char	*clean_str(char *str, t_gc **l_gc)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if ((str[i] == '\'' || str[i] == '\"' ) && is_qu_exist(str, i))
 		{
 			quote = str[i++];
 			while (str[i] && str[i] != quote)
