@@ -9,11 +9,10 @@ execpart --------------------------------------------------------------
 
 i will see
 "."    check this error if you can fix it or not
-
-//this working good must be 1 not 258
 exit when no errors maybe should print to stdout
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
+make sure you free the memory before you exit
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
@@ -45,70 +44,4 @@ must you expand in parsepart                       >> i just expand environment 
 must ss be created in a directory like bash
 
 minishell$ ls >> ./a/ss
-minishell: ./a/ss: No such file or directory
-
-
-minishell$ ls > /a/hhh
-=================================================================
-==1949==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200003750f at pc 0x00010104245f bp 0x7ffeeebc5910 sp 0x7ffeeebc5908
-READ of size 1 at 0x60200003750f thread T0
-    #0 0x10104245e in is_path redirections.c:22
-    #1 0x10104bdef in handle_overwrite_redirection redir_utils.c:73
-    #2 0x10104c249 in handle_red_out redir_utils.c:93
-    #3 0x1010426e1 in handle_redirections redirections.c:36
-    #4 0x101042dc5 in open_redirection redirections.c:65
-    #5 0x101039f4d in parsing_part main.c:28
-    #6 0x10103b2bb in readline_loop main.c:127
-    #7 0x10103d259 in main main.c:383
-    #8 0x7fff71622cc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
-
-0x60200003750f is located 1 bytes to the left of 7-byte region [0x602000037510,0x602000037517)
-allocated by thread T0 here:
-    #0 0x10110717d in wrap_malloc+0x9d (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x4917d)
-    #1 0x10103ddd8 in ft_malloc ft_malloc.c:19
-    #2 0x10104c651 in clean_str env_utils5.c:36
-    #3 0x101043b92 in process_token build_command.c:58
-    #4 0x1010436c1 in process_command build_command.c:86
-    #5 0x101043417 in init_cmd build_command.c:101
-    #6 0x101039f37 in parsing_part main.c:27
-    #7 0x10103b2bb in readline_loop main.c:127
-    #8 0x10103d259 in main main.c:383
-    #9 0x7fff71622cc8 in start+0x0 (libdyld.dylib:x86_64+0x1acc8)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow redirections.c:22 in is_path
-Shadow bytes around the buggy address:
-  0x1c0400006e50: fa fa 00 04 fa fa 00 04 fa fa 00 04 fa fa 00 00
-  0x1c0400006e60: fa fa 03 fa fa fa 00 00 fa fa 00 00 fa fa 02 fa
-  0x1c0400006e70: fa fa 00 00 fa fa 00 00 fa fa 07 fa fa fa 00 00
-  0x1c0400006e80: fa fa 00 00 fa fa 00 00 fa fa 00 00 fa fa 00 00
-  0x1c0400006e90: fa fa 03 fa fa fa 00 00 fa fa 00 00 fa fa 00 00
-=>0x1c0400006ea0: fa[fa]07 fa fa fa 00 00 fa fa 00 00 fa fa 00 00
-  0x1c0400006eb0: fa fa 00 00 fa fa 00 00 fa fa 03 fa fa fa 00 00
-  0x1c0400006ec0: fa fa 03 fa fa fa 00 00 fa fa fa fa fa fa fa fa
-  0x1c0400006ed0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x1c0400006ee0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x1c0400006ef0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-  Shadow gap:              cc
-==1949==ABORTING
-Abort trap: 6
-
-
+minishell: ./a/ss: No such file or directory incorrect ❌

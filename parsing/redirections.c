@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 09:08:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 06:18:14 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	is_path(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
-		if (str[i] == '/' && str[i -1] != '.')
+		if (i > 0 && str[i] == '/' && str[i - 1] != '.'  )
 			return (1);
 		i++;
 	}

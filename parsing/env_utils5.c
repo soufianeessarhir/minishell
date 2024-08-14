@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 04:25:35 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 06:17:45 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ char	*clean_str(char *str, t_gc **l_gc)
 	int		j;
 	char	quote;
 	char	*tmp;
-
+	if (!str)
+		return (NULL);
 	tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
+	if (!tmp)
+		return (NULL);
 	i = 0;
 	j = 0;
-	if (!tmp || !str)
-		return (NULL);
 	while (str[i])
 	{
 		if ((str[i] == '\'' || str[i] == '\"' ) && is_qu_exist(str, i))
