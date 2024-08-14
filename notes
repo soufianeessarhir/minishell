@@ -9,12 +9,14 @@ execpart --------------------------------------------------------------
 
 i will see
 "."    check this error if you can fix it or not
-exit when no errors maybe should print to stdout
+
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
 make sure you free the memory before you exit
 
 env hamid incorrect output
+env with no options or arguments this in subject
+test by tester if you fix this ls >> ./a/ss maybe we can finish this project
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
@@ -35,8 +37,8 @@ minishell 99824 relamine    5r   REG    1,5       16            21473141 /privat
 
 you didn't close the file descriptors 3, 4, 5
 
-explain this above or remove it
-
+explain this above or remove it ?
+???????
 ------------------------------------------------------------------------
 
 if you want to fix this cd: ~/Desktop/
@@ -48,5 +50,6 @@ must ss be created in a directory like bash
 minishell$ ls >> ./a/ss
 minishell: ./a/ss: No such file or directory incorrect ❌
 
-
-
+create directory "a" and tap this command 
+ls >> ./a/ss
+must  file ss be created like bash

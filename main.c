@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 03:24:26 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 07:38:05 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 		}
 		else 
 			path_of_program = my_getenv("_", env_lst);
+		if (ft_strchr(path_of_program, '.'))
+			path_of_program = ft_strjoin(my_getenv("PWD", env_lst), "/./minishell", lst);
 		ft_export_path_program(path_of_program, &env, lst);
 		env_lst = NULL;
 	}
