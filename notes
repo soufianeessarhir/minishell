@@ -13,6 +13,8 @@ exit when no errors maybe should print to stdout
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
 make sure you free the memory before you exit
+
+env hamid incorrect output
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
@@ -33,7 +35,7 @@ minishell 99824 relamine    5r   REG    1,5       16            21473141 /privat
 
 you didn't close the file descriptors 3, 4, 5
 
-
+explain this above or remove it
 
 ------------------------------------------------------------------------
 
@@ -45,3 +47,6 @@ must ss be created in a directory like bash
 
 minishell$ ls >> ./a/ss
 minishell: ./a/ss: No such file or directory incorrect ❌
+
+
+
