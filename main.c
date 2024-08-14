@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/13 23:28:53 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 03:24:26 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
+
+			// exit(0);
 			// this is for printind the command you can use it to check the command
 			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next)
 			// {
@@ -283,9 +285,9 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						exit(stexit);
 					}
 				}
-				else
-				{
-					int in_fd = -1;
+				else 
+				{					
+				    int in_fd = -1;
 					int out_fd = -1;
 
 					if (tmp->red_in_fd > 0)

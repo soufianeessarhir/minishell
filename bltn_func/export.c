@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/13 07:17:23 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/14 00:26:06 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,26 @@ void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 	*envp = new_env;
 }
 
-void	sort_env_list(char ***env_lst, t_gc **gc)
+char	**sort_env_list(char ***env_lst, t_gc **gc)
 {
 	char	**tmp;
 	char	**tmp2;
 	char	*swap;
+	int	j;
 
-	tmp = *env_lst;
-	int	i = 0;
-	int	j = 0;
+	size_t	env_count = ft_strlen_double(*env_lst);
+	char	**new_env = ft_malloc(sizeof(char *) * (env_count + 1), gc);
+	size_t	i = 0;
+
+	while (i < env_count)
+	{
+		new_env[i] = ft_strdup((*env_lst)[i], gc);
+		i++;
+	}
+	new_env[i] = NULL;	
+	tmp = new_env;
+	i = 0;
+	j = 0;
 	while (tmp[i])
 	{
 		tmp2 = &tmp[i + 1];
@@ -92,34 +103,38 @@ void	sort_env_list(char ***env_lst, t_gc **gc)
 		}
 		i++;
 	}
+	return (tmp);
 }
 
 // Function to print exported environment variables
 void	print_exported_variables(char **envp, t_gc **gc, int bol)
 {
 	int	i = 0;
-	sort_env_list(&envp, gc);
-	while (envp[i])
+	char	**env;
+
+	env = sort_env_list(&envp, gc);
+	while (env[i])
 	{
-		if (ft_strcmp(get_key(envp[i], gc), "PATH") == 0 && bol == 1)
+		if (ft_strcmp(get_key(env[i], gc), "PATH") == 0 && bol == 1)
 		{
 			i++;
 			continue ;
 		}
-		if (!ft_strcmp(get_key(envp[i], gc), "exitstatus") || !ft_strncmp(envp[i], "@path_of_program", 16) || !ft_strcmp(get_key(envp[i], gc), "_"))
+		if (!ft_strcmp(get_key(env[i], gc), "exitstatus") || !ft_strncmp(env[i], "@path_of_program", 16) || !ft_strcmp(get_key(env[i], gc), "_"))
 		{
 			i++;
 			continue ;
 		}
 		ft_putstr_fd("declare -x ", 1);
-		if (strchr(envp[i], '=') == NULL)
-			printf("%s\n", envp[i]);
-		else if (get_value(envp[i], gc) == NULL && strchr(envp[i], '=') != NULL)
-			printf("%s\"\"\n", envp[i]);
+		if (strchr(env[i], '=') == NULL)
+			printf("%s\n", env[i]);
+		else if (get_value(env[i], gc) == NULL && strchr(env[i], '=') != NULL)
+			printf("%s\"\"\n", env[i]);
 		else
-			printf("%s=\"%s\"\n", get_key(envp[i], gc), get_value(envp[i], gc));
+			printf("%s=\"%s\"\n", get_key(env[i], gc), get_value(env[i], gc));
 		i++;
 	}
+	
 }
 
 int	ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
