@@ -13,6 +13,9 @@ i will see
 
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
+
+
+exit you must print the message "exit" to stdout
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
