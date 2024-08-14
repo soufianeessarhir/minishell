@@ -192,14 +192,14 @@ rm -f tmp_std_outfile
 # limm
 # lim
 
-# <<lim cat
-#  "lim"
-# HELLO
-# 42
-#  lim
-# testing your minishell
-# limm
-# lim
+<<lim cat
+ "lim"
+HELLO
+42
+ lim
+testing your minishell
+limm
+lim
 
 # cat << lim
 # test

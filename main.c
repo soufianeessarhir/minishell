@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/13 07:29:38 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/13 23:28:53 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	cmd = NULL;
 	exitstatus = NULL;
 	tmp_env = NULL;
-
 	char *path_of_program = NULL;
 
 	intit_env_list(&env_lst, env, lst);
@@ -265,7 +264,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 								exit(1);
 							}
 						}	
-						// if not the first command get input from the previous command
+				// if not the first command get input from the previous command
 						if (cmd_pipe > 0 && tmp->red_in_fd == 0)
 						{
 							if (dup2(pipes_fds[(cmd_pipe - 1) * 2], STDIN_FILENO) < 0)
@@ -274,20 +273,19 @@ void readline_loop(char **line, t_gc **lst, char **env)
 								exit(1);
 							}
 						}
-
 						i = 0;
 						while (i < num_pipe * 2)
 						{
 							close(pipes_fds[i]);
 							i++;
 						}
-						stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+						stexit = ft_builtin_func(tmp, &env, &l_gc, lst);
 						exit(stexit);
 					}
 				}
 				else
 				{
-				    int in_fd = -1;
+					int in_fd = -1;
 					int out_fd = -1;
 
 					if (tmp->red_in_fd > 0)
@@ -302,7 +300,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						dup2(tmp->red_out_fd, 1);
 						close(tmp->red_out_fd);
 					}
-					stexit = ft_builtin_func(tmp, &env, &l_gc,lst);
+					stexit = ft_builtin_func(tmp, &env, &l_gc, lst);
 					if (tmp->red_in_fd > 0)
 					{
 						dup2(in_fd, 0);
@@ -313,10 +311,10 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						dup2(out_fd, 1);
 						close(out_fd);
 					}
-					export_status(stexit, &env, &l_gc, lst);	
+					export_status(stexit, &env, &l_gc, lst);
 				}
 				if (l == 2)
-					break;	
+					break ;
 				tmp = tmp->next;
 				if (tmp)
 					cmd_pipe++;
@@ -330,8 +328,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			if (flag_pipe)
 			{
 				int status;
-				export_status(0, &env, &l_gc, lst);	
-				
+				export_status(0, &env, &l_gc, lst);
 				i = 0;
 				while (i < num_pipe * 2)
 				{
@@ -350,38 +347,39 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				}
 				ft_export_anything("_=", &l_gc, lst, &env);
 			}
-			
 			free(*line);
 			*line = NULL;
 			ft_free(&l_gc);
 			cmd = NULL;
 			env_lst = NULL;
 		}
-    }
+	}
 }
 
-void f() {
-    system("leaks minishell");
+void	f(void)
+{
+	system("leaks minishell");
 }
 
 int	main(int ac, char **av, char **env)
 {
-	struct termios term, term_orig;
+	struct termios	term, term_orig;
+	t_gc			*lst;
+	char			*line;
+
 	tcgetattr(STDIN_FILENO, &term);
 	term_orig = term;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	t_gc *lst;
-	char *line;
 	// atexit(f);
 	// rl_variable_bind("enable-bracketed-paste", "off");
 	lst = NULL;
 	if (ac != 1)
-	    return (printf("Usage: %s\n", av[0]),1);
+		return (printf("Usage: %s\n", av[0]), 1);
 	rl_catch_signals = 0;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigint);
 	readline_loop(&line, &lst, env);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_orig);
 	ft_free(&lst);
-	return 0;
+	return (0);
 }
