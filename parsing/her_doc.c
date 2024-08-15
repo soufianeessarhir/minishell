@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 08:47:20 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/15 08:09:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	herdoc_h(t_heredoc heredoc, t_token **tmp, t_gc **l_gc, t_env *env_lst)
 		heredoc.line = readline(">");
 	}
 	(*tmp)->next->value = ft_strjoin("/tmp/heredoc",
-			clean_str((*tmp)->next->value, l_gc), l_gc);
+		(*tmp)->next->value, l_gc);
 	close(heredoc.fd);
 }
 
