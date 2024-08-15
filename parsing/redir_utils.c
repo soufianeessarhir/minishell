@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 05:09:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 02:44:24 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/15 03:24:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	handle_red_in(t_cmd *tmp, t_gc **l_gc, t_redir *rd)
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						rd->next->redio, l_gc),
 					": No such file or directory\n", l_gc), 2), 1);
-	if (tmp->prev && tmp->prev->red_in_fd != 0)
-		close(tmp->prev->red_in_fd);
+	if (tmp->red_in_fd != 0)
+		close(tmp->red_in_fd);
 	tmp->red_in_fd = open(rd->next->redio, O_RDONLY);
 	if (tmp->red_in_fd == -1)
 		return (1);
@@ -55,8 +55,8 @@ int	handle_append_redirection(t_cmd *tmp, char *redout, t_gc **l_gc)
 	if (redout && access(redout, F_OK) == 0 && access(redout, W_OK) == -1)
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						redout, l_gc), ": Permission denied\n", l_gc), 2), 1);
-	if (tmp->prev && tmp->prev->red_out_fd != 1)
-		close(tmp->prev->red_out_fd);
+	if (tmp->red_out_fd != 1)
+		close(tmp->red_out_fd);
 	tmp->red_out_fd = open(redout, O_APPEND | O_CREAT | O_RDWR, 0644);
 	if (tmp->red_out_fd == -1)
 		return (1);
@@ -78,7 +78,7 @@ int	handle_overwrite_redirection(t_cmd *tmp, char *redout, t_gc **l_gc)
 	if (redout && access(redout, F_OK) == 0 && access(redout, W_OK) == -1)
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						redout, l_gc), ": Permission denied\n", l_gc), 2), 1);
-	if (tmp->prev && tmp->red_out_fd != 1)
+	if (tmp->red_out_fd != 1)
 		close(tmp->red_out_fd);
 	tmp->red_out_fd = open(redout, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (tmp->red_out_fd == -1)
