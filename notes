@@ -44,12 +44,3 @@ explain this above or remove it ?
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 --------------------------------------------------------------------------------
-
-must ss be created in a directory like bash
-
-minishell$ ls >> ./a/ss
-minishell: ./a/ss: No such file or directory incorrect ❌
-
-create directory "a" and tap this command 
-ls >> ./a/ss
-must  file ss be created like bash
