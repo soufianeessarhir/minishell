@@ -12,8 +12,24 @@ i will see
 
 cd /var  \\this i must handle and this " etc   tmp " 
 cd /var  \\this i must handle and this " etc   tmp "
+##############################################################################
 make sure you free the memory before you exit
-
+##############################################################################
+export arg='"hello"'
+##############################################################################
+touch ls
+chmod 777 ls
+export ORIGINALPATH=$PATH
+export PATH="$PATH:$PWD"
+ls
+export PATH=$ORIGINALPATH
+export PATH="$PWD:$PATH"
+ls
+when a file created in the current directory and it is executable, it should be executed
+##############################################################################
+echo '~'
+/Users/sessarhi  should be '~' !
+##############################################################################
 cd not fixed yet
 if you finsh it move to norminette and testing then told me when you want to finsh and push
 parsepart --------------------------------------------------------------
@@ -43,3 +59,6 @@ explain this above or remove it ?
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 --------------------------------------------------------------------------------
+$===    "$=TEST"
+$+$+$+  $  
+echo "$      $USER"
