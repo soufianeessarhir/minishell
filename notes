@@ -30,8 +30,29 @@ when a file created in the current directory and it is executable, it should be 
 echo '~'
 /Users/sessarhi  should be '~' !
 ##############################################################################
+bash-3.2$ ~
+bash: /Users/sessarhi: is a directory
+bash-3.2$ echo $?
+126
+##############################################################################
+bash-3.2$ .
+bash: .: filename argument required
+.: usage: . filename [arguments]
+bash-3.2$ echo $?
+2
+##############################################################################
+env | grep NEW
+bash: env: No such file or directory
+bash: grep: No such file or directory
+also for cd recheck if you need to fix them
+
+                                  this when unset path 
+##############################################################################
 cd not fixed yet
 if you finsh it move to norminette and testing then told me when you want to finsh and push
+############################################################################################
+i just put the error i found if it's necessary to fix them ,fix them else remove them
+############################################################################################
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
@@ -62,3 +83,9 @@ must you expand in parsepart                       >> i just expand environment 
 $===    "$=TEST"
 $+$+$+  $  
 echo "$      $USER"
+
+cat << lim''
+$USER
+$NOVAR
+$HOME
+lim
