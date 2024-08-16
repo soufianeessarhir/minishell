@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 11:41:03 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 09:37:45 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ char	*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 {
 	t_env_h	tmp;
 
-	env_h_init(&tmp, l_gc, env_lst, str);
 	if (str[0] == '\'' && numcmd != -1)
-		return (ft_strdup(str, l_gc));
-	str = expand_double_dollar(str, l_gc);
+		return (ft_strdup(clean_str(str,l_gc), l_gc));
+	str = expand_double_dollar(clean_str(str,l_gc), l_gc);
+	env_h_init(&tmp, l_gc, env_lst, str);
 	while (str[tmp.i])
 	{
 		if (str[tmp.i] == '$' && !str[tmp.i + 1])
@@ -62,7 +62,7 @@ char	*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 		if (str[tmp.i] == '$' && str[tmp.i + 1] != '/')
 			env_pro_max(&tmp, numcmd);
 		else if (str[tmp.i])
-			tmp.result = handle_non_variable(str, &tmp.i, tmp.result, l_gc);
+			tmp.result = handle_non_variable(tmp.str, &tmp.i, tmp.result, l_gc);
 	}
 	return (tmp.result);
 }

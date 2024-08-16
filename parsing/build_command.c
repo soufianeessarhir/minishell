@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 06:36:54 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 10:23:36 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 	{
 		ft_lstadd_back_redir(&new->rd, new_redir((*tmp)->value, l_gc));
 		ft_lstadd_back_redir(&new->rd,
-			new_redir(clean_str((*tmp)->next->value, l_gc), l_gc));
+			new_redir((*tmp)->next->value, l_gc));
 		*tmp = (*tmp)->next;
 	}
 	else if ((*tmp)->type != 2)
@@ -63,11 +63,11 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 		if ((*tmp)->is_env == 1)
 		{
 			tmp_p = ft_split((*tmp)->value, ' ', l_gc);
-			while (tmp_p && *tmp_p)
-			{
-				ft_lstadd_back_args(&new->args_lst, new_args(*tmp_p, l_gc));
-				tmp_p++;
-			}
+		while (tmp_p && *tmp_p) 
+		{
+			ft_lstadd_back_args(&new->args_lst, new_args(*tmp_p, l_gc));
+			tmp_p++; 
+		}
 		}
 		else
 			ft_lstadd_back_args(&new->args_lst, new_args((*tmp)->value, l_gc));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 06:36:28 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 10:52:29 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				continue;
 			}
 			t_cmd *tmp = cmd;
-
+            // for (t_cmd *tmp = cmd; tmp; tmp = tmp->next)
+			// {
+			// 	for (int i = 0; tmp->args[i]; i++)
+			// 		printf("args: %s\n", tmp->args[i]);
+			// 	for (t_redir *tmp2 = tmp->rd; tmp2; tmp2 = tmp2->next)
+			// 	printf("redir: %s\n", tmp2->redio);
+			// }
 			int num_pipe;
 
 			num_pipe = 0;

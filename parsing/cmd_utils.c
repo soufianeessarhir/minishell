@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:22:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 03:17:06 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 08:43:27 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**ft_fill_args(t_args *args_lst, t_gc **l_gc)
 	tmp = args_lst;
 	while (tmp)
 	{
-		args[i] = ft_strdup(clean_str(tmp->arg, l_gc), l_gc);
+		args[i] = ft_strdup(tmp->arg, l_gc);
 		i++;
 		tmp = tmp->next;
 	}

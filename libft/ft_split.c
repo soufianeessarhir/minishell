@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 22:38:11 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 06:26:44 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 11:28:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 
 static int	ft_countwords(char const *s, char c)
 {
-	int		len;
-	char	quote;
+	int	len;
 
 	len = 0;
+	if (!*s)
+		return (1);
 	while (*s != '\0')
 	{
-		if (*s == '\'' || *s == '\"')
-		{
-			quote = *s;
-			s++;
-			while (*s != quote && *s)
-				s++;
-		}
 		if (*s != c && *s)
 		{
 			len++;
@@ -39,38 +33,15 @@ static int	ft_countwords(char const *s, char c)
 	return (len);
 }
 
-static void	my_free(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		free(s[i++]);
-	free(s);
-}
 
 static int	ft_countchars(char const *s, char c, int i)
 {
-	int		j;
-	char	quote;
+	int	j;
 
 	j = 0;
 	while (s[i] != c && s[i])
 	{
-		if (s[i] == '\'' || s[i] == '\"')
-		{
-			quote = s[i];
-			i++;
-			j++;
-			while (s[i] != quote && s[i])
-			{
-				j++;
-				i++;
-			}
-			j++;
-		}
-		else
-			j++;
+		j++;
 		i++;
 	}
 	return (j);
@@ -87,13 +58,13 @@ static char	**ft_strfill(const char *s, char c, int size, t_gc **gc)
 	ptr = ft_malloc(sizeof(char *) * (size + 1), gc);
 	if (!ptr)
 		return (NULL);
-	while (j < ft_countwords(s, c))
+	while (j < size)
 	{
 		while (s[i] == c)
 			i++;
 		ptr[j] = ft_substr(s, i, ft_countchars(s, c, i), gc);
 		if (ptr[j] == NULL)
-			return (my_free(ptr), NULL);
+			return (NULL);
 		i = i + ft_countchars(s, c, i);
 		j++;
 	}

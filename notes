@@ -28,46 +28,24 @@ bash-3.2$
 ##############################################################################
 
 ##############################################################################
-
+minishell$ cd /var			// cd /var
+minishell$ pwd
+/private/var
+minishell$ 
 ##############################################################################
 
 ##############################################################################
 cd not fixed yet
 ?????
+and also cd ~
 WHAT YOU WANT TO FIX
-
 
 
 if you finsh it move to norminette and testing then told me when you want to finsh and push
 ############################################################################################
-i just put the error i found if it's necessary to fix them ,fix them else remove them 
-
-give example ???
-
 
 ############################################################################################
 parsepart --------------------------------------------------------------
-
-unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
-➜  tty git:(master) ✗ lsof -p 99824
-COMMAND     PID     USER   FD   TYPE DEVICE SIZE/OFF                NODE NAME
-minishell 99824 relamine  cwd    DIR    1,9      782             8549785 /Users/relamine/Desktop/tty
-minishell 99824 relamine  txt    REG    1,9   171184             8553980 /Users/relamine/Desktop/tty/minishell
-minishell 99824 relamine  txt    REG    1,9   275776             8252840 /Users/relamine/.brew/Cellar/readline/8.2.10/lib/libreadline.8.2.dylib
-minishell 99824 relamine  txt    REG    1,5  3157888             1717739 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
-minishell 99824 relamine  txt    REG    1,5  1572480 1152921500312412785 /usr/lib/dyld
-minishell 99824 relamine    0u   CHR  16,13  0t54800                1029 /dev/ttys013
-minishell 99824 relamine    1u   CHR  16,13  0t54800                1029 /dev/ttys013
-minishell 99824 relamine    2u   CHR  16,13  0t54800                1029 /dev/ttys013
-minishell 99824 relamine    3r   REG    1,5       16            21487874 /private/tmp/w
-minishell 99824 relamine    4r   REG    1,5       16            21487862 /private/tmp/g
-minishell 99824 relamine    5r   REG    1,5       16            21473141 /private/tmp/h
-
-
-you didn't close the file descriptors 3, 4, 5
-
-explain this above or remove it ?
-???????
 ------------------------------------------------------------------------
 
 if you want to fix this cd: ~/Desktop/
@@ -84,41 +62,3 @@ $HOME
 lim
 
 ------------------------------------------------------------------------
-export arg='"hello"'
-lvalue dial lkey f env khssha thezz kima hiyya blquotes makhasch ithydu lquotes mn lvalue ila kanu aslan fwst quotes okhrin
-
-arg="hello"
-daba hna haz "hello" kamla
-
-
-------------------------------------------------------------------------
-not the same behavior as bash 
-in this case you must split the string 
-
-
-
-minishell$ export a='"ls -l"'
-minishell$ $a
-minishell: ls -l: command not found
-
-bash-3.2$ export a='"ls -l"'
-bash-3.2$ $a
-bash: "ls: command not found
-
-
-
-------------------------------------------------------------------------
-minishell$ << ""
->$USER
->
->
->
->
->
->""
->''
->'
->"
->
-
-when you tap enter must you exit the here document like bash

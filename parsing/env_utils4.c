@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 05:12:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 09:11:21 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 09:47:41 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,11 @@ char	*helper(char *s, t_gc **l_gc, t_env *env_lst, int numcmd)
 	while (tmp)
 	{
 		if (!is_all_dollar(tmp->value) && (!tmp->next || tmp->value[0] == '\'' || tmp->value[0] == '\"'))
-			tmp->value = expand_double_dollar(tmp->value, l_gc);
+			tmp->value = expand_double_dollar(clean_str(tmp->value, l_gc), l_gc);
 		else if (is_dollar(tmp->value))
 			tmp->value = env_search(tmp->value, env_lst, l_gc, numcmd);
+		else
+			tmp->value = ft_strdup(clean_str(tmp->value, l_gc), l_gc);
 		tmp = tmp->next;
 	}
 	return (new_value(new, l_gc));
