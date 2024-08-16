@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 09:32:03 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:15:58 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,54 @@ int	is_qu_exist(char *str, int i)
 		return (1);
 	return (0);
 }
-
-char	*clean_str(char *str, t_gc **l_gc)
+void clean_st_heler(char *str, int *i, int *j, char *result)
 {
-	int		i;
-	int		j;
-	char	quote;
-	char	*tmp;
+    char quote;
 
-	if (!str)
-		return (NULL);
-	tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if ((str[i] == '\'' || str[i] == '\"' ) && is_qu_exist(str, i))
-		{
-			quote = str[i++];
-			while (str[i] && str[i] != quote)
-				tmp[j++] = str[i++];
-			if (str[i] == quote)
-				i++;
-		}
-		else
-			tmp[j++] = str[i++];
-	}
-	return (tmp[j] = '\0', tmp);
+    quote = str[*i];
+    (*i)++;
+    while (str[*i] && str[*i] != quote)
+    {
+        if (str[*i] == '\\')
+            (*i)++;
+        if (str[*i])
+        {
+            result[*j] = str[*i];
+            (*j)++;
+        }
+        (*i)++;
+    }
+    if (str[*i] == quote)
+        (*i)++;
 }
+
+char *clean_str(char *str, t_gc **l_gc)
+{
+    int     i;
+    int     j;
+    char    *tmp;
+
+    if (!str)
+        return (NULL);
+    tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
+    if (!tmp)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (str[i])
+    {
+        if (str[i] == '\\')
+            i++;
+        else if ((str[i] == '\'' || str[i] == '\"') && is_qu_exist(str, i))
+            clean_st_heler(str, &i, &j, tmp);
+        else
+            tmp[j++] = str[i++];
+    }
+    tmp[j] = '\0';
+    return (tmp);
+}
+
+
 
 char	*handle_exit_status(char *result, t_env *env_lst,
 	t_gc **l_gc, int numcmd)
@@ -73,8 +91,7 @@ char	*handle_env_variable(char *str, int *i, char *result, t_env_h *tmp)
 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 		(*i)++;
 	if (str[j] != '\'' && str[j] != '\"')
-		return (ft_strjoin(result, my_getenv(ft_substr(str, j, *i - j,
-						tmp->l_gc), tmp->env_lst), tmp->l_gc));
+		return (ft_strjoin(result,expand_sl(my_getenv(ft_substr(str, j, *i - j, tmp->l_gc), tmp->env_lst), tmp->l_gc), tmp->l_gc));
 	else
 		return (ft_strjoin(result,
 				ft_substr(str, j - 1, *i - j + 1, tmp->l_gc), tmp->l_gc));

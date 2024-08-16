@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 05:27:10 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:08:45 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ char		*handle_exit_status(char *result,
 char		*handle_env_variable(char *str, int *i, char *result, t_env_h *tmp);
 char		*handle_non_variable(char *str, int *i, char *result, t_gc **l_gc);
 char	*trim_dir(char	*str,t_gc **l_gc);
-
+char 		*expand_sl(char *str, t_gc **l_gc);
 
 
 

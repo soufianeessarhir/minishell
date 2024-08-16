@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 10:23:36 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:33:20 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 	}
 	else if ((*tmp)->type != 2)
 	{
-		if ((*tmp)->is_env == 1)
+		if ((*tmp)->is_env == 1 && sp_in_it((*tmp)->value))
 		{
 			tmp_p = ft_split((*tmp)->value, ' ', l_gc);
 		while (tmp_p && *tmp_p) 
@@ -69,7 +69,7 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 			tmp_p++; 
 		}
 		}
-		else
+		else if ((*tmp)->value)
 			ft_lstadd_back_args(&new->args_lst, new_args((*tmp)->value, l_gc));
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 00:17:02 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:04:38 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,17 @@ char	*my_getenv(char *key, t_env *env_lst)
 int	sp_in_it(char *str)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (str[i])
+	if (!str)
+		return (0);
+	j = ft_strlen(str) - 1;
+	while (str[i] && str[i] == ' ')
+		i++;
+	while (j >= 0 && str[j] == ' ')
+		j--;
+	while (str[i] && i <= j)
 	{
 		if (str[i] == ' ')
 			return (1);

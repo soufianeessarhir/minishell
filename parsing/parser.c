@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 11:44:31 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:02:10 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ int	syntax_error(t_token **token, t_gc **l_gc, t_env *env_lst)
 	}
 	return (her_doc_handling(token, l_gc, env_lst),
 		ft_putstr_fd
-		("minishell: syntax error nearunexpected token `newline\' \n", 2), 1);
+		("minishell: syntax error near unexpected token `newline\' \n", 2), 1);
 }

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:22:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 08:43:27 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:30:46 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_args	*new_args(char *arg, t_gc **l_gc)
 	t_args	*new;
 
 	new = (t_args *)ft_malloc(sizeof(t_args), l_gc);
-	new->arg = ft_strdup(arg, l_gc);
+	new->arg = arg;
 	new->next = NULL;
 	return (new);
 }
@@ -80,7 +80,7 @@ char	**ft_fill_args(t_args *args_lst, t_gc **l_gc)
 	tmp = args_lst;
 	while (tmp)
 	{
-		args[i] = ft_strdup(tmp->arg, l_gc);
+		args[i] = tmp->arg;
 		i++;
 		tmp = tmp->next;
 	}
