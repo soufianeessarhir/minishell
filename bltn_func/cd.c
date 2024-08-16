@@ -6,15 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/14 01:46:59 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 00:35:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
 static char	*skip_slash(char *str, t_gc **l_gc)
-
 {
 	int i;
 	char *command;
@@ -27,11 +25,7 @@ static char	*skip_slash(char *str, t_gc **l_gc)
 	{
 		bol = 0;
 		get_char = ft_substr(str, i, 1,l_gc);
-		if (get_char == NULL)
-			return (NULL);
 		command = ft_strjoin(command, get_char,l_gc);
-		if (command == NULL)
-			return (NULL);
 		while (str[i] == '/')
 		{
 			bol = 1;
@@ -58,13 +52,11 @@ int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	path = argv[i];
 	env_lst = NULL;
 	intit_env_list(&env_lst, *envp, l_gc);
-	if (path == NULL || ft_strcmp(path, "~") == 0)
+	if (path == NULL)
 		path = my_getenv("HOME", env_lst);
 	else
 		path = skip_slash(path, l_gc);
-	// export OLDPWD
 	export_oldpwd(envp, l_gc, lst);
-	// change directory
 	if (path && chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 1);
@@ -73,7 +65,6 @@ int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 		perror("");
 		return (1);
 	}
-	// export PWD
 	export_pwd(envp, l_gc, lst);
 	return (0);
 }

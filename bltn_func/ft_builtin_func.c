@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/14 09:04:31 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 02:01:50 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	execute_bltncmd(int is_builtin, t_cmd *cmd, char ***envpv, t_gc **gc,
 	else if (is_builtin == 5)
 		return (exit_0(1, ft_strlen_double(argv + 1), argv, cmd->flag_pipe));
 	else if (is_builtin == 6)
-		return (echo(ft_strlen_double(argv), argv, envpv, lst));
+		return (echo(ft_strlen_double(argv), argv));
 	return (ft_execute(cmd, envpv, gc, lst));
 }
 int	ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)

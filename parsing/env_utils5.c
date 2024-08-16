@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 06:17:45 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/15 04:51:18 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*handle_exit_status(char *result, t_env *env_lst,
 	t_gc **l_gc, int numcmd)
 {
 	if (numcmd == 0)
-		return (ft_strjoin(result, my_getenv("exitstatus", env_lst), l_gc));
+		return (ft_strjoin(result, my_getenv("@exitstatus", env_lst), l_gc));
 	else
 		return (ft_strjoin(result, "0", l_gc));
 }

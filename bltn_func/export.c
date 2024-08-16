@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/14 00:26:06 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 00:30:12 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ char	*get_value(char *str, t_gc **gc)
 	return (value);
 }
 
-// Function to combine environment variables and arguments
 void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 {
-	size_t	env_count = ft_strlen_double(*envp);
-	char	**new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
-	size_t	i = 0;
+	size_t	env_count;
+	char	**new_env;
+	size_t	i;
 
+	env_count = ft_strlen_double(*envp);
+	new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
+	i = 0;
 	while (i < env_count)
 	{
 		new_env[i] = ft_strdup((*envp)[i], lst);
@@ -67,26 +69,34 @@ void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 	*envp = new_env;
 }
 
+char **copy_env_list(char ***env_lst, t_gc **gc)
+{
+	size_t	env_count;
+	char	**new_env;
+	size_t	i;
+
+	i = 0;
+	env_count = ft_strlen_double(*env_lst);
+	new_env = ft_malloc(sizeof(char *) * (env_count + 1), gc);
+	while (i < env_count)
+	{
+		new_env[i] = ft_strdup((*env_lst)[i], gc);
+		i++;
+	}
+	new_env[i] = NULL;
+    return new_env;
+}
+
 char	**sort_env_list(char ***env_lst, t_gc **gc)
 {
 	char	**tmp;
 	char	**tmp2;
 	char	*swap;
 	int	j;
+	int	i;
 
-	size_t	env_count = ft_strlen_double(*env_lst);
-	char	**new_env = ft_malloc(sizeof(char *) * (env_count + 1), gc);
-	size_t	i = 0;
-
-	while (i < env_count)
-	{
-		new_env[i] = ft_strdup((*env_lst)[i], gc);
-		i++;
-	}
-	new_env[i] = NULL;	
-	tmp = new_env;
 	i = 0;
-	j = 0;
+	tmp = copy_env_list(env_lst, gc);
 	while (tmp[i])
 	{
 		tmp2 = &tmp[i + 1];
@@ -106,13 +116,24 @@ char	**sort_env_list(char ***env_lst, t_gc **gc)
 	return (tmp);
 }
 
-// Function to print exported environment variables
+void print_export_(char *env, t_gc **gc)
+{
+	ft_putstr_fd("declare -x ", 1);
+	if (strchr(env, '=') == NULL)
+		printf("%s\n", env);
+	else if (get_value(env, gc) == NULL && strchr(env, '=') != NULL)
+		printf("%s\"\"\n", env);
+	else
+		printf("%s=\"%s\"\n", get_key(env, gc), get_value(env, gc));
+}
+
 void	print_exported_variables(char **envp, t_gc **gc, int bol)
 {
-	int	i = 0;
+	int	i;
 	char	**env;
 
 	env = sort_env_list(&envp, gc);
+	i = 0;
 	while (env[i])
 	{
 		if (ft_strcmp(get_key(env[i], gc), "PATH") == 0 && bol == 1)
@@ -120,23 +141,22 @@ void	print_exported_variables(char **envp, t_gc **gc, int bol)
 			i++;
 			continue ;
 		}
-		if (!ft_strcmp(get_key(env[i], gc), "exitstatus") || !ft_strncmp(env[i], "@path_of_program", 16) || !ft_strcmp(get_key(env[i], gc), "_"))
+		if (!ft_strncmp(env[i], "@exitstatus", 11) || !ft_strncmp(env[i], "@path_of_program", 16) || !ft_strcmp(get_key(env[i], gc), "_"))
 		{
 			i++;
 			continue ;
 		}
-		ft_putstr_fd("declare -x ", 1);
-		if (strchr(env[i], '=') == NULL)
-			printf("%s\n", env[i]);
-		else if (get_value(env[i], gc) == NULL && strchr(env[i], '=') != NULL)
-			printf("%s\"\"\n", env[i]);
-		else
-			printf("%s=\"%s\"\n", get_key(env[i], gc), get_value(env[i], gc));
+		print_export_(env[i], gc);
 		i++;
 	}
 	
 }
-
+void print_export_error(char *arg)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
 int	ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 {
 	int		g;
@@ -157,9 +177,7 @@ int	ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 	{
 		if (get_key(argv[i], gc) == NULL || ft_isonlydigit(get_key(argv[i], gc)))
 		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(argv[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			print_export_error(argv[i]);
 			status = 1;
 		}
 		else

@@ -6,11 +6,12 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/14 09:24:44 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 04:16:01 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <dirent.h>
 
 static char	*get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 {

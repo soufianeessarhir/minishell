@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 02:28:40 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 02:01:43 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ char		*handle_env_variable(char *str, int *i, char *result, t_env_h *tmp);
 char		*handle_non_variable(char *str, int *i, char *result, t_gc **l_gc);
 
 void		handle_sigint(int sig);
-int			echo(int argc, char **argv, char ***envp, t_gc **lst);
+int			echo(int argc, char **argv);
 int			ft_builtin_func(t_cmd *cmd, char ***env, t_gc **l_gc, t_gc **lst);
 int			pwd(void);
 int			exit_0(int i, int argc, char **argv, int *flag_pipe);
@@ -206,7 +206,7 @@ void		export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);
 char		*get_value(char *str, t_gc **l_gc);
 char		*get_key(char *str, t_gc **l_gc);
 int			unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
-void		export_status(int status, char ***envp, t_gc **l_gc, t_gc **lst);
+void		ft_export_status(int status, char ***envp, t_gc **l_gc, t_gc **lst);
 void		ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst);
 void		export_shelvl(char ***envp, t_gc **l_gc,
 				t_gc **lst, t_env *env_lst);
@@ -214,5 +214,8 @@ void		ft_export_anything(char *argv, t_gc **l_gc,
 				t_gc **lst, char ***env);
 int			ft_isonlydigit(char *str);
 void		ft_export_path_program(char *argv, char ***envp, t_gc **lst);
+int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
+void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:57:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/14 01:16:09 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 01:12:58 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,6 @@ void	export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst)
 	ft_export(args, envp, l_gc, lst, 0);
 }
 
-void	export_status (int status, char ***envp, t_gc **l_gc, t_gc **lst)
-{
-	char	*tmp;
-	char	**exitstatus;
-
-	tmp = ft_strjoin("exitstatus=", ft_itoa(status, l_gc) , l_gc);
-	exitstatus = ft_malloc(sizeof(char *) * 3, l_gc);
-	exitstatus[0] = ft_strdup("export", l_gc);
-	exitstatus[1] = tmp;
-	exitstatus[2] = NULL;
-	ft_export(exitstatus, envp, l_gc, lst, 0);
-}
-
 void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 {
 	int		q;
@@ -196,11 +183,3 @@ void	ft_export_path_program(char *argv, char ***envp, t_gc **lst)
 	new_env[i + 1] = NULL;
 	*envp = new_env;
 }
-
-
-
-
-
-
-
-////////

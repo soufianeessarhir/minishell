@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 09:24:53 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 04:23:08 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 		return (1);
 	ft_tokinize(help->line, &token_lst, l_gc);
 	if (syntax_error(&token_lst, l_gc, *env_lst))
-		return (export_status(258, help->env, l_gc, help->lst), 1);
+		return (ft_export_status(258, help->env, l_gc, help->lst), 1);
 	her_doc_handling(&token_lst, l_gc, *env_lst);
 	env_handling(&token_lst, *env_lst, l_gc);
 	init_cmd(cmd, token_lst, l_gc);
 	if (open_redirection(cmd, l_gc))
-		return (export_status(1, help->env, l_gc, help->lst), 1);
+		return (ft_export_status(1, help->env, l_gc, help->lst), 1);
 	return (0);
 }
 
@@ -50,62 +50,9 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	cmd = NULL;
 	exitstatus = NULL;
 	tmp_env = NULL;
-	char *path_of_program = NULL;
 
-	intit_env_list(&env_lst, env, lst);
-	int env_i = 0;
-	if (!path_of_program && !my_getenv("@path_of_program", env_lst))
-	{
-		char **tmp;
-		char *pwd;
-
-		if (*env == NULL)
-		{
-			pwd = my_getenv("PWD", env_lst);
-			env_i = 1;
-			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
-			tmp[0] = ft_strdup("cd", &l_gc);
-			tmp[1] = ft_strdup("..", &l_gc);
-			tmp[2] = NULL;
-			cd(tmp, &env, &l_gc, lst);
-			intit_env_list(&env_lst, env, lst);
-			path_of_program = ft_strjoin(my_getenv("OLDPWD", env_lst), "/./minishell", lst);
-			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
-			tmp[0] = ft_strdup("unset", &l_gc);
-			tmp[1] = ft_strdup("OLDPWD", &l_gc);
-			tmp[2] = NULL;
-			unset(tmp, &env, &l_gc, lst);
-			tmp = ft_malloc(sizeof(char *) * 3, &l_gc);
-			tmp[0] = ft_strdup("unset", &l_gc);
-			tmp[1] = ft_strdup("_", &l_gc);
-			tmp[2] = NULL;
-			unset(tmp, &env, &l_gc, lst);
-			chdir(pwd);
-		}
-		else 
-			path_of_program = my_getenv("_", env_lst);
-		if (ft_strchr(path_of_program, '.'))
-			path_of_program = ft_strjoin(my_getenv("PWD", env_lst), "/./minishell", lst);
-		ft_export_path_program(path_of_program, &env, lst);
-		env_lst = NULL;
-	}
-	
-	if (env_i)
-	{
-		ft_export_anything("SHLVL=1", &l_gc, lst, &env);
-		ft_export_anything("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin", &l_gc, lst, &env);
-		ft_export_anything(ft_strjoin("_=", path_of_program, lst), &l_gc, lst, &env);
-		bol = 1;
-	}
-
-	tmp_env = env;
-	int g = 0;
-	while (tmp_env != NULL && tmp_env[g])
-	{
-		if(ft_strcmp(tmp_env[g], "exitstatus") != 0 && tmp_env[g + 1] == NULL)
-			export_status(0, &env, &l_gc, lst);
-		g++;
-	}
+	bol = setup_env_and_path(&env, lst, &l_gc);
+	check_and_export_status(&env, &l_gc, lst);
 	
     while (1) {
 		flag_pipe = 0;
@@ -116,9 +63,11 @@ void readline_loop(char **line, t_gc **lst, char **env)
         }
 		if (g_a.exitstatus_singnal == 1)
 		{
-			export_status(g_a.exitstatus_singnal, &env, &l_gc, lst);
+			ft_export_status(g_a.exitstatus_singnal, &env, &l_gc, lst);
 			g_a.exitstatus_singnal = 0;
 		}
+		if (bol == 1)
+			printf("Error: malloc\n");
     	intit_env_list(&env_lst, env, lst);
         if (*line[0] != '\0')
 		{	
@@ -138,32 +87,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				env_lst = NULL;
 				continue;
 			}
-
-			// exit(0);
-			// this is for printind the command you can use it to check the command
-			// for (t_cmd *tmp = cmd; tmp; tmp = tmp->next)
-			// {
-			// 	for (int i = 0; tmp->args[i]; i++)
-			// 	printf("args: %s\n", tmp->args[i]);
-			// 	for (t_redir *tmp2 = tmp->rd; tmp2; tmp2 = tmp2->next)
-			// 	printf("redir: %s\n", tmp2->redio);
-			// 	printf("red_in: %d\n", tmp->red_in_fd);
-			// 	printf("red_out: %d\n", tmp->red_out_fd);
-			// }
 			t_cmd *tmp = cmd;
 
-			// while (tmp)
-			// {
-			// 	printf("cmd: %s\n", tmp->cmd);
-			// 	printf("args: %s\n", tmp->args[0]);
-			// 	printf("red_in: %s\n", tmp->red_in);
-			// 	printf("red_out: %s\n", tmp->red_out);
-			// 	printf("red_in_fd: %d\n", tmp->red_in_fd);
-			// 	printf("red_out_fd: %d\n", tmp->red_out_fd);
-			// 	tmp = tmp->next;
-			// }
-			// exit(0);
-			// number of pipe
 			int num_pipe;
 
 			num_pipe = 0;
@@ -203,7 +128,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			int last_childpid;
 
 			last_childpid = 0;
-			int process_group_id = 0;
+			int firstchild_pid = 0;
 			while (tmp)
 			{
 				tmp->flag_pipe = &flag_pipe;
@@ -227,7 +152,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					if (childpid == -1)
 					{
 						perror("fork");
-						kill(process_group_id, SIGKILL);
+						kill(firstchild_pid, SIGKILL);
 						break;
 					}
 					if (childpid > 0)
@@ -235,7 +160,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						if (!tmp->next)
 							last_childpid = childpid;
 						if (cmd_pipe == 0)
-							process_group_id = childpid;
+							firstchild_pid = childpid;
 					}
 					if (childpid == 0)
 					{
@@ -321,7 +246,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 						dup2(out_fd, 1);
 						close(out_fd);
 					}
-					export_status(stexit, &env, &l_gc, lst);
+					ft_export_status(stexit, &env, &l_gc, lst);
 				}
 				if (l == 2)
 					break ;
@@ -338,7 +263,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			if (flag_pipe)
 			{
 				int status;
-				export_status(0, &env, &l_gc, lst);
+				ft_export_status(0, &env, &l_gc, lst);
 				i = 0;
 				while (i < num_pipe * 2)
 				{
@@ -350,13 +275,13 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				{
 					g_a.stpsignal_inparent = 1;
 					if (wait(&status) == last_childpid)
-						export_status(WEXITSTATUS(status), &env, &l_gc, lst);
+						ft_export_status(WEXITSTATUS(status), &env, &l_gc, lst);
 					g_a.stpsignal_inparent = 0;
 					g_a.exitstatus_singnal = 0;
 					i++;
 				}
 				if (childpid == -1)
-					export_status(1, &env, &l_gc, lst);
+					ft_export_status(1, &env, &l_gc, lst);
 				ft_export_anything("_=", &l_gc, lst, &env);
 			}
 			free(*line);

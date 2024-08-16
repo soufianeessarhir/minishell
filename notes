@@ -4,19 +4,48 @@
                 -----------------
 	remove  the notes that you agree with me if not explain to me why
 
-
+		ga3 hado li 7ayadt makhasch ykono ou la makaynich fi subject aw kit jawab 3lihom bi lfhama
 execpart --------------------------------------------------------------
 
-i will see
-"."    check this error if you can fix it or not
 
-cd /var  \\this i must handle and this " etc   tmp " 
-cd /var  \\this i must handle and this " etc   tmp "
+##############################################################################
 make sure you free the memory before you exit
+##############################################################################
 
-env hamid incorrect output
-env with no options or arguments this is in subject
-test by tester if you fix this ls >> ./a/ss maybe we can finish this project
+##############################################################################
+bash-3.2$ pwd
+/Users/relamine/Desktop/ppp/folder/b
+bash-3.2$ rm -r ../../folder/
+bash-3.2$ cd ..
+cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+bash-3.2$ cd ..
+bash-3.2$ pwd
+/Users/relamine/Desktop/ppp
+bash-3.2$ cd ..
+bash-3.2$ pwd
+/Users/relamine/Desktop
+bash-3.2$ 
+##############################################################################
+
+##############################################################################
+
+##############################################################################
+
+##############################################################################
+cd not fixed yet
+?????
+WHAT YOU WANT TO FIX
+
+
+
+if you finsh it move to norminette and testing then told me when you want to finsh and push
+############################################################################################
+i just put the error i found if it's necessary to fix them ,fix them else remove them 
+
+give example ???
+
+
+############################################################################################
 parsepart --------------------------------------------------------------
 
 unset TES!T                           exitstatus must be 258   this is in parcing i will fix it
@@ -44,12 +73,34 @@ explain this above or remove it ?
 if you want to fix this cd: ~/Desktop/
 must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
 --------------------------------------------------------------------------------
+$===    "$=TEST"
+$+$+$+  $  
+echo "$      $USER"
 
-must ss be created in a directory like bash
+cat << lim''
+$USER
+$NOVAR
+$HOME
+lim
 
-minishell$ ls >> ./a/ss
-minishell: ./a/ss: No such file or directory incorrect ❌
+------------------------------------------------------------------------
+export arg='"hello"'
+lvalue dial lkey f env khssha thezz kima hiyya blquotes makhasch ithydu lquotes mn lvalue ila kanu aslan fwst quotes okhrin
 
-create directory "a" and tap this command 
-ls >> ./a/ss
-must  file ss be created like bash
+arg="hello"
+daba hna haz "hello" kamla
+
+
+------------------------------------------------------------------------
+not the same behavior as bash 
+in this case you must split the string 
+
+
+
+minishell$ export a='"ls -l"'
+minishell$ $a
+minishell: ls -l: command not found
+
+bash-3.2$ export a='"ls -l"'
+bash-3.2$ $a
+bash: "ls: command not found
