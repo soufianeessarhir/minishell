@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/16 06:02:27 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 07:19:39 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ static char	*get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 	return (argv[0]);
 }
 
+void   reset_terminal()
+{
+	char *cmd = "/bin/stty";
+    char *argv[] = {"stty", "sane", NULL};
+    char *envp[] = {NULL};
+
+	int pid = fork();
+	if (pid == 0) 
+	{
+		if (execve(cmd, argv, envp) == -1)
+			perror("execve failed");
+	}
+	else
+		waitpid(pid, NULL, 0);
+	
+}
 int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 {
 	char		**argv;
@@ -72,7 +88,10 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		if (status == 130)
 			printf("\n");
 		if (status == 131)
+		{
 			printf("Quit: 3\n");
+			reset_terminal();
+		}
 		g_a.stpsignal_inparent = 0;
 		g_a.exitstatus_singnal = 0;
 	}
