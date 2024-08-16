@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 09:19:07 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:41:03 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env_h_init(t_env_h *env_h, t_gc **l_gc, t_env *env_lst, char *str)
 
 void	env_pro_max(t_env_h *tmp, int numcmd)
 {
-	if (tmp->str[tmp->i + 1] == '?')
+	if (tmp->str[tmp->i] && tmp->str[tmp->i + 1] == '?')
 	{
 		tmp->result = handle_exit_status(tmp->result,
 				tmp->env_lst, tmp->l_gc, numcmd);
@@ -57,9 +57,11 @@ char	*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 	str = expand_double_dollar(str, l_gc);
 	while (str[tmp.i])
 	{
+		if (str[tmp.i] == '$' && !str[tmp.i + 1])
+			tmp.i++;
 		if (str[tmp.i] == '$' && str[tmp.i + 1] != '/')
 			env_pro_max(&tmp, numcmd);
-		else
+		else if (str[tmp.i])
 			tmp.result = handle_non_variable(str, &tmp.i, tmp.result, l_gc);
 	}
 	return (tmp.result);

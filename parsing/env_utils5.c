@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 04:51:18 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 05:28:01 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*clean_str(char *str, t_gc **l_gc)
 	int		j;
 	char	quote;
 	char	*tmp;
+
 	if (!str)
 		return (NULL);
 	tmp = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);

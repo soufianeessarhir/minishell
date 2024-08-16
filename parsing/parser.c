@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 08:50:36 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/15 11:44:31 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	process_tokens(t_token **tmp, int graph[4][3], t_gc **l_gc)
 		if (state == -1)
 		{
 			ft_putstr_fd(ft_strjoin(
-					ft_strjoin("syntax error near unexpected token `",
+					ft_strjoin
+					("minishell: syntax error near unexpected token `",
 						(*tmp)->value, l_gc), "\'\n", l_gc), 2);
 			return (-1);
 		}
@@ -77,5 +78,6 @@ int	syntax_error(t_token **token, t_gc **l_gc, t_env *env_lst)
 		return (her_doc_handling(token, l_gc, env_lst), 1);
 	}
 	return (her_doc_handling(token, l_gc, env_lst),
-		ft_putstr_fd("syntax error near unexpected token `newline\' \n", 2), 1);
+		ft_putstr_fd
+		("minishell: syntax error nearunexpected token `newline\' \n", 2), 1);
 }

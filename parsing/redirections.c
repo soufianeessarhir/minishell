@@ -6,11 +6,21 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/14 06:18:14 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/15 02:34:10 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*trim_dir(char	*str,t_gc **l_gc)
+{
+	int len;
+
+	len = ft_strlen(str) - 1;
+	while (len >= 0 && str[len] != '/')
+		len--;
+	return (ft_substr(str, 0, len, l_gc));
+}
 
 int	is_path(char *str)
 {
