@@ -104,3 +104,21 @@ minishell: ls -l: command not found
 bash-3.2$ export a='"ls -l"'
 bash-3.2$ $a
 bash: "ls: command not found
+
+
+
+------------------------------------------------------------------------
+minishell$ << ""
+>$USER
+>
+>
+>
+>
+>
+>""
+>''
+>'
+>"
+>
+
+when you tap enter must you exit the here document like bash
