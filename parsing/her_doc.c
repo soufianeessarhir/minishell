@@ -3,33 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   her_doc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 06:36:23 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:11:48 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_split_here_doc(t_heredoc herdoc, t_gc **l_gc, t_env *env_lst)
+int hrdc_q_ckeck(char *str)
 {
-	char	**args;
-	int		i;
-
-	args = ft_split(herdoc.line, '\n', l_gc);
+	int i;
+	
 	i = 0;
-	while (args[i])
+	while (str[i])
 	{
-		if (ft_strcmp (args[i], clean_str(herdoc.delimiter, l_gc)) == 0)
+		if (str[i] == '\"' || str[i] == '\'')
 			return (1);
-		if (is_dollar(args[i]) && herdoc.delimiter[0] != '\''
-			&& herdoc.delimiter[0] != '\"')
-			args[i] = helper(args[i], l_gc, env_lst, -1);
-		write(herdoc.fd, args[i], ft_strlen(args[i]));
-		write(herdoc.fd, "\n", 1);
 		i++;
 	}
+	return (0);
+}
+int	ft_split_here_doc(t_heredoc herdoc, t_gc **l_gc, t_env *env_lst)
+{
+
+		if (ft_strcmp (herdoc.line, clean_str(herdoc.delimiter, l_gc)) == 0)
+			return (1);
+		if (is_dollar(herdoc.line) && !hrdc_q_ckeck(herdoc.delimiter))
+			herdoc.line = helper(herdoc.line, l_gc, env_lst, -1);
+		write(herdoc.fd, herdoc.line, ft_strlen(herdoc.line));
+		write(herdoc.fd, "\n", 1);
 	return (0);
 }
 

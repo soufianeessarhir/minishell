@@ -4,7 +4,6 @@
                 -----------------
 	remove  the notes that you agree with me if not explain to me why
 
-		ga3 hado li 7ayadt makhasch ykono ou la makaynich fi subject aw kit jawab 3lihom bi lfhama
 execpart --------------------------------------------------------------
 
 
@@ -37,28 +36,13 @@ minishell$
 ##############################################################################
 cd not fixed yet
 ?????
-and also cd ~
 WHAT YOU WANT TO FIX
-
-
-if you finsh it move to norminette and testing then told me when you want to finsh and push
-############################################################################################
 
 ############################################################################################
 parsepart --------------------------------------------------------------
 ------------------------------------------------------------------------
 
-if you want to fix this cd: ~/Desktop/
-must you expand in parsepart                       >> i just expand environment variables in parsepart (any thing include $) it's a directory not an environment variable
---------------------------------------------------------------------------------
 $===    "$=TEST"
 $+$+$+  $  
 echo "$      $USER"
-
-cat << lim''
-$USER
-$NOVAR
-$HOME
-lim
-
 ------------------------------------------------------------------------
