@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 12:06:46 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:41:23 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	exitstatus = NULL;
 	tmp_env = NULL;
 
+	
 	bol = setup_env_and_path(&env, lst, &l_gc);
 	check_and_export_status(&env, &l_gc, lst);
 	

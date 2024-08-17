@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 00:26:44 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 11:01:15 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:50:37 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,19 @@ static void unset_tmp_env(char *var, char ***env, t_gc **l_gc, t_gc **lst)
     unset(tmp, env, l_gc, lst);
 }
 
-static void setup_default_env(t_env **env_lst, char ***env, char **path_of_program, t_gc **l_gc, t_gc **lst)
+static char  *setup_default_env(t_env **env_lst, char ***env, char **path_of_program, t_gc **l_gc, t_gc **lst)
 {
     char **tmp;
+	char *pwd_env_i;
 
     tmp = create_tmp_env("cd", "..", l_gc);
     cd(tmp, env, l_gc, lst);
     intit_env_list(env_lst, *env, l_gc);
     *path_of_program = ft_strjoin(my_getenv("OLDPWD", *env_lst), "/./minishell", l_gc);
+	pwd_env_i = my_getenv("OLDPWD", *env_lst);
     unset_tmp_env("OLDPWD", env, l_gc, lst);
     unset_tmp_env("_", env, l_gc, lst);
+	return (pwd_env_i);
 }
 
 static int handle_env_setup(char **path_of_program, t_env **env_lst, t_gc **l_gc, t_gc **lst, char ***env)
@@ -54,14 +57,13 @@ static int handle_env_setup(char **path_of_program, t_env **env_lst, t_gc **l_gc
     if (**env == NULL)
 	{
 		env_i = 1;
-		if (pwd == NULL)
-			tmp_pwd = getcwd(NULL, 0);
-        setup_default_env(env_lst, env, path_of_program, l_gc, lst);
-		if (chdir(pwd) == -1)
-			ft_export_anything(ft_strjoin("PWD=", tmp_pwd, lst), l_gc, lst, env);
+        tmp_pwd = setup_default_env(env_lst, env, path_of_program, l_gc, lst);
+		ft_export_anything(ft_strjoin("PWD=", tmp_pwd, lst), l_gc, lst, env);
+		chdir(tmp_pwd);
 	}
     else
         *path_of_program = ft_strjoin(pwd, "/./minishell", l_gc);
+	ft_export_anything("OLDPWD", l_gc, lst, env);
     system_export_config("@path_of_program=", *path_of_program, env, lst);
 	return	(env_i);
 }
@@ -87,7 +89,7 @@ int setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc)
 			ft_export_anything(ft_strjoin("_=", path_of_program, lst), l_gc, lst, env);
 			system_export_config("@hidden_PATH=", "1", env, lst);
 			return (1);
-	   }		
+	   }
 	}
 	return (env_i);
 }
