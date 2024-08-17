@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 17:56:27 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:11:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void		norm_env_zero(t_token **tmp, t_env *env_lst,
 				t_gc **l_gc, int *numcmd);
 int			is_export_arg(t_token *token_lst);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
+char		*deter_spl(char *str, char *ostr, t_gc **l_gc);
 
 
 void		handle_sigint(int sig);

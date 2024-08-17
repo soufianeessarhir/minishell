@@ -25,8 +25,6 @@ bash-3.2$ pwd
 /Users/relamine/Desktop
 bash-3.2$ 
 ##############################################################################
-bash-3.2$ cd
-bash: cd: HOME not set
 ##############################################################################
 
 i removed this because the function chdir
@@ -44,7 +42,3 @@ $===    "$=TEST"
 $+$+$+  $  
 echo "$      $USER"
 ------------------------------------------------------------------------
-
-bash-3.2$ export a="ls -l"
-bash-3.2$ "$a"
-bash: ls -l: command not found

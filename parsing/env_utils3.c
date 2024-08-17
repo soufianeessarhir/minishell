@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 12:23:45 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:07:51 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ char	*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 		else if (str[tmp.i])
 			tmp.result = handle_non_variable(tmp.str, &tmp.i, tmp.result, l_gc);
 	}
-	return (clean_str(antiexpand_sl(tmp.result, l_gc), l_gc));
+	return (deter_spl(clean_str(antiexpand_sl(tmp.result, l_gc),
+				l_gc), str, l_gc));
 }

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 22:38:11 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 11:28:50 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:45:15 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	ft_countwords(char const *s, char c)
 	}
 	return (len);
 }
-
 
 static int	ft_countchars(char const *s, char c, int i)
 {
