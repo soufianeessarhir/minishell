@@ -6,17 +6,17 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 16:05:56 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 12:23:45 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *expand_sl(char *str, t_gc **l_gc)
+char	*expand_sl(char *str, t_gc **l_gc)
 {
-	int i;
-	int j;
-	char *result;
+	int		i;
+	int		j;
+	char	*result;
 
 	i = 0;
 	j = 1;
@@ -25,16 +25,17 @@ char *expand_sl(char *str, t_gc **l_gc)
 	result = ft_malloc(sizeof(char) * (ft_strlen(str) + 3), l_gc);
 	result[0] = '\\';
 	while (str[i])
-	result[j++] = str[i++];
+		result[j++] = str[i++];
 	result[j++] = '\\';
 	result[j] = '\0';
 	return (result);
 }
-char *antiexpand_sl(char *str,t_gc **l_gc)
+
+char	*antiexpand_sl(char *str, t_gc **l_gc)
 {
-	int i;
-	int j;
-	char *result;
+	int		i;
+	int		j;
+	char	*result;
 
 	i = 0;
 	j = 0;
@@ -92,7 +93,7 @@ char	*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 	t_env_h	tmp;
 
 	if (str[0] == '\'' && numcmd != -1)
-		return (ft_strdup(clean_str(str,l_gc), l_gc));
+		return (ft_strdup(clean_str(str, l_gc), l_gc));
 	str = expand_double_dollar(str, l_gc);
 	env_h_init(&tmp, l_gc, env_lst, str);
 	while (str[tmp.i])

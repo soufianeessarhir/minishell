@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 05:09:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 03:24:35 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 12:29:23 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	handle_append_redirection(t_cmd *tmp, char *redout, t_gc **l_gc)
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						redout, l_gc), ": Is a directory\n", l_gc), 2), 1);
 	if ((redout && access(redout, F_OK) == -1
-			&& !is_directory(trim_dir(redout, l_gc)) && is_path(redout)) || ft_strcmp (redout, "") == 0)
+			&& !is_directory(trim_dir(redout, l_gc)) && is_path(redout))
+		|| ft_strcmp (redout, "") == 0)
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						redout, l_gc), ": No such file or directory\n",
 					l_gc), 2), 1);
@@ -70,8 +71,9 @@ int	handle_overwrite_redirection(t_cmd *tmp, char *redout, t_gc **l_gc)
 	if (redout && is_directory(redout))
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						redout, l_gc), ": Is a directory\n", l_gc), 2), 1);
-	if ((redout && access(redout, F_OK) == -1 && !is_directory(trim_dir(redout, l_gc)) && is_path(redout))
-		|| ft_strcmp (redout, "") == 0 )
+	if ((redout && access(redout, F_OK) == -1
+			&& !is_directory(trim_dir(redout, l_gc)) && is_path(redout))
+		|| ft_strcmp (redout, "") == 0)
 		return (ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 						redout, l_gc), ": No such file or directory\n",
 					l_gc), 2), 1);

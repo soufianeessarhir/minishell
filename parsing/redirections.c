@@ -6,15 +6,15 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/15 02:34:10 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 12:29:45 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*trim_dir(char	*str,t_gc **l_gc)
+char	*trim_dir(char	*str, t_gc **l_gc)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(str) - 1;
 	while (len >= 0 && str[len] != '/')
@@ -31,7 +31,7 @@ int	is_path(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (i > 0 && str[i] == '/' && str[i - 1] != '.'  )
+		if (i > 0 && str[i] == '/' && str[i - 1] != '.')
 			return (1);
 		i++;
 	}

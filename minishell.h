@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 10:47:51 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 13:48:04 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,10 +187,17 @@ char		*handle_exit_status(char *result,
 				t_env *env_lst, t_gc **l_gc, int numcmd);
 char		*handle_env_variable(char *str, int *i, char *result, t_env_h *tmp);
 char		*handle_non_variable(char *str, int *i, char *result, t_gc **l_gc);
-char	*trim_dir(char	*str,t_gc **l_gc);
-char 		*expand_sl(char *str, t_gc **l_gc);
-
-
+char		*trim_dir(char	*str, t_gc **l_gc);
+char		*expand_sl(char *str, t_gc **l_gc);
+void		norm_env_for(char *s, int *i, t_gc **l_gc, t_env_vars **new);
+void		clean_st_heler(char *str, int *i, int *j, char *result);
+void		process_dor(char *s, int *i, t_gc **l_gc, t_env_vars **new);
+void		process_reg(char *s, int *i, t_gc **l_gc, t_env_vars **new);
+void		process_quote(char *s, int *i, t_gc **l_gc, t_env_vars **new);
+void		norm_env_zero(t_token **tmp, t_env *env_lst,
+				t_gc **l_gc, int *numcmd);
+int			is_export_arg(t_token *token_lst);
+void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
 
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);
