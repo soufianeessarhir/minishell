@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 02:59:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 16:07:51 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:35:58 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ char	*env_search(char *str, t_env *env_lst, t_gc **l_gc, int numcmd)
 	{
 		if (str[tmp.i] == '$' && !str[tmp.i + 1])
 			tmp.i++;
-		if (str[tmp.i] == '$' && str[tmp.i + 1] != '/')
+		if (str[tmp.i] == '$' && (str[tmp.i + 1] != '/' && str[tmp.i + 1] != ' '
+				&& str[tmp.i + 1] != '\t'))
 			env_pro_max(&tmp, numcmd);
 		else if (str[tmp.i])
 			tmp.result = handle_non_variable(tmp.str, &tmp.i, tmp.result, l_gc);

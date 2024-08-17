@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 00:50:15 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/12 06:15:32 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:45:38 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_malloc(size_t size, t_gc **lst)
 
 	new = ft_lstnew(malloc(size));
 	if (!new)
-		return (NULL);
+		return (exit(printf("Error: malloc failed\n")), NULL);
 	ft_lstadd_back(lst, new);
 	return (new->ptr);
 }
