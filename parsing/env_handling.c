@@ -6,13 +6,13 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 17:16:27 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 13:30:05 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_export_arg(t_token *token_lst)
+int	is_export_arg(t_token *token_lst)
 {
 	t_token	*tmp;
 
@@ -46,7 +46,6 @@ static void	increment(int *i, int type)
 void	env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
 {
 	t_token	*tmp;
-	char	*tmp_va;
 	int		numcmd;
 
 	init(&numcmd, &tmp, *token_lst);
@@ -56,20 +55,12 @@ void	env_handling(t_token **token_lst, t_env *env_lst, t_gc **l_gc)
 		if (tmp->type == 1)
 		{
 			if (is_dollar(tmp->value) && (!(tmp->prev
-					&& ft_strcmp(tmp->prev->value, "<<") == 0)))
-			{
-				tmp_va = tmp->value;
-				tmp->value = helper(tmp->value, l_gc, env_lst, numcmd);
-				if ((tmp->value == NULL || sp_in_it(tmp->value))
-					&& tmp->prev && tmp->prev->type == 2)
-					norm_helper(tmp_va, l_gc, &tmp->value);
-				else if (!is_export_arg(tmp))
-					tmp->is_env = 1;
-			}
-			else 
+						&& ft_strcmp(tmp->prev->value, "<<") == 0)))
+				norm_env_zero(&tmp, env_lst, l_gc, &numcmd);
+			else
 				tmp->value = ft_strdup(clean_str(tmp->value, l_gc), l_gc);
 		}
-		else 
+		else
 			tmp->value = ft_strdup(clean_str(tmp->value, l_gc), l_gc);
 		increment(&numcmd, tmp->type);
 		tmp = tmp->next;

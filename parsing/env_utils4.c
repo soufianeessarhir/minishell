@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 05:12:18 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 09:47:41 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 13:15:46 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,14 @@ char	*helper(char *s, t_gc **l_gc, t_env *env_lst, int numcmd)
 
 	new = NULL;
 	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '$')
-			process_dor(s, &i, l_gc, &new);
-		else if (s[i] == '\'' || s[i] == '\"')
-			process_quote(s, &i, l_gc, &new);
-		else
-			process_reg(s, &i, l_gc, &new);
-	}
+	norm_env_for(s, &i, l_gc, &new);
 	tmp = new;
 	while (tmp)
 	{
-		if (!is_all_dollar(tmp->value) && (!tmp->next || tmp->value[0] == '\'' || tmp->value[0] == '\"'))
-			tmp->value = expand_double_dollar(clean_str(tmp->value, l_gc), l_gc);
+		if (!is_all_dollar(tmp->value) && (!tmp->next || tmp->value[0] == '\''
+				|| tmp->value[0] == '\"'))
+			tmp->value = expand_double_dollar(
+					clean_str(tmp->value, l_gc), l_gc);
 		else if (is_dollar(tmp->value))
 			tmp->value = env_search(tmp->value, env_lst, l_gc, numcmd);
 		else

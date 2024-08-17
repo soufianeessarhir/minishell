@@ -6,16 +6,16 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 19:11:48 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 12:28:07 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int hrdc_q_ckeck(char *str)
+int	hrdc_q_ckeck(char *str)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (str[i])
 	{
@@ -25,15 +25,15 @@ int hrdc_q_ckeck(char *str)
 	}
 	return (0);
 }
+
 int	ft_split_here_doc(t_heredoc herdoc, t_gc **l_gc, t_env *env_lst)
 {
-
-		if (ft_strcmp (herdoc.line, clean_str(herdoc.delimiter, l_gc)) == 0)
-			return (1);
-		if (is_dollar(herdoc.line) && !hrdc_q_ckeck(herdoc.delimiter))
-			herdoc.line = helper(herdoc.line, l_gc, env_lst, -1);
-		write(herdoc.fd, herdoc.line, ft_strlen(herdoc.line));
-		write(herdoc.fd, "\n", 1);
+	if (ft_strcmp (herdoc.line, clean_str(herdoc.delimiter, l_gc)) == 0)
+		return (1);
+	if (is_dollar(herdoc.line) && !hrdc_q_ckeck(herdoc.delimiter))
+		herdoc.line = helper(herdoc.line, l_gc, env_lst, -1);
+	write(herdoc.fd, herdoc.line, ft_strlen(herdoc.line));
+	write(herdoc.fd, "\n", 1);
 	return (0);
 }
 
