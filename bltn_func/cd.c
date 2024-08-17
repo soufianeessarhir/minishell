@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 09:11:35 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:08:51 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,13 @@ static char	*skip_slash(char *str, t_gc **l_gc)
 		command[i] = '\0';
 	return (command);
 }
-
+static void print_cd_error(char *arg)
+{
+    ft_putstr_fd("minishell: cd: ", 1);
+    ft_putstr_fd(arg, 1);
+    ft_putstr_fd(": ", 1);
+    perror("");
+}
 int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 {
 	int		i;
@@ -56,15 +62,10 @@ int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 		path = my_getenv("HOME", env_lst);
 	else
 		path = skip_slash(path, l_gc);
+	if(path == NULL)
+		return (ft_putstr_fd("minishell: cd: HOME not set\n", 1), 1);
 	export_pwd("OLDPWD=", envp, l_gc, lst);
 	if (path && chdir(path) == -1)
-	{
-		ft_putstr_fd("minishell: cd: ", 1);
-		ft_putstr_fd(argv[i], 1);
-		ft_putstr_fd(": ", 1);
-		perror("");
-		return (1);
-	}
-	export_pwd("PWD=", envp, l_gc, lst);
-	return (0);
+		return (print_cd_error(path), 1);
+	return (export_pwd("PWD=", envp, l_gc, lst), 0);
 }

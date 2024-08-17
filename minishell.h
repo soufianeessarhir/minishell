@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 13:48:04 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:56:27 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ void		norm_env_zero(t_token **tmp, t_env *env_lst,
 int			is_export_arg(t_token *token_lst);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
 
+
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);
 int			ft_builtin_func(t_cmd *cmd, char ***env, t_gc **l_gc, t_gc **lst);
@@ -226,7 +227,9 @@ void		system_export_config(char *key, char *value, char ***envp, t_gc **lst);
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
 void		print_exported_variables(char **envp, t_gc **gc, int bol);
-
+void		handle_execve_error(char *path_cmd, t_env *env_lst);
+void		handling_fd_minishell(t_cmd *cmd, char *path_cmd);
+void		reset_terminal();
 
 
 #endif

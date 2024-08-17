@@ -25,7 +25,8 @@ bash-3.2$ pwd
 /Users/relamine/Desktop
 bash-3.2$ 
 ##############################################################################
-
+bash-3.2$ cd
+bash: cd: HOME not set
 ##############################################################################
 
 i removed this because the function chdir

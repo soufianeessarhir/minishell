@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 12:03:37 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:55:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,48 @@ static char	*get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 	return (argv[0]);
 }
 
-static void   reset_terminal()
+static char *get_command_path(t_cmd *cmd, t_env *env_lst, t_gc **l_gc)
 {
-	char *cmd = "/bin/stty";
-    char *argv[] = {"stty", "sane", NULL};
-    char *envp[] = {NULL};
+    if (ft_strchr(cmd->args[0], '/') == NULL && ft_strlen(cmd->args[0]) != 0)
+        return (get_path(cmd->args, env_lst, l_gc));
+    else
+        return (cmd->args[0]);
+}
+static int handle_parent_process()
+{
+    int status;
 
-	int pid = fork();
-	if (pid == -1)
-		perror("fork");
-	if (pid == 0) 
-	{
-		if (execve(cmd, argv, envp) == -1)
-			perror("execve failed");
-	}
+	g_a.stpsignal_inparent = 1;
+	wait(&status);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
 	else
-		waitpid(pid, NULL, 0);
+		status = 128 + WTERMSIG(status);
+	if (status == 130)
+		printf("\n");
+	if (status == 131)
+	{
+		printf("Quit: 3\n");
+		reset_terminal();
+	}
+	g_a.stpsignal_inparent = 0;
+	g_a.exitstatus_singnal = 0;
+	return (status);
+}
+
+static pid_t fork_process(int *flag_pipe)
+{
+    pid_t childpid;
+
+	childpid = 0;
+    if (!*flag_pipe) {
+        childpid = fork();
+    }
+    if (childpid == -1) {
+        perror("fork");
+        exit(1);
+    }
+    return (childpid);
 }
 
 int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
@@ -59,44 +85,12 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 	char		*path_cmd;
 	pid_t		childpid;
 	t_env		*env_lst;
-	int			status;
-	struct stat	statbuf;
 
 	env_lst = NULL;
-	status = 0;
 	argv = cmd->args;
 	intit_env_list(&env_lst, *envp, l_gc);
-	if (ft_strchr(argv[0], '/') == NULL && ft_strlen(argv[0]) != 0)
-		path_cmd = get_path(argv, env_lst, l_gc);
-	else
-		path_cmd = argv[0];
-	if (!*cmd->flag_pipe)
-		childpid = fork();
-	else
-		childpid = 0;
-	if (childpid == -1)
-	{
-		perror("fork");
-		exit(1);
-	}
-	if (childpid > 0)
-	{
-		g_a.stpsignal_inparent = 1;
-		wait(&status);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
-		else
-			status = 128 + WTERMSIG(status);
-		if (status == 130)
-			printf("\n");
-		if (status == 131)
-		{
-			printf("Quit: 3\n");
-			reset_terminal();
-		}
-		g_a.stpsignal_inparent = 0;
-		g_a.exitstatus_singnal = 0;
-	}
+	path_cmd = get_command_path(cmd, env_lst, l_gc);
+	childpid = fork_process(cmd->flag_pipe);
 	if (childpid == 0)
 	{
 		if (ft_strcmp(path_cmd, "./minishell") == 0)
@@ -104,55 +98,20 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 			export_shelvl(envp, l_gc, lst, env_lst);
 			path_cmd = cmd->path_of_program;
 		}
-		if (*cmd->flag_pipe && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)) && cmd->num_cmd > 0)
-			close(1);
-		if (cmd->num_cmd == 0 && ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd)))
-			dup2(2, 1);
+		handling_fd_minishell(cmd, path_cmd);
 		if (execve(path_cmd, argv, *envp) == -1)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			stat(path_cmd, &statbuf);
-			if (argv[0][0] == '.' && argv[0][1] == '/')
-			{
-				if (S_ISDIR(statbuf.st_mode))
-				{
-					ft_putstr_fd(argv[0], 2);
-					ft_putstr_fd(": is a directory\n", 2);
-					exit(126);
-				}
-				perror(argv[0]);
-				if (errno == 13 && S_ISDIR(statbuf.st_mode) == 0)
-					exit(126);
-			}
-			else if (ft_strchr(argv[0], '/') && argv[0][0] != '/')
-			{
-				ft_putstr_fd(argv[0], 2);
-				if (S_ISDIR(statbuf.st_mode))
-				{
-					ft_putstr_fd(": is a directory\n", 2);
-					exit(126);
-				}
-				else
-					ft_putstr_fd(": Not a directory\n", 2);
-			}
-			else if (my_getenv("PATH", env_lst) == NULL || argv[0][0] == '/')
-			{
-				if (S_ISDIR(statbuf.st_mode))
-				{
-					ft_putstr_fd(argv[0], 2);
-					ft_putstr_fd(": is a directory\n", 2);
-					exit(126);
-				}
-				else
-					perror(argv[0]);
-			}
-			else
-			{
-				ft_putstr_fd(argv[0], 2);
-				ft_putstr_fd(": command not found\n", 2);
-			}
-			exit(127);
-		}
+			handle_execve_error(path_cmd, env_lst);
 	}
-	return (status);
+	return (handle_parent_process());
+}
+
+void handling_fd_minishell(t_cmd *cmd, char *path_cmd)
+{
+	char		*is_minishell;
+
+	is_minishell = ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd));
+    if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
+		close(1);
+	if (cmd->num_cmd == 0 && is_minishell)
+		dup2(2, 1);
 }
