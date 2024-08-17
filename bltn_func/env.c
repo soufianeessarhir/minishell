@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 21:17:27 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/15 06:08:24 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 08:38:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	env(char **env, t_gc **lst, int bol)
 			i++;
 			continue ;
 		}
-		if (ft_strncmp(env[i], "@exitstatus", 11) == 0 || ft_strncmp(env[i], "@path_of_program", 16) == 0)
+		if (!ft_strncmp(env[i], "@exitstatus", 11)|| !ft_strncmp(env[i], "@path_of_program", 16) || !ft_strncmp(env[i], "@hidden_PATH", 12))
 		{
 			i++;
 			continue ;

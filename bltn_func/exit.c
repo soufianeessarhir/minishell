@@ -6,13 +6,63 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/16 00:31:11 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 11:49:11 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int print_exit_error(int argc, int error_msg, int checker, char *arg)
+static int parse_sign_and_whitespace(char **str, int *error_msg)
+{
+    int signe;
+
+	signe = 1;
+	if (**str == '\0')
+		return (*error_msg = -1);
+	while ((**str >= 9 && **str <= 13) || **str == 32)
+	{
+		(*str)++;
+		if (**str == '\0')
+			return (*error_msg = -1);
+	}
+	if (**str == '-' || **str == '+')
+	{
+		if (*((*str)++) == '-')
+			signe = -1;
+		if (**str == '\0')
+			return (*error_msg = -1);
+	}
+    return (signe);
+}
+
+static long	ft_atoi_checker(char *str, int *error_msg)
+{
+	int		signe;
+	long	res;
+
+	signe = parse_sign_and_whitespace(&str, error_msg);
+	if (*error_msg == -1)
+    	return (*error_msg);
+	res = 0;
+	while (*str)
+	{
+		while ((*str >= 9 && *str <= 13) || *str == 32)
+		{
+			str++;
+			if (*str == '\0')
+				return (res * signe);
+		}
+		if (!ft_isdigit(*str))
+			return (*error_msg = -1);
+		if (res > 922337203685477580 || (res == 922337203685477580 && *str > '7' && signe == 1) ||
+			(res == 922337203685477580 && *str > '8' && signe == -1))
+			return (*error_msg = -2);
+		res = res * 10 + (*(str++) - '0');
+	}
+	return (res * signe);
+}
+
+static int print_exit_error(int argc, int error_msg, int checker, char *arg)
 {
 	if (argc >= 2 && error_msg != -1 && error_msg != -2)
 	{

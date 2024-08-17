@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_export_to_env.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/17 10:55:21 by relamine          #+#    #+#             */
+/*   Updated: 2024/08/17 11:02:30 by relamine         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+void	export_pwd(char *which, char ***envp, t_gc **l_gc, t_gc **lst)
+{
+	char	**args = ft_malloc(sizeof(char *) * 3, l_gc);
+
+	args[0] = ft_strdup("export", l_gc);
+	args[1] = ft_strjoin(which, getcwd(NULL, 0), l_gc);
+	args[2] = NULL;
+	ft_export(args, envp, l_gc, lst, 0);
+}
+
+void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
+{
+	int		q;
+	char	**tmp;
+	char	*arg;
+
+	q = ft_strlen_double(argv) - 1;
+	tmp = (char **)ft_malloc(sizeof(char *) * 3, lst);
+	tmp[0] = ft_strdup("export", gc);
+	arg = ft_strdup(argv[q], gc);
+	tmp[1] = ft_strjoin("_=", arg, gc);
+	tmp[2] = NULL;
+	ft_export(tmp, envpv, gc, lst, 0);
+}
+
+void	export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
+{
+	char	*tmp;
+	char	**shelvl;
+	char	*num_shlvl;
+	int		i;
+
+	num_shlvl = my_getenv("SHLVL", env_lst);
+	i = ft_atoi(num_shlvl);
+	if (i == 0 || i >= 10240)
+		i = 1;
+	else if (i < 0)
+		i = 0;
+	else
+		i++;
+	tmp = ft_strjoin("SHLVL=", ft_itoa(i, l_gc), l_gc);
+	shelvl = ft_malloc(sizeof(char *) * 3, l_gc);
+	shelvl[0] = ft_strdup("export", l_gc);
+	shelvl[1] = tmp;
+	shelvl[2] = NULL;
+	ft_export(shelvl, envp, l_gc, lst, 0);
+}
+
+void	ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
+{
+	char	**tmp;
+
+	tmp = ft_malloc(sizeof(char *) * 3, lst);
+	tmp[0] = ft_strdup("export", l_gc);
+	tmp[1] = ft_strdup(argv, l_gc);
+	tmp[2] = NULL;
+	ft_export(tmp, env, l_gc, lst, 0);
+}
+
+void	system_export_config(char *key, char *value, char ***envp, t_gc **lst)
+{
+	size_t	env_count;
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	env_count = ft_strlen_double(*envp);
+	new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
+	while ((*envp)[i])
+	{
+		new_env[i] = ft_strdup((*envp)[i], lst);
+		i++;
+	}
+	new_env[i] = ft_strjoin(key, value, lst);
+	new_env[i + 1] = NULL;
+	*envp = new_env;
+}

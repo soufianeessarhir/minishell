@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 17:34:20 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 12:06:46 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			ft_export_status(g_a.exitstatus_singnal, &env, &l_gc, lst);
 			g_a.exitstatus_singnal = 0;
 		}
-		if (bol == 1)
-			printf("Error: malloc\n");
     	intit_env_list(&env_lst, env, lst);
         if (*line[0] != '\0')
 		{	

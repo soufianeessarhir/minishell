@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_handler.c                                      :+:      :+:    :+:   */
+/*   exitstatus_handler.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:58:16 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/16 00:42:56 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 11:05:05 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst)
         g++;
     }
 }
-int update_exitstatus(char ***envp, int status, t_gc **l_gc, t_gc **lst)
+static int update_exitstatus(char ***envp, int status, t_gc **l_gc, t_gc **lst)
 {
     int i;
 

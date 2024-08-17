@@ -27,16 +27,13 @@ bash-3.2$
 ##############################################################################
 
 ##############################################################################
-minishell$ cd /var			// cd /var
-minishell$ pwd
-/private/var
-minishell$ 
+
+i removed this because the function chdir
+search for symbolic links and if it finds one it will change the current directory to the directory that the symbolic link points to
+and it fail if  If there are too many symbolic links encountered in the resolving path.
 ##############################################################################
 
 ##############################################################################
-cd not fixed yet
-?????
-WHAT YOU WANT TO FIX
 
 ############################################################################################
 parsepart --------------------------------------------------------------
@@ -46,3 +43,7 @@ $===    "$=TEST"
 $+$+$+  $  
 echo "$      $USER"
 ------------------------------------------------------------------------
+
+bash-3.2$ export a="ls -l"
+bash-3.2$ "$a"
+bash: ls -l: command not found

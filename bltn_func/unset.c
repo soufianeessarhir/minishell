@@ -6,26 +6,26 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/16 01:10:25 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 11:40:35 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void print_unset_error(char *arg)
+static void print_unset_error(char *arg)
 {
 	ft_putstr_fd("minishell: unset: `", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
-int	ft_iswhitespace(char c)
+static int	ft_iswhitespace(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
 
-char	*get_key_unset(char *str, t_gc **gc)
+static char	*get_key_unset(char *str, t_gc **gc)
 {
 	int		i;
 	char	*key;
@@ -45,7 +45,7 @@ char	*get_key_unset(char *str, t_gc **gc)
 	return (key);
 }
 
-char **create_new_env(char **env, char *key, t_gc **gc, t_gc **lst)
+static char **create_new_env(char **env, char *key, t_gc **gc, t_gc **lst)
 {
 	int j;
 	int k;

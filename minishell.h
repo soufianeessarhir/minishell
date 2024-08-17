@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 15:08:45 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 10:47:51 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,14 +199,12 @@ int			pwd(void);
 int			exit_0(int i, int argc, char **argv, int *flag_pipe);
 int			env(char **env, t_gc **lst, int bol);
 int			ft_strlen_double(char **str);
-long		ft_atoi_checker(char *str, int *error_msg);
 int			cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
 int			ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst);
 int			ft_export(char **argv, char ***envp, t_gc **gc,
 				t_gc **lst, int *boll);
 int			ft_strcmp(const char *s1, const char *s2);
-void		export_pwd(char ***envp, t_gc **l_gc, t_gc **lst);
-void		export_oldpwd(char ***envp, t_gc **l_gc, t_gc **lst);
+void		export_pwd(char *which, char ***envp, t_gc **l_gc, t_gc **lst);
 char		*get_value(char *str, t_gc **l_gc);
 char		*get_key(char *str, t_gc **l_gc);
 int			unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst);
@@ -217,9 +215,11 @@ void		export_shelvl(char ***envp, t_gc **l_gc,
 void		ft_export_anything(char *argv, t_gc **l_gc,
 				t_gc **lst, char ***env);
 int			ft_isonlydigit(char *str);
-void		ft_export_path_program(char *argv, char ***envp, t_gc **lst);
+void		system_export_config(char *key, char *value, char ***envp, t_gc **lst);
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
+void		print_exported_variables(char **envp, t_gc **gc, int bol);
+
 
 
 #endif
