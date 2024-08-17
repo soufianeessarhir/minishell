@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 12:19:52 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:02:53 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 	{
 		if ((*tmp)->is_env == 1 && sp_in_it((*tmp)->value))
 		{
-			tmp_p = ft_split((*tmp)->value, ' ', l_gc);
+			tmp_p = ft_split((*tmp)->value, '\\', l_gc);
 			while (tmp_p && *tmp_p)
 			{
 				ft_lstadd_back_args(&new->args_lst, new_args(*tmp_p, l_gc));

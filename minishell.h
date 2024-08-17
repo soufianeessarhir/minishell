@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 13:48:04 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:09:15 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void		norm_env_zero(t_token **tmp, t_env *env_lst,
 				t_gc **l_gc, int *numcmd);
 int			is_export_arg(t_token *token_lst);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
+char		*deter_spl(char *str, char *ostr, t_gc **l_gc);
 
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);
@@ -226,7 +227,5 @@ void		system_export_config(char *key, char *value, char ***envp, t_gc **lst);
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
 void		print_exported_variables(char **envp, t_gc **gc, int bol);
-
-
 
 #endif

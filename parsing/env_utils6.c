@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:04:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 13:28:42 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:08:14 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,25 @@ void	norm_env_zero(t_token **tmp, t_env *env_lst, t_gc **l_gc, int *numcmd)
 		norm_helper(tmp_va, l_gc, &(*tmp)->value);
 	else if (!is_export_arg(*tmp))
 		(*tmp)->is_env = 1;
+}
+
+char	*deter_spl(char *str, char *ostr, t_gc **l_gc)
+{
+	char	*res;
+	int		i;
+
+	if (ostr[0] == '\'' || ostr[0] == '\"' || !str)
+		return (str);
+	i = 0;
+	res = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+			res[i] = '\\';
+		else
+			res[i] = str[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }
