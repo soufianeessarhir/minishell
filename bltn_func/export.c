@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 11:32:15 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:29:52 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int handle_existing_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
 	{
 		if (ft_strcmp(get_key((*envp)[j], gc), get_key(arg, gc)) == 0)
 		{
+			bol = 1;
 			if (ft_strchr(arg, '=') == NULL)
 				break ;
 			if (ft_strchr(arg, '+') != NULL)
@@ -70,7 +71,8 @@ static void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 static void handle_new_key(char *arg, char ***envp, t_gc **gc, t_gc **lst) {
     char *tmp;
     
-    if (ft_strchr(arg, '+') != NULL) {
+    if (ft_strchr(arg, '+') != NULL)
+	{
         tmp = get_value(arg, gc);
         arg = ft_strjoin(get_key(arg, gc), "=", gc);
         arg = ft_strjoin(arg, tmp, lst);
