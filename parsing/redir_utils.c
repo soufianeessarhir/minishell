@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 05:09:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 12:29:23 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:08:43 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	handle_red_in(t_cmd *tmp, t_gc **l_gc, t_redir *rd)
 	if (tmp->red_in_fd != 0)
 		close(tmp->red_in_fd);
 	tmp->red_in_fd = open(rd->next->redio, O_RDONLY);
+	if (rd && ft_strcmp(rd->redio, "<<") == 0)
+		unlink(rd->next->redio);
 	if (tmp->red_in_fd == -1)
 		return (1);
 	return (0);
