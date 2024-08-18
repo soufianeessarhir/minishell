@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:44:50 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 13:14:47 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:44:52 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ char	*clean_str(char *str, t_gc **l_gc)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\\')
-			i++;
-		else if ((str[i] == '\'' || str[i] == '\"') && is_qu_exist(str, i))
+		if ((str[i] == '\'' || str[i] == '\"' || str[i] == '\\') && is_qu_exist(str, i))
 			clean_st_heler(str, &i, &j, tmp);
 		else
 			tmp[j++] = str[i++];

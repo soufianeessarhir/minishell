@@ -6,12 +6,22 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 12:28:07 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:42:18 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+int rnd(int nd,char *str,t_gc **l_gc)
+{
+	static int	herdoc = 0;
+	herdoc += nd;
+	if (nd != 0)
+	{
+		while(access(ft_strjoin(ft_strjoin("/tmp/heredoc",ft_itoa(herdoc,l_gc),l_gc),str,l_gc),F_OK) == 0)
+			herdoc += 1;
+	}
+	return (herdoc);
+}
 int	hrdc_q_ckeck(char *str)
 {
 	int	i;
@@ -49,8 +59,8 @@ void	herdoc_h(t_heredoc heredoc, t_token **tmp, t_gc **l_gc, t_env *env_lst)
 		heredoc.line = NULL;
 		heredoc.line = readline(">");
 	}
-	(*tmp)->next->value = ft_strjoin("/tmp/heredoc",
-			(*tmp)->next->value, l_gc);
+	(*tmp)->next->value = ft_strjoin(ft_strjoin("/tmp/heredoc",ft_itoa(rnd(0,(*tmp)->next->value, l_gc),l_gc),l_gc), 
+							(*tmp)->next->value,l_gc);
 	close(heredoc.fd);
 }
 
@@ -69,8 +79,8 @@ void	her_doc_handling(t_token **token_lst, t_gc **l_gc, t_env *env_lst)
 		{
 			if (!tmp->next || (tmp->next->type != 1))
 				break ;
-			heredoc.fd = open(ft_strjoin("/tmp/heredoc", clean_str(
-							tmp->next->value, l_gc),
+			heredoc.fd = open(ft_strjoin(ft_strjoin("/tmp/heredoc",ft_itoa(rnd(1,clean_str(
+							tmp->next->value, l_gc),l_gc),l_gc),l_gc), clean_str(tmp->next->value, l_gc),
 						l_gc), O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (heredoc.fd == -1)
 				return ;

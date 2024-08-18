@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:04:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 16:08:14 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:42:46 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	clean_st_heler(char *str, int *i, int *j, char *result)
 	(*i)++;
 	while (str[*i] && str[*i] != quote)
 	{
-		if (str[*i] == '\\')
-			(*i)++;
 		if (str[*i])
 		{
 			result[*j] = str[*i];
