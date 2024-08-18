@@ -27,9 +27,6 @@ bash-3.2$
 ##############################################################################
 ##############################################################################
 
-i removed this because the function chdir
-search for symbolic links and if it finds one it will change the current directory to the directory that the symbolic link points to
-and it fail if  If there are too many symbolic links encountered in the resolving path.
 ##############################################################################
 
 ##############################################################################
@@ -42,3 +39,24 @@ $===    "$=TEST"
 $+$+$+  $  
 echo "$      $USER"
 ------------------------------------------------------------------------
+
+minishell$ export a='"'ls'"'
+minishell$ $a
+Makefile        gc              main.o          notes           signals.o
+bltn_func       libft           minishell       parsing
+execute         main.c          minishell.h     signals.c
+
+
+bash-3.2$ export a='"'ls'"'
+bash-3.2$ $a
+bash: "ls": command not found
+
+
+------------------------------------------------------------------------
+gal liy salah had to9ba kiraj3o 3liha donc kikhasna nhandliwha
+
+3andk to9ba fi herdoc 
+
+- khas smiyet file dyal herdoc tkon random dima bach maykrich file 3ando nafs smiy ou ybda ykhawrlik fih
+- khasak  t creayeh m3a t unlike file bach mayb9ach tal3 ou ykhawar lik fih
+- khasak tchicki wach dak file exist oula ila kan crea wahad akhour bi smiya mkhtalfa (had test d9dar tchikih mnin thol jouj minishell in the same time) hadi 7tach i9dar itcreaya bi the same name in because is a random

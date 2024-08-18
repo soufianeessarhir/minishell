@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 19:25:56 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/18 10:13:25 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	if(path == NULL)
 		return (ft_putstr_fd("minishell: cd: HOME not set\n", 1), 1);
 	export_pwd("OLDPWD=", envp, l_gc, lst);
-	if (path && chdir(path) == -1)
+	if (chdir(path) == -1)
 		return (print_cd_error(path), 1);
 	return (export_pwd("PWD=", envp, l_gc, lst), 0);
 }

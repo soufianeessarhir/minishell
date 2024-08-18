@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 17:55:20 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:55:13 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static int handle_parent_process()
 
 	g_a.stpsignal_inparent = 1;
 	wait(&status);
-	if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	else
+	if (WIFSIGNALED(status))
 		status = 128 + WTERMSIG(status);
+	else
+		status = WEXITSTATUS(status);
 	if (status == 130)
 		printf("\n");
 	if (status == 131)

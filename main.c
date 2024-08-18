@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 16:41:23 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:56:29 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,9 +265,10 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					cmd_pipe = 0;
 				}
 			}
+			int status = 0;
+			int childpid_tmp = 0;
 			if (flag_pipe)
 			{
-				int status;
 				ft_export_status(0, &env, &l_gc, lst);
 				i = 0;
 				while (i < num_pipe * 2)
@@ -276,15 +277,27 @@ void readline_loop(char **line, t_gc **lst, char **env)
 					i++;
 				}
 				i = 0;
+				g_a.stpsignal_inparent = 1;
 				while (i <= num_pipe)
 				{
-					g_a.stpsignal_inparent = 1;
-					if (wait(&status) == last_childpid)
-						ft_export_status(WEXITSTATUS(status), &env, &l_gc, lst);
-					g_a.stpsignal_inparent = 0;
-					g_a.exitstatus_singnal = 0;
+					childpid_tmp = wait(&status);
+					if (WIFSIGNALED(status))
+					{
+						status = 128 + WTERMSIG(status);
+						ft_export_status(status, &env, &l_gc, lst);
+					}
+					else if (childpid_tmp == last_childpid)
+					{
+						ft_export_status(WEXITSTATUS(status), &env, &l_gc, lst);	
+					}
 					i++;
 				}
+				g_a.stpsignal_inparent = 0;
+				g_a.exitstatus_singnal = 0;
+				if (status == 130)
+					printf("\n");
+				if (status == 131)
+					printf("Quit: 3\n");
 				if (childpid == -1)
 					ft_export_status(1, &env, &l_gc, lst);
 				ft_export_anything("_=", &l_gc, lst, &env);
