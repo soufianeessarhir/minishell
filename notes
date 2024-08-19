@@ -24,7 +24,35 @@ bash-3.2$ cd ..
 bash-3.2$ pwd
 /Users/relamine/Desktop
 bash-3.2$ 
+export NEW=42
+env | grep NEW
+unset NEW
+env | grep NEW
+unset NEW
+unset NEW
+unset NEW
+unset NEW
+unset NEW
+env | grep NEW
 ##############################################################################
+hadchi can khdam imkan w9a3 chi error bsbab norminette
+exit 9223372036854775808
+exit -9223372036854775809
+/bin/echo 1 | kaka
+try this command  between the dollar sign it give incorrect result in the last (env | grep NEW)
+$$$$$$$$$$$$$$$
+export NEW=42
+env | grep NEW
+unset NEW
+env | grep NEW
+unset NEW
+unset NEW
+unset NEW
+unset NEW
+unset NEW
+env | grep NEW
+$$$$$$$$$$$$$$$
+
 ##############################################################################
 
 ##############################################################################
@@ -37,105 +65,4 @@ parsepart ----------------------------------------------------------------------
 
 mnin hayadt sanitaz tal3o liya hdo makhadaminch jarabthom li9thom makhadaminch 
 jarabt 7ta version lakhrin l9ithom nafs l7aja mini kanhayad lihom sanitaz mkibawach ikhadmo 
-
-ou wahd lhaja ghariba mini kandakhal had command 3 marat katkhdam 3adi dak sa3a ki b9a koula mara ikriyi wa7ad
-ls > ./outfiles/outfile > ./outfiles/outfile01 > ./outfiles/outfile02
-ls > ./outfiles/outfile > ./outfiles/outfile01 > ./outfiles/outfile02
-ls > ./outfiles/outfile > ./outfiles/outfile01 > ./outfiles/outfile02
-
-
-
-
-
-
-Test 122: ❌ echo hi >>./outfiles/outfile01 >>./outfiles/outfile02 | echo bye 
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-hi
-Test 123: ✅ echo hi | echo >>./outfiles/outfile01 bye 
-Test 124: ❌ echo hi | echo bye >>./outfiles/outfile01 >>./outfiles/outfile02 
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-bye
-Test 125: ❌ echo hi >>./outfiles/outfile01 | echo bye >>./outfiles/outfile02 
-Files ./mini_outfiles/outfile01 and ./bash_outfiles/outfile01 differ
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-hi
-bye
-
-
-
-Test 114: ❌ ls >>./outfiles/outfile01 >>./outfiles/outfile02 
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-README.md
-bash.supp
-bash_outfiles
-bonus
-bonus_bonus
-builtins
-extras
-local.supp
-loop.out
-manual_tests
-mini_outfiles
-os_specific
-outfiles
-pipes
-redirects
-syntax
-test_files
-tester
-wildcards
-
-
-
-Test  92: ❌ echo hi >./outfiles/outfile01 >./outfiles/outfile02 | echo bye 
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-hi
-Test  93: ✅ echo hi | echo >./outfiles/outfile01 bye 
-Test  94: ❌ echo hi | echo bye >./outfiles/outfile01 >./outfiles/outfile02 
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-bye
-Test  95: ❌ echo hi >./outfiles/outfile01 | echo bye >./outfiles/outfile02 
-Files ./mini_outfiles/outfile01 and ./bash_outfiles/outfile01 differ
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-hi
-bye
-
-
-
-Test  84: ❌ ls >./outfiles/outfile01 >./outfiles/outfile02 
-Only in ./bash_outfiles: outfile02
-mini outfiles:
-bash outfiles:
-README.md
-bash.supp
-bash_outfiles
-bonus
-bonus_bonus
-builtins
-extras
-local.supp
-loop.out
-manual_tests
-mini_outfiles
-os_specific
-outfiles
-pipes
-redirects
-syntax
-test_files
-tester
-wildcards
+mafhamtch 

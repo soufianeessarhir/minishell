@@ -6,18 +6,26 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 05:09:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/18 17:08:43 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:23:24 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_directory(char *path)
-{
-	struct stat	path_stat;
+#include <errno.h>
 
-	stat(path, &path_stat);
-	return (S_ISDIR(path_stat.st_mode));
+int is_directory(const char *path)
+{
+    struct stat path_stat;
+    
+    if (stat(path, &path_stat) != 0) 
+	{
+        if (errno == ENOENT) {
+            return 0;
+        }
+        return -1;
+    }
+    return S_ISDIR(path_stat.st_mode);
 }
 
 int	handle_red_in(t_cmd *tmp, t_gc **l_gc, t_redir *rd)
