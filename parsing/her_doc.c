@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/18 17:06:25 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:25:19 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	rnd(int nd, char *str, t_gc **l_gc)
 {
 	static int	herdoc;
 
-	herdoc = 0;
 	herdoc += nd;
 	if (nd != 0)
 	{
