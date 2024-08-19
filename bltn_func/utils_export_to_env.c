@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 10:55:21 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 14:24:00 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:51:08 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	export_pwd(char *which, char ***envp, t_gc **l_gc, t_gc **lst)
 {
-	char	**args = ft_malloc(sizeof(char *) * 3, l_gc);
+	char	**args;
+	t_norm	lst_n;
 
+	lst_n.l_gc = l_gc;
+	lst_n.lst = lst;
+	lst_n.bol2 = 0;
+	args = ft_malloc(sizeof(char *) * 3, l_gc);
 	args[0] = ft_strdup("export", l_gc);
 	args[1] = ft_strjoin(which, getcwd(NULL, 0), l_gc);
 	args[2] = NULL;
-	ft_export(args, envp, l_gc, lst, 0);
+	ft_export(args, envp, lst_n);
 }
 
 void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
@@ -27,14 +32,18 @@ void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 	int		q;
 	char	**tmp;
 	char	*arg;
+	t_norm	lst_n;
 
+	lst_n.l_gc = gc;
+	lst_n.lst = lst;
+	lst_n.bol2 = 0;
 	q = ft_strlen_double(argv) - 1;
 	tmp = (char **)ft_malloc(sizeof(char *) * 3, lst);
 	tmp[0] = ft_strdup("export", gc);
 	arg = ft_strdup(argv[q], gc);
 	tmp[1] = ft_strjoin("_=", arg, gc);
 	tmp[2] = NULL;
-	ft_export(tmp, envpv, gc, lst, 0);
+	ft_export(tmp, envpv, lst_n);
 }
 
 void	export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
@@ -43,7 +52,11 @@ void	export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 	char	**shelvl;
 	char	*num_shlvl;
 	int		i;
+	t_norm	lst_n;
 
+	lst_n.l_gc = l_gc;
+	lst_n.lst = lst;
+	lst_n.bol2 = 0;
 	num_shlvl = my_getenv("SHLVL", env_lst);
 	i = ft_atoi(num_shlvl);
 	if (i == 0 || i >= 10240)
@@ -57,18 +70,22 @@ void	export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 	shelvl[0] = ft_strdup("export", l_gc);
 	shelvl[1] = tmp;
 	shelvl[2] = NULL;
-	ft_export(shelvl, envp, l_gc, lst, 0);
+	ft_export(shelvl, envp, lst_n);
 }
 
 void	ft_export_anything(char *argv, t_gc **l_gc, t_gc **lst, char ***env)
 {
 	char	**tmp;
+	t_norm	lst_n;
 
+	lst_n.l_gc = l_gc;
+	lst_n.lst = lst;
+	lst_n.bol2 = 0;
 	tmp = ft_malloc(sizeof(char *) * 3, lst);
 	tmp[0] = ft_strdup("export", l_gc);
 	tmp[1] = ft_strdup(argv, l_gc);
 	tmp[2] = NULL;
-	ft_export(tmp, env, l_gc, lst, 0);
+	ft_export(tmp, env, lst_n);
 }
 
 void	system_export_config(char *key, char *value, char ***envp, t_gc **lst)

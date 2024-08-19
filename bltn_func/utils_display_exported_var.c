@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 10:41:11 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 10:43:40 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:52:31 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char **copy_env_list(char ***env_lst, t_gc **gc)
+static	char	**copy_env_list(char ***env_lst, t_gc **gc)
 {
 	size_t	env_count;
 	char	**new_env;
@@ -27,7 +27,7 @@ static char **copy_env_list(char ***env_lst, t_gc **gc)
 		i++;
 	}
 	new_env[i] = NULL;
-    return new_env;
+	return (new_env);
 }
 
 static char	**sort_env_list(char ***env_lst, t_gc **gc)
@@ -35,8 +35,8 @@ static char	**sort_env_list(char ***env_lst, t_gc **gc)
 	char	**tmp;
 	char	**tmp2;
 	char	*swap;
-	int	j;
-	int	i;
+	int		j;
+	int		i;
 
 	i = 0;
 	tmp = copy_env_list(env_lst, gc);
@@ -59,7 +59,7 @@ static char	**sort_env_list(char ***env_lst, t_gc **gc)
 	return (tmp);
 }
 
-static void print_export_(char *env, t_gc **gc)
+static void	print_export_(char *env, t_gc **gc)
 {
 	ft_putstr_fd("declare -x ", 1);
 	if (strchr(env, '=') == NULL)
@@ -72,7 +72,7 @@ static void print_export_(char *env, t_gc **gc)
 
 void	print_exported_variables(char **envp, t_gc **gc, int bol)
 {
-	int	i;
+	int		i;
 	char	**env;
 
 	env = sort_env_list(&envp, gc);
@@ -84,7 +84,10 @@ void	print_exported_variables(char **envp, t_gc **gc, int bol)
 			i++;
 			continue ;
 		}
-		if (!ft_strncmp(env[i], "@exitstatus", 11) || !ft_strncmp(env[i], "@path_of_program", 16) || !ft_strcmp(get_key(env[i], gc), "_") || !ft_strncmp(env[i], "@hidden_PATH", 12))
+		if (!ft_strncmp(env[i], "@exitstatus", 11)
+			|| !ft_strncmp(env[i], "@path_of_program", 16)
+			|| !ft_strcmp(get_key(env[i], gc), "_")
+			|| !ft_strncmp(env[i], "@hidden_PATH", 12))
 		{
 			i++;
 			continue ;

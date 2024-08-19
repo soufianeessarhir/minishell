@@ -6,18 +6,19 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 00:50:33 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 11:40:35 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 05:59:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void print_unset_error(char *arg)
+static	void	print_unset_error(char *arg)
 {
 	ft_putstr_fd("minishell: unset: `", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
+
 static int	ft_iswhitespace(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
@@ -45,16 +46,16 @@ static char	*get_key_unset(char *str, t_gc **gc)
 	return (key);
 }
 
-static char **create_new_env(char **env, char *key, t_gc **gc, t_gc **lst)
+static char	**create_new_env(char **env, char *key, t_gc **gc, t_gc **lst)
 {
-	int j;
-	int k;
-	char **new_env;
+	int		j;
+	int		k;
+	char	**new_env;
 	t_env	*env_lst;
 
 	env_lst = NULL;
 	intit_env_list(&env_lst, env, gc);
-    if (!my_getenv(key, env_lst))
+	if (!my_getenv(key, env_lst))
 		return (env);
 	j = 0;
 	k = 0;
@@ -90,4 +91,4 @@ int	unset(char **argv, char ***env_lst, t_gc **gc, t_gc **lst)
 		i++;
 	}
 	return (status);
-}	
+}

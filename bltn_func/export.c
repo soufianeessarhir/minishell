@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 14:29:52 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:49:36 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int print_export_error(char *arg)
+static int	print_export_error(char *arg)
 {
 	ft_putstr_fd("minishell: export: `", 2);
 	ft_putstr_fd(arg, 2);
@@ -20,11 +20,11 @@ static int print_export_error(char *arg)
 	return (1);
 }
 
-static int handle_existing_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
+static int	handle_existing_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
 {
-    int bol;
-    int j;
-    char *tmp;
+	int		bol;
+	int		j;
+	char	*tmp;
 
 	j = 0;
 	bol = 0;
@@ -46,7 +46,7 @@ static int handle_existing_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
 		}
 		j++;
 	}
-    return (bol);
+	return (bol);
 }
 
 static void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
@@ -68,19 +68,21 @@ static void	combine_env_and_args(char ***envp, char *argv, t_gc **lst)
 	new_env[i] = NULL;
 	*envp = new_env;
 }
-static void handle_new_key(char *arg, char ***envp, t_gc **gc, t_gc **lst) {
-    char *tmp;
-    
-    if (ft_strchr(arg, '+') != NULL)
+
+static void	handle_new_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
+{
+	char	*tmp;
+
+	if (ft_strchr(arg, '+') != NULL)
 	{
-        tmp = get_value(arg, gc);
-        arg = ft_strjoin(get_key(arg, gc), "=", gc);
-        arg = ft_strjoin(arg, tmp, lst);
-    }
-    combine_env_and_args(envp, arg, lst);
+		tmp = get_value(arg, gc);
+		arg = ft_strjoin(get_key(arg, gc), "=", gc);
+		arg = ft_strjoin(arg, tmp, lst);
+	}
+	combine_env_and_args(envp, arg, lst);
 }
 
-int	ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
+int	ft_export(char **argv, char ***envp, t_norm n)
 {
 	int		i;
 	int		status;
@@ -88,17 +90,18 @@ int	ft_export(char **argv, char ***envp, t_gc **gc, t_gc **lst, int *boll)
 	status = 0;
 	i = 1;
 	if (ft_strlen_double(argv) == 1)
-		return (print_exported_variables(*envp, gc, *boll), 0);
-	if (ft_strcmp(get_key(argv[i], gc), "PATH") == 0 && boll != 0)
-		*boll = 0;
+		return (print_exported_variables(*envp, n.l_gc, *n.bol2), 0);
+	if (ft_strcmp(get_key(argv[i], n.l_gc), "PATH") == 0 && n.bol2 != 0)
+		*n.bol2 = 0;
 	while (argv[i])
 	{
-		if (get_key(argv[i], gc) == NULL || ft_isonlydigit(get_key(argv[i], gc)))
+		if (get_key(argv[i], n.l_gc) == NULL
+			|| ft_isonlydigit(get_key(argv[i], n.l_gc)))
 			status = print_export_error(argv[i]);
 		else
 		{
-			if (!handle_existing_key(argv[i], envp, gc, lst))
-				handle_new_key(argv[i], envp, gc, lst);
+			if (!handle_existing_key(argv[i], envp, n.l_gc, n.lst))
+				handle_new_key(argv[i], envp, n.l_gc, n.lst);
 		}
 		i++;
 	}

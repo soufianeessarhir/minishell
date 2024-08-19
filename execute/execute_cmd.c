@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 02:41:12 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:31:28 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
+static char	*get_path(char	**argv, t_env *env_lst, t_gc **l_gc)
 {
 	char	*env_path;
 	char	*path_env_copy;
@@ -35,16 +35,17 @@ static char	*get_path(char **argv,  t_env *env_lst, t_gc **l_gc)
 	return (argv[0]);
 }
 
-static char *get_command_path(t_cmd *cmd, t_env *env_lst, t_gc **l_gc)
+static char	*get_command_path(t_cmd *cmd, t_env *env_lst, t_gc **l_gc)
 {
-    if (ft_strchr(cmd->args[0], '/') == NULL && ft_strlen(cmd->args[0]) != 0)
-        return (get_path(cmd->args, env_lst, l_gc));
-    else
-        return (cmd->args[0]);
+	if (ft_strchr(cmd->args[0], '/') == NULL && ft_strlen(cmd->args[0]) != 0)
+		return (get_path(cmd->args, env_lst, l_gc));
+	else
+		return (cmd->args[0]);
 }
-static int handle_parent_process()
+
+static int	handle_parent_process(void)
 {
-    int status;
+	int	status;
 
 	g_a.stpsignal_inparent = 1;
 	wait(&status);
@@ -65,19 +66,19 @@ static int handle_parent_process()
 	return (status);
 }
 
-static pid_t fork_process(int *flag_pipe)
+static pid_t	fork_process(int *flag_pipe)
 {
-    pid_t childpid;
+	pid_t	childpid;
 
 	childpid = 0;
-    if (!*flag_pipe)
-        childpid = fork();
-    if (childpid == -1)
+	if (!*flag_pipe)
+		childpid = fork();
+	if (childpid == -1)
 	{
-        perror("fork");
-        exit(1);
-    }
-    return (childpid);
+		perror("fork");
+		exit(1);
+	}
+	return (childpid);
 }
 
 int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
@@ -105,4 +106,3 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 	}
 	return (handle_parent_process());
 }
-

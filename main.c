@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/19 02:30:45 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 05:53:01 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	int		bol;
 	t_help	help;
 	t_norm	lgc_norm;
-	char *exit_s;
-	int status;
+	char	*exit_s;
+	int		status;
 
 	l_gc = NULL;
 	env_lst = NULL;
@@ -48,13 +48,13 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	tmp_env = NULL;
 	bol = setup_env_and_path(&env, lst, &l_gc);
 	check_and_export_status(&env, &l_gc, lst);
-    while (1)
+	while (1)
 	{
 		g_a.exitstatus_singnal = 0;
-        *line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
-        if (!*line)
+		*line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
+		if (!*line)
 		{
-            write(0, "exit\n", 5);
+			write(0, "exit\n", 5);
 			intit_env_list(&env_lst, env, lst);
 			exit_s = my_getenv("@exitstatus", env_lst);
 			status = 0;
@@ -65,21 +65,22 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			}
 			else if (exit_s)
 				status = ft_atoi(exit_s);
-            exit(status);
-        }
+			exit(status);
+		}
 		if (g_a.exitstatus_singnal == 1)
 		{
 			ft_export_status(1, &env, &l_gc, lst);
 			g_a.exitstatus_singnal = 0;
 		}
-    	intit_env_list(&env_lst, env, lst);
-        if (*line[0] != '\0')
-		{	
+		intit_env_list(&env_lst, env, lst);
+		if (*line[0] != '\0')
+		{
 			add_history(*line);
 			help.line = *line;
 			help.env = &env;
 			help.lst = lst;
-			if (parsing_part(&help, &env_lst, &l_gc, &cmd) || g_a.stphedorc_insgin == 2)
+			if (parsing_part(&help, &env_lst, &l_gc, &cmd)
+				|| g_a.stphedorc_insgin == 2)
 			{
 				if (g_a.stphedorc_insgin == 2)
 					dup2(1, 0);
@@ -89,7 +90,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				ft_free(&l_gc);
 				cmd = NULL;
 				env_lst = NULL;
-				continue;
+				continue ;
 			}
 			lgc_norm.l_gc = &l_gc;
 			lgc_norm.lst = lst;
@@ -104,11 +105,6 @@ void readline_loop(char **line, t_gc **lst, char **env)
 	}
 }
 
-// void	f(void)
-// {
-// 	system("leaks minishell");
-// }
-
 int	main(int ac, char **av, char **env)
 {
 	struct termios	term, term_orig;
@@ -118,8 +114,6 @@ int	main(int ac, char **av, char **env)
 	tcgetattr(STDIN_FILENO, &term);
 	term_orig = term;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// atexit(f);
-	// rl_variable_bind("enable-bracketed-paste", "off");
 	lst = NULL;
 	if (ac != 1)
 		return (printf("Usage: %s\n", av[0]), 1);

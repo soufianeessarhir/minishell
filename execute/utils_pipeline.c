@@ -6,110 +6,109 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 19:16:48 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 02:40:08 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 05:19:36 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void setup_pipes(t_shell_vars *vars, t_cmd *cmd)
+void	setup_pipes(t_shell_vars *vars, t_cmd *cmd)
 {
-    vars->num_pipe = 0;
-    vars->tmp = cmd;
-    while (vars->tmp && vars->tmp->next)
+	vars->num_pipe = 0;
+	vars->tmp = cmd;
+	while (vars->tmp && vars->tmp->next)
 	{
-        vars->num_pipe += 1;
-        vars->tmp = vars->tmp->next;
-    }
-    vars->pipes_fds = ft_malloc(sizeof(int) * vars->num_pipe * 2, vars->l_gc);
-    vars->i = 0;
-    while (vars->i < vars->num_pipe)
+		vars->num_pipe += 1;
+		vars->tmp = vars->tmp->next;
+	}
+	vars->pipes_fds = ft_malloc(sizeof(int) * vars->num_pipe * 2, vars->l_gc);
+	vars->i = 0;
+	while (vars->i < vars->num_pipe)
 	{
-        vars->flag_pipe = 1;
-        if (pipe(&vars->pipes_fds[vars->i * 2]) == -1)
+		vars->flag_pipe = 1;
+		if (pipe(&vars->pipes_fds[vars->i * 2]) == -1)
 		{
-            perror("pipe");
-            exit(1);
-        }
-        vars->i++;
-    }
+			perror("pipe");
+			exit(1);
+		}
+		vars->i++;
+	}
 	vars->tmp = cmd;
 }
 
-int fork_and_manage_process(t_shell_vars *vars)
+int	fork_and_manage_process(t_shell_vars *vars)
 {
-    vars->childpid = fork();
-    if (vars->childpid == -1)
+	vars->childpid = fork();
+	if (vars->childpid == -1)
 	{
-        perror("fork");
-        kill(vars->firstchild_pid, SIGKILL);
+		perror("fork");
+		kill(vars->firstchild_pid, SIGKILL);
 		return (1);
-    } 
+	}
 	else if (vars->childpid > 0)
 	{
-        if (!vars->tmp->next)
-            vars->last_childpid = vars->childpid;
-        if (vars->cmd_pipe == 0)
-            vars->firstchild_pid = vars->childpid;
-    }
+		if (!vars->tmp->next)
+			vars->last_childpid = vars->childpid;
+		if (vars->cmd_pipe == 0)
+			vars->firstchild_pid = vars->childpid;
+	}
 	return (0);
 }
 
-static void wait_for_processes(t_shell_vars *vars, char ***env)
+static void	wait_for_processes(t_shell_vars *vars, char ***env)
 {
-    vars->i = 0;
-    g_a.stpsignal_inparent = 1;
-    while (vars->i <= vars->num_pipe)
-    {
-        vars->childpid_tmp = wait(&vars->status);
-        if (WIFSIGNALED(vars->status))
-        {
-            vars->status = 128 + WTERMSIG(vars->status);
-            if (vars->status == 141)
-                vars->status = 0;
-            ft_export_status(vars->status, env, vars->l_gc, vars->lst);
-        }
-        else if (vars->childpid_tmp == vars->last_childpid)
-            ft_export_status(WEXITSTATUS(vars->status), env, vars->l_gc, vars->lst);
-        vars->i++;
-    }
+	vars->i = 0;
+	g_a.stpsignal_inparent = 1;
+	while (vars->i <= vars->num_pipe)
+	{
+		vars->childpid_tmp = wait(&vars->status);
+		if (WIFSIGNALED(vars->status))
+		{
+			vars->status = 128 + WTERMSIG(vars->status);
+			if (vars->status == 141)
+				vars->status = 0;
+			ft_export_status(vars->status, env, vars->l_gc, vars->lst);
+		}
+		else if (vars->childpid_tmp == vars->last_childpid)
+			ft_export_status(WEXITSTATUS(vars->status),
+				env, vars->l_gc, vars->lst);
+		vars->i++;
+	}
 }
 
-void handle_pipe_status(t_shell_vars *vars, char ***env)
+void	handle_pipe_status(t_shell_vars *vars, char ***env)
 {
-    if (vars->flag_pipe)
-    {
-        vars->i = 0;
-        while (vars->i < vars->num_pipe * 2)
-        {
-            close(vars->pipes_fds[vars->i]);
-            vars->i++;
-        }
+	if (vars->flag_pipe)
+	{
+		vars->i = 0;
+		while (vars->i < vars->num_pipe * 2)
+		{
+			close(vars->pipes_fds[vars->i]);
+			vars->i++;
+		}
 		wait_for_processes(vars, env);
-        if (vars->status == 130)
-            printf("\n");
-        if (vars->status == 131)
-            printf("Quit: 3\n");
-        if (vars->childpid == -1)
-            ft_export_status(1, env, vars->l_gc, vars->lst);
-        ft_export_anything("_=", vars->l_gc, vars->lst, env);
-    }
+		if (vars->status == 130)
+			printf("\n");
+		if (vars->status == 131)
+			printf("Quit: 3\n");
+		if (vars->childpid == -1)
+			ft_export_status(1, env, vars->l_gc, vars->lst);
+		ft_export_anything("_=", vars->l_gc, vars->lst, env);
+	}
 }
 
-int advance_to_next_command(t_shell_vars *vars)
+int	advance_to_next_command(t_shell_vars *vars)
 {
-    if (vars->l == 2)
-        return (1);  
-    vars->tmp = vars->tmp->next;
-    if (vars->tmp)
-    {
-        vars->cmd_pipe++;
-    }
-    else if (vars->l == 1)
-    {
-        vars->l = 2;
-        vars->tmp = vars->path_program;
-        vars->cmd_pipe = 0;
-    }
-    return (0); 
+	if (vars->l == 2)
+		return (1);
+	vars->tmp = vars->tmp->next;
+	if (vars->tmp)
+		vars->cmd_pipe++;
+	else if (vars->l == 1)
+	{
+		vars->l = 2;
+		vars->tmp = vars->path_program;
+		vars->cmd_pipe = 0;
+	}
+	return (0);
 }

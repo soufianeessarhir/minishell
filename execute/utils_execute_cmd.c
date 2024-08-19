@@ -6,17 +6,18 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/18 23:18:50 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 05:28:16 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void handle_relative_path_error(char *path_cmd)
+static void	handle_relative_path_error(char *path_cmd)
 {
 	struct stat	statbuf;
 
-	if (!ft_strncmp(path_cmd, "./", 2) || !ft_strncmp(path_cmd, "../", 2) || (ft_strncmp(path_cmd, "/", 1) && ft_strchr(path_cmd, '/')))
+	if (!ft_strncmp(path_cmd, "./", 2) || !ft_strncmp(path_cmd, "../", 2)
+		|| (ft_strncmp(path_cmd, "/", 1) && ft_strchr(path_cmd, '/')))
 	{
 		stat(path_cmd, &statbuf);
 		if (S_ISDIR(statbuf.st_mode))
@@ -32,7 +33,7 @@ static void handle_relative_path_error(char *path_cmd)
 	}
 }
 
-static void handle_absolute_path_error(char *path_cmd)
+static void	handle_absolute_path_error(char *path_cmd)
 {
 	struct stat	statbuf;
 
@@ -52,7 +53,7 @@ static void handle_absolute_path_error(char *path_cmd)
 	}
 }
 
-void handle_execve_error(char *path_cmd, t_env *env_lst)
+void	handle_execve_error(char *path_cmd, t_env *env_lst)
 {
 	ft_putstr_fd("minishell: ", 2);
 	handle_relative_path_error(path_cmd);
@@ -65,35 +66,39 @@ void handle_execve_error(char *path_cmd, t_env *env_lst)
 	else
 	{
 		ft_putstr_fd(path_cmd, 2);
-		ft_putstr_fd(": command not found\n", 2);		
+		ft_putstr_fd(": command not found\n", 2);
 	}
 	exit(127);
 }
 
-void   reset_terminal()
+void	reset_terminal(void)
 {
-	char *cmd = "/bin/stty";
-    char *argv[] = {"stty", "sane", NULL};
-    char *envp[] = {NULL};
+	char	*cmd;
+	char	*argv[3];
+	int		pid;
 
-	int pid = fork();
+	cmd = "/bin/stty";
+	argv[0] = "stty";
+	argv[1] = "sane";
+	argv[2] = NULL;
+	pid = fork();
 	if (pid == -1)
 		perror("fork");
-	if (pid == 0) 
+	if (pid == 0)
 	{
-		if (execve(cmd, argv, envp) == -1)
+		if (execve(cmd, argv, NULL) == -1)
 			perror("execve failed");
 	}
 	else
 		waitpid(pid, NULL, 0);
 }
 
-void handling_fd_minishell(t_cmd *cmd, char *path_cmd)
+void	handling_fd_minishell(t_cmd *cmd, char *path_cmd)
 {
 	char		*is_minishell;
 
 	is_minishell = ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd));
-    if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
+	if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
 		close(1);
 	if (cmd->num_cmd == 0 && is_minishell)
 	{

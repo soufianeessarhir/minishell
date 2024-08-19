@@ -6,29 +6,30 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:58:16 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 02:08:33 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:35:33 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst)
+void	check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst)
 {
-    char **tmp_env;
-    int g;
+	char	**tmp_env;
+	int		g;
 
 	tmp_env = *env;
 	g = 0;
-    while (tmp_env != NULL && tmp_env[g])
-    {
-        if (ft_strcmp(tmp_env[g], "@exitstatus") != 0 && tmp_env[g + 1] == NULL)
-            ft_export_status(0, env, l_gc, lst);
-        g++;
-    }
+	while (tmp_env != NULL && tmp_env[g])
+	{
+		if (ft_strcmp(tmp_env[g], "@exitstatus") != 0 && tmp_env[g + 1] == NULL)
+			ft_export_status(0, env, l_gc, lst);
+		g++;
+	}
 }
-static int update_exitstatus(char ***envp, int status, t_gc **l_gc, t_gc **lst)
+
+static int	update_exitstatus(char ***envp, int status, t_gc **l_gc, t_gc **lst)
 {
-    int i;
+	int	i;
 
 	i = 0;
 	while ((*envp)[i])
@@ -50,7 +51,7 @@ void	ft_export_status(int status, char ***envp, t_gc **l_gc, t_gc **lst)
 	int		i;
 
 	if (update_exitstatus(envp, status, l_gc, lst))
-		return;
+		return ;
 	i = 0;
 	env_count = ft_strlen_double(*envp);
 	new_env = ft_malloc(sizeof(char *) * (env_count + 2), lst);
@@ -64,10 +65,10 @@ void	ft_export_status(int status, char ***envp, t_gc **l_gc, t_gc **lst)
 	*envp = new_env;
 }
 
-void initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst)
+void	initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst)
 {
-    vars->tmp->flag_pipe = &vars->flag_pipe;
-    vars->tmp->flag_display_env = &vars->bol;
-    vars->tmp->num_cmd = vars->cmd_pipe;
-    vars->tmp->path_of_program = my_getenv("@path_of_program", env_lst);
+	vars->tmp->flag_pipe = &vars->flag_pipe;
+	vars->tmp->flag_display_env = &vars->bol;
+	vars->tmp->num_cmd = vars->cmd_pipe;
+	vars->tmp->path_of_program = my_getenv("@path_of_program", env_lst);
 }

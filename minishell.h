@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/19 03:10:53 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:49:21 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <termios.h>
 # include "./gc/gc.h"
 
+# define MAXLONG 9223372036854775807
+
 typedef struct s_signalhandler
 {
 	int	exitstatus_singnal;
@@ -35,7 +37,7 @@ typedef struct s_signalhandler
 	int	stphedorc_insgin;
 }	t_signalhandler;
 
-t_signalhandler	g_a;
+t_signalhandler		g_a;
 
 # define RESET "\033[0m"
 # define GOLD "\033[0;33m"
@@ -155,36 +157,35 @@ typedef struct s_exec
 
 typedef struct s_norm
 {
-	t_gc **l_gc;
-	t_gc **lst;
-	int bol;
+	t_gc	**l_gc;
+	t_gc	**lst;
+	int		bol;
+	int		*bol2;
 }	t_norm;
-
 
 typedef struct s_shell_vars
 {
-	int *pipes_fds;
-	int i;
-	int	flag_pipe;
-	int num_pipe;
-	int cmd_pipe;
-	int tmp_cmd_pipe;
-	int last_childpid;
-	int firstchild_pid;
-	int in_fd;
-	int out_fd;
-	int status;
-	int childpid_tmp;
-	int	stexit;
-	int	childpid;
-	int bol;
-	int l;
-	t_cmd *tmp;
-	t_gc **l_gc;
-	t_gc **lst;
-	t_cmd *path_program;
-} t_shell_vars;
-
+	int		*pipes_fds;
+	int		i;
+	int		flag_pipe;
+	int		num_pipe;
+	int		cmd_pipe;
+	int		tmp_cmd_pipe;
+	int		last_childpid;
+	int		firstchild_pid;
+	int		in_fd;
+	int		out_fd;
+	int		status;
+	int		childpid_tmp;
+	int		stexit;
+	int		childpid;
+	int		bol;
+	int		l;
+	t_cmd	*tmp;
+	t_gc	**l_gc;
+	t_gc	**lst;
+	t_cmd	*path_program;
+}	t_shell_vars;
 
 t_token		*ft_dll_lstnew(char *content, int type, t_gc **l_gc);
 void		ft_dll_lstadd_front(t_token **lst, t_token *new);
@@ -243,7 +244,6 @@ int			is_export_arg(t_token *token_lst);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
 char		*deter_spl(char *str, char *ostr, t_gc **l_gc);
 
-
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);
 int			ft_builtin_func(t_cmd *cmd, char ***env, t_gc **l_gc, t_gc **lst);
@@ -253,8 +253,7 @@ int			env(char **env, t_gc **lst, int bol);
 int			ft_strlen_double(char **str);
 int			cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
 int			ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst);
-int			ft_export(char **argv, char ***envp, t_gc **gc,
-				t_gc **lst, int *boll);
+int			ft_export(char **argv, char ***envp, t_norm n);
 int			ft_strcmp(const char *s1, const char *s2);
 void		export_pwd(char *which, char ***envp, t_gc **l_gc, t_gc **lst);
 char		*get_value(char *str, t_gc **l_gc);
@@ -267,19 +266,23 @@ void		export_shelvl(char ***envp, t_gc **l_gc,
 void		ft_export_anything(char *argv, t_gc **l_gc,
 				t_gc **lst, char ***env);
 int			ft_isonlydigit(char *str);
-void		system_export_config(char *key, char *value, char ***envp, t_gc **lst);
+void		system_export_config(char *key, char *value,
+				char ***envp, t_gc **lst);
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
 void		print_exported_variables(char **envp, t_gc **gc, int bol);
 void		handle_execve_error(char *path_cmd, t_env *env_lst);
 void		handling_fd_minishell(t_cmd *cmd, char *path_cmd);
-void		reset_terminal();
-void		main_execute(t_cmd *cmd, t_env	*env_lst, t_norm l_norm, char ***env);
+void		reset_terminal(void);
+void		main_execute(t_cmd *cmd, t_env	*env_lst,
+				t_norm l_norm, char ***env);
 int			fork_and_manage_process(t_shell_vars *vars);
 void		setup_pipes(t_shell_vars *vars, t_cmd *cmd);
 void		handle_child_process(t_shell_vars *vars, char ***env);
 void		handle_pipe_status(t_shell_vars *vars, char ***env);
 int			advance_to_next_command(t_shell_vars *vars);
 void		initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst);
+void		initialize_shell_environment(char *path_program,
+				t_gc **l_gc, t_gc **lst, char ***env);
 
 #endif
