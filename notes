@@ -34,6 +34,9 @@ unset NEW
 unset NEW
 unset NEW
 env | grep NEW
+there is some error with unset PATH
+and then export it with different values like empty... etc
+the result when executing the command give uncorret exit status like (.. ieoiihewoi and so on)
 ##############################################################################
 hadchi can khdam imkan w9a3 chi error bsbab norminette
 exit 9223372036854775808
