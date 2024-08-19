@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/19 06:49:21 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:27:24 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <termios.h>
 # include "./gc/gc.h"
 
-# define MAXLONG 9223372036854775807
+# define MAXLONG 922337203685477580
 
 typedef struct s_signalhandler
 {
