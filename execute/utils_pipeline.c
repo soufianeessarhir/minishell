@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 19:16:48 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 05:19:36 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:57:16 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,17 @@ static void	wait_for_processes(t_shell_vars *vars, char ***env)
 	while (vars->i <= vars->num_pipe)
 	{
 		vars->childpid_tmp = wait(&vars->status);
-		if (WIFSIGNALED(vars->status))
+		if (vars->childpid_tmp == vars->last_childpid)
 		{
-			vars->status = 128 + WTERMSIG(vars->status);
-			if (vars->status == 141)
-				vars->status = 0;
-			ft_export_status(vars->status, env, vars->l_gc, vars->lst);
+			if (WIFSIGNALED(vars->status))
+			{
+				vars->status = 128 + WTERMSIG(vars->status);
+				ft_export_status(vars->status, env, vars->l_gc, vars->lst);
+			}
+			else
+				ft_export_status(WEXITSTATUS(vars->status),
+					env, vars->l_gc, vars->lst);
 		}
-		else if (vars->childpid_tmp == vars->last_childpid)
-			ft_export_status(WEXITSTATUS(vars->status),
-				env, vars->l_gc, vars->lst);
 		vars->i++;
 	}
 }

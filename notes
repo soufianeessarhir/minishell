@@ -39,8 +39,7 @@ and then export it with different values like empty... etc
 the result when executing the command give uncorret exit status like (.. ieoiihewoi and so on)
 ##############################################################################
 hadchi can khdam imkan w9a3 chi error bsbab norminette
-exit 9223372036854775808
-exit -9223372036854775809
+
 /bin/echo 1 | kaka
 try this command  between the dollar sign it give incorrect result in the last (env | grep NEW)
 
