@@ -40,24 +40,10 @@ exit 9223372036854775808
 exit -9223372036854775809
 /bin/echo 1 | kaka
 try this command  between the dollar sign it give incorrect result in the last (env | grep NEW)
-$$$$$$$$$$$$$$$
-export NEW=42
-env | grep NEW
-unset NEW
-env | grep NEW
-unset NEW
-unset NEW
-unset NEW
-unset NEW
-unset NEW
-env | grep NEW
-$$$$$$$$$$$$$$$
+
 
 ##############################################################################
 
-##############################################################################
-
-##############################################################################
 
 ############################################################################################
 
@@ -66,3 +52,6 @@ parsepart ----------------------------------------------------------------------
 mnin hayadt sanitaz tal3o liya hdo makhadaminch jarabthom li9thom makhadaminch 
 jarabt 7ta version lakhrin l9ithom nafs l7aja mini kanhayad lihom sanitaz mkibawach ikhadmo 
 mafhamtch 
+############################################################################################
+signals in herdoc
+ambiguity in spaces
