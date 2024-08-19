@@ -66,6 +66,7 @@
     "utility": "c",
     "minishell.h": "c",
     "__node_handle": "c",
-    "signal.h": "c"
+    "signal.h": "c",
+    "complex": "c"
   }
 }

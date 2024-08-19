@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 00:02:28 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 19:23:36 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/19 02:17:42 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void handle_sigint(int sig)
 {
 	if (sig == SIGINT)
     {
-		
 		g_a.exitstatus_singnal = 1;
 		if (g_a.stpsignal_inparent == 1)
 			return;

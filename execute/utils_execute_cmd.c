@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 17:55:41 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/18 23:18:50 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void handle_relative_path_error(char *path_cmd)
 		exit(127);
 	}
 }
+
 static void handle_absolute_path_error(char *path_cmd)
 {
 	struct stat	statbuf;
@@ -50,6 +51,7 @@ static void handle_absolute_path_error(char *path_cmd)
 		exit(127);
 	}
 }
+
 void handle_execve_error(char *path_cmd, t_env *env_lst)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -84,4 +86,21 @@ void   reset_terminal()
 	}
 	else
 		waitpid(pid, NULL, 0);
+}
+
+void handling_fd_minishell(t_cmd *cmd, char *path_cmd)
+{
+	char		*is_minishell;
+
+	is_minishell = ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd));
+    if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
+		close(1);
+	if (cmd->num_cmd == 0 && is_minishell)
+	{
+		if (dup2(2, 1) == -1)
+		{
+			perror("dup2");
+			exit(1);
+		}
+	}
 }

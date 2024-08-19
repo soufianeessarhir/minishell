@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/18 14:55:13 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 02:41:12 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static int handle_parent_process()
 	if (WIFSIGNALED(status))
 		status = 128 + WTERMSIG(status);
 	else
+	{
 		status = WEXITSTATUS(status);
+		g_a.stpsignal_inparent = 0;
+	}
 	if (status == 130)
 		printf("\n");
 	if (status == 131)
@@ -59,8 +62,6 @@ static int handle_parent_process()
 		printf("Quit: 3\n");
 		reset_terminal();
 	}
-	g_a.stpsignal_inparent = 0;
-	g_a.exitstatus_singnal = 0;
 	return (status);
 }
 
@@ -69,10 +70,10 @@ static pid_t fork_process(int *flag_pipe)
     pid_t childpid;
 
 	childpid = 0;
-    if (!*flag_pipe) {
+    if (!*flag_pipe)
         childpid = fork();
-    }
-    if (childpid == -1) {
+    if (childpid == -1)
+	{
         perror("fork");
         exit(1);
     }
@@ -105,13 +106,3 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 	return (handle_parent_process());
 }
 
-void handling_fd_minishell(t_cmd *cmd, char *path_cmd)
-{
-	char		*is_minishell;
-
-	is_minishell = ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd));
-    if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
-		close(1);
-	if (cmd->num_cmd == 0 && is_minishell)
-		dup2(2, 1);
-}

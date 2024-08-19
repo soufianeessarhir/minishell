@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:58:16 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/17 11:05:05 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 02:08:33 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,12 @@ void	ft_export_status(int status, char ***envp, t_gc **l_gc, t_gc **lst)
 	new_env[i] = ft_strjoin("@exitstatus=", ft_itoa(status, l_gc), lst);
 	new_env[i + 1] = NULL;
 	*envp = new_env;
+}
+
+void initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst)
+{
+    vars->tmp->flag_pipe = &vars->flag_pipe;
+    vars->tmp->flag_display_env = &vars->bol;
+    vars->tmp->num_cmd = vars->cmd_pipe;
+    vars->tmp->path_of_program = my_getenv("@path_of_program", env_lst);
 }

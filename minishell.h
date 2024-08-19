@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 18:11:54 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 02:08:48 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,49 @@ typedef struct s_heredoc
 
 }	t_heredoc;
 
+typedef struct s_exec
+{
+	int		i;
+	char	*result;
+	char	*tmp;
+	t_env	*env_lst;
+	t_gc	**l_gc;
+	char	*str;
+}	t_exec;
+
+typedef struct s_norm
+{
+	t_gc **l_gc;
+	t_gc **lst;
+	int bol;
+}	t_norm;
+
+
+typedef struct s_shell_vars
+{
+	int *pipes_fds;
+	int i;
+	int	flag_pipe;
+	int num_pipe;
+	int cmd_pipe;
+	int tmp_cmd_pipe;
+	int last_childpid;
+	int firstchild_pid;
+	int in_fd;
+	int out_fd;
+	int status;
+	int childpid_tmp;
+	int	stexit;
+	int	childpid;
+	int bol;
+	int l;
+	t_cmd *tmp;
+	t_gc **l_gc;
+	t_gc **lst;
+	t_cmd *path_program;
+} t_shell_vars;
+
+
 t_token		*ft_dll_lstnew(char *content, int type, t_gc **l_gc);
 void		ft_dll_lstadd_front(t_token **lst, t_token *new);
 void		ft_dll_lstadd_back(t_token **lst, t_token *new);
@@ -231,6 +274,12 @@ void		print_exported_variables(char **envp, t_gc **gc, int bol);
 void		handle_execve_error(char *path_cmd, t_env *env_lst);
 void		handling_fd_minishell(t_cmd *cmd, char *path_cmd);
 void		reset_terminal();
-
+void		main_execute(t_cmd *cmd, t_env	*env_lst, t_norm l_norm, char ***env);
+int			fork_and_manage_process(t_shell_vars *vars);
+void		setup_pipes(t_shell_vars *vars, t_cmd *cmd);
+void		handle_child_process(t_shell_vars *vars, char ***env);
+void		handle_pipe_status(t_shell_vars *vars, char ***env);
+int			advance_to_next_command(t_shell_vars *vars);
+void		initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst);
 
 #endif
