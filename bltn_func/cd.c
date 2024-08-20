@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 18:27:31 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:22:29 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 02:18:39 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,15 @@ int	cd(char **argv, char ***envp, t_gc **l_gc, t_gc **lst)
 	i = 1;
 	j = 0;
 	path = argv[i];
+	if (argv[i] && argv[i][0] == '\0')
+		return (0);
 	env_lst = NULL;
 	intit_env_list(&env_lst, *envp, l_gc);
 	if (path == NULL)
 		path = my_getenv("HOME", env_lst);
 	else
 		path = skip_slash(path, l_gc);
-	if (path == NULL)
+	if (!my_getenv("HOME", env_lst))
 		return (ft_putstr_fd("minishell: cd: HOME not set\n", 1), 1);
 	export_pwd("OLDPWD=", envp, l_gc, lst);
 	if (chdir(path) == -1)

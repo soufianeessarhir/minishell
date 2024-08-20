@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 10:55:21 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:51:08 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 00:46:17 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@ void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)
 	char	**tmp;
 	char	*arg;
 	t_norm	lst_n;
+	char	*tmp_arg;
 
 	lst_n.l_gc = gc;
 	lst_n.lst = lst;
 	lst_n.bol2 = 0;
 	q = ft_strlen_double(argv) - 1;
+	tmp_arg = argv[q];
+	if (strcmp(argv[0], "export") == 0 && get_key(tmp_arg, gc))
+		tmp_arg = get_key(argv[q], gc);
 	tmp = (char **)ft_malloc(sizeof(char *) * 3, lst);
 	tmp[0] = ft_strdup("export", gc);
-	arg = ft_strdup(argv[q], gc);
+	arg = ft_strdup(tmp_arg, gc);
 	tmp[1] = ft_strjoin("_=", arg, gc);
 	tmp[2] = NULL;
 	ft_export(tmp, envpv, lst_n);

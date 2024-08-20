@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:51:50 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 01:27:41 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ int	ft_builtin_func(t_cmd *cmd, char ***envpv, t_gc **gc, t_gc **lst)
 	norm_bag.bol = ft_is_builtin(argv[i], (char **)builtins);
 	if (!*cmd->flag_pipe && ft_strlen_double(argv) && norm_bag.bol != 1)
 		ft_export_(argv, envpv, gc, lst);
-	if (norm_bag.bol == 1 && !*cmd->flag_pipe)
+	if (norm_bag.bol == 1)
 		ft_export_anything("_=/usr/bin/env", gc, lst, envpv);
 	status = execute_bltncmd(norm_bag.bol, cmd, envpv, norm_bag);
-	if (norm_bag.bol == 1 && !*cmd->flag_pipe)
+	if (norm_bag.bol == 1)
 		ft_export_anything("_=env", gc, lst, envpv);
 	return (status);
 }

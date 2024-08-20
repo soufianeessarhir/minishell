@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:31:28 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 01:50:45 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 		}
 		handling_fd_minishell(cmd, path_cmd);
 		if (execve(path_cmd, argv, *envp) == -1)
-			handle_execve_error(path_cmd, env_lst);
+			handle_execve_error(path_cmd, argv[0], env_lst);
 	}
 	return (handle_parent_process());
 }

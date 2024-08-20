@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 05:28:16 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 01:59:07 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	handle_relative_path_error(char *path_cmd)
 {
 	struct stat	statbuf;
 
-	if (!ft_strncmp(path_cmd, "./", 2) || !ft_strncmp(path_cmd, "../", 2)
+	if (!ft_strncmp(path_cmd, "./", 2) || !ft_strncmp(path_cmd, "../", 3)
 		|| (ft_strncmp(path_cmd, "/", 1) && ft_strchr(path_cmd, '/')))
 	{
 		stat(path_cmd, &statbuf);
@@ -53,9 +53,11 @@ static void	handle_absolute_path_error(char *path_cmd)
 	}
 }
 
-void	handle_execve_error(char *path_cmd, t_env *env_lst)
+void	handle_execve_error(char *path_cmd, char *argv, t_env *env_lst)
 {
 	ft_putstr_fd("minishell: ", 2);
+	if (!ft_strcmp(argv, "..") || !ft_strcmp(argv, "."))
+		path_cmd = argv;
 	handle_relative_path_error(path_cmd);
 	handle_absolute_path_error(path_cmd);
 	if (my_getenv("PATH", env_lst) == NULL)

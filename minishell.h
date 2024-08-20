@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/19 23:27:24 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 01:51:21 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ void		system_export_config(char *key, char *value,
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
 void		print_exported_variables(char **envp, t_gc **gc, int bol);
-void		handle_execve_error(char *path_cmd, t_env *env_lst);
+void		handle_execve_error(char *path_cmd, char *argv, t_env *env_lst);
 void		handling_fd_minishell(t_cmd *cmd, char *path_cmd);
 void		reset_terminal(void);
 void		main_execute(t_cmd *cmd, t_env	*env_lst,

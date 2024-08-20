@@ -24,18 +24,6 @@ bash-3.2$ cd ..
 bash-3.2$ pwd
 /Users/relamine/Desktop
 bash-3.2$ 
-export NEW=42
-env | grep NEW
-unset NEW
-env | grep NEW
-unset NEW
-unset NEW
-unset NEW
-unset NEW
-unset NEW
-env | grep NEW
-
-
 
 
 
@@ -48,7 +36,6 @@ the result when executing the command give uncorret exit status like (.. ieoiihe
 
 
 give example ??
-
 
 
 ##############################################################################
