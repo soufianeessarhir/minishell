@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 08:45:54 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:08:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
 	return (0);
 }
 
-void readline_loop(char **line, t_gc **lst, char **env) 
+void readline_loop(char **line, t_gc **lst, char **env)
 {
 	t_env	*env_lst;
 	t_gc	*l_gc;
