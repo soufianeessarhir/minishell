@@ -12,18 +12,6 @@ make sure you free the memory before you exit
 ##############################################################################
 
 ##############################################################################
-bash-3.2$ pwd
-/Users/relamine/Desktop/ppp/folder/b
-bash-3.2$ rm -r ../../folder/
-bash-3.2$ cd ..
-cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
-bash-3.2$ cd ..
-bash-3.2$ pwd
-/Users/relamine/Desktop/ppp
-bash-3.2$ cd ..
-bash-3.2$ pwd
-/Users/relamine/Desktop
-bash-3.2$ 
 
 
 
@@ -39,7 +27,6 @@ give example ??
 
 
 ##############################################################################
-hadchi can khdam imkan w9a3 chi error bsbab norminette
 
 
 ##############################################################################
