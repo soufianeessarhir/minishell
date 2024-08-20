@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/19 23:35:02 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 06:05:33 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ void readline_loop(char **line, t_gc **lst, char **env)
 				|| g_a.stphedorc_insgin == 2)
 			{
 				if (g_a.stphedorc_insgin == 2)
-					dup2(1, 0);
+				{
+					dup2(2, 0);
+					dup2(2, 1);
+				}
 				g_a.stphedorc_insgin = 0;
 				free(*line);
 				*line = NULL;

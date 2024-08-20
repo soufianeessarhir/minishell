@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 00:02:28 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 23:42:04 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 06:05:46 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	handle_sigint(int sig)
 		if (g_a.stphedorc_insgin == 1)
 		{
 			g_a.stphedorc_insgin = 2;
+			printf("\n");
 			close(0);
+			close(1);
 			return ;
 		}
 		printf("\n");
