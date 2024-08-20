@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 16:18:07 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:44:34 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,24 @@ typedef struct s_shell_vars
 	t_cmd	*path_program;
 }	t_shell_vars;
 
+typedef struct s_norm_rll
+{
+	t_env			*env_lst;
+	t_gc			*l_gc;
+	t_cmd			*cmd;
+	char			**tmp_env;
+	int				bol;
+	t_help			help;
+	t_norm			lgc_norm;
+	char			*exit_s;
+	int				status;
+	struct termios	term;
+	struct termios	term_orig;
+	char			**line;
+	t_gc			**lst;
+	char			**env;
+}	t_norm_rll;
+
 t_token		*ft_dll_lstnew(char *content, int type, t_gc **l_gc);
 void		ft_dll_lstadd_front(t_token **lst, t_token *new);
 void		ft_dll_lstadd_back(t_token **lst, t_token *new);
@@ -244,6 +262,14 @@ int			is_export_arg(t_token *token_lst);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
 char		*deter_spl(char *str, char *ostr, t_gc **l_gc);
 char		*undeter_spl(char *str, t_gc **l_gc);
+int			parsing_part(t_help *help, t_env **env_lst,
+				t_gc **l_gc, t_cmd **cmd);
+void		free_nr_rl_vars(t_cmd **cmd, t_env **env_lst,
+				t_gc **l_gc, char **line);
+void		init_rn_rll(t_norm_rll *help_rll);
+void		rll_helper1(int *a, int *b);
+void		rll_helper2(void);
+void		rll_nr_helpr_f(t_norm_rll *helper);
 
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);

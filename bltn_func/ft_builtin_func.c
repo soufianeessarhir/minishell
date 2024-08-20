@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 11:02:09 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 08:18:13 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:48:22 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	execute_bltncmd(int is_builtin,
 	else if (is_builtin == 4)
 		return (unset(argv, envpv, gc, lst));
 	else if (is_builtin == 5)
-		return (exit_0(ft_strlen_double(argv + 1), argv, cmd->flag_pipe, lst_n));
+		return (exit_0(ft_strlen_double(argv + 1),
+				argv, cmd->flag_pipe, lst_n));
 	else if (is_builtin == 6)
 		return (echo(ft_strlen_double(argv), argv));
 	return (ft_execute(cmd, envpv, lst_n));

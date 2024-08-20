@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execute_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 08:37:07 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:48:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void	handle_absolute_path_error(char *path_cmd, t_norm lst_n)
 	}
 }
 
-void	handle_execve_error(char *path_cmd, char *argv, t_env *env_lst, t_norm lst_n)
+void	handle_execve_error(char *path_cmd, char *argv,
+	t_env *env_lst, t_norm lst_n)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (!ft_strcmp(argv, "..") || !ft_strcmp(argv, "."))

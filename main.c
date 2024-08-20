@@ -6,117 +6,94 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 15:08:35 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:46:30 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
+void	rrl_nr_helpr_f2(t_norm_rll *helper)
 {
-	t_token	*token_lst;
-
-	token_lst = NULL;
-	if (sp_uq_handling(help->line))
-		return (1);
-	ft_tokinize(help->line, &token_lst, l_gc);
-	if (syntax_error(&token_lst, l_gc, *env_lst))
-		return (ft_export_status(258, help->env, l_gc, help->lst), 1);
-	her_doc_handling(&token_lst, l_gc, *env_lst);
-	env_handling(&token_lst, *env_lst, l_gc);
-	init_cmd(cmd, token_lst, l_gc);
-	if (open_redirection(cmd, l_gc))
-		return (ft_export_status(1, help->env, l_gc, help->lst), 1);
-	return (0);
+	helper->lgc_norm.l_gc = &helper->l_gc;
+	helper->lgc_norm.lst = helper->lst;
+	helper->lgc_norm.bol = helper->bol;
 }
 
-void readline_loop(char **line, t_gc **lst, char **env)
+void	readline_loop_hellper2(t_norm_rll *helper)
 {
-	t_env	*env_lst;
-	t_gc	*l_gc;
-	t_cmd	*cmd;
-	char	**tmp_env;
-	int		bol;
-	t_help	help;
-	t_norm	lgc_norm;
-	char	*exit_s;
-	int		status;
+	if (g_a.exitstatus_singnal == 1)
+	{
+		ft_export_status(1, &helper->env, &helper->l_gc, helper->lst);
+		g_a.exitstatus_singnal = 0;
+	}
+	intit_env_list(&helper->env_lst, helper->env, helper->lst);
+	if (*(helper->line)[0] != '\0')
+	{
+		add_history(*(helper->line));
+		rll_nr_helpr_f(helper);
+		if (parsing_part(&helper->help, &helper->env_lst, &helper->l_gc,
+				&helper->cmd) || g_a.stphedorc_insgin == 2)
+		{
+			if (g_a.stphedorc_insgin == 2)
+				rll_helper2();
+			g_a.stphedorc_insgin = 0;
+			return (free_nr_rl_vars(&helper->cmd, &helper->env_lst,
+					&helper->l_gc, helper->line), (void)0);
+		}
+		rrl_nr_helpr_f2(helper);
+		main_execute(helper->cmd, helper->env_lst,
+			helper->lgc_norm, &helper->env);
+		free_nr_rl_vars(&helper->cmd, &helper->env_lst,
+			&helper->l_gc, helper->line);
+	}
+}
 
-	l_gc = NULL;
-	env_lst = NULL;
-	cmd = NULL;
-	tmp_env = NULL;
-	bol = setup_env_and_path(&env, lst, &l_gc);
-	check_and_export_status(&env, &l_gc, lst);
+void	readline_loop_hellper(t_norm_rll *helper)
+{
 	while (1)
 	{
+		tcgetattr(STDIN_FILENO, &helper->term);
+		helper->term_orig = helper->term;
+		tcsetattr(STDIN_FILENO, TCSANOW, &helper->term);
 		g_a.exitstatus_singnal = 0;
-		*line = readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
-		if (!*line)
+		*(helper->line)
+			= readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
+		if (!*(helper->line))
 		{
 			write(0, "exit\n", 5);
-			intit_env_list(&env_lst, env, lst);
-			exit_s = my_getenv("@exitstatus", env_lst);
-			status = 0;
+			intit_env_list(&helper->env_lst, helper->env, helper->lst);
+			helper->exit_s = my_getenv("@exitstatus", helper->env_lst);
+			helper->status = 0;
 			if (g_a.exitstatus_singnal == 1)
-			{
-				status = 1;
-				g_a.exitstatus_singnal = 0;
-			}
-			else if (exit_s)
-				status = ft_atoi(exit_s);
-			return (ft_free(&l_gc), ft_free(lst), exit(status));
+				rll_helper1(&helper->status, &g_a.exitstatus_singnal);
+			else if (helper->exit_s)
+				helper->status = ft_atoi(helper->exit_s);
+			return (ft_free(&helper->l_gc),
+				ft_free(helper->lst), exit(helper->status));
 		}
-		if (g_a.exitstatus_singnal == 1)
-		{
-			ft_export_status(1, &env, &l_gc, lst);
-			g_a.exitstatus_singnal = 0;
-		}
-		intit_env_list(&env_lst, env, lst);
-		if (*line[0] != '\0')
-		{
-			add_history(*line);
-			help.line = *line;
-			help.env = &env;
-			help.lst = lst;
-			if (parsing_part(&help, &env_lst, &l_gc, &cmd)
-				|| g_a.stphedorc_insgin == 2)
-			{
-				if (g_a.stphedorc_insgin == 2)
-				{
-					dup2(2, 0);
-					dup2(2, 1);
-				}
-				g_a.stphedorc_insgin = 0;
-				free(*line);
-				*line = NULL;
-				ft_free(&l_gc);
-				cmd = NULL;
-				env_lst = NULL;
-				continue ;
-			}
-			lgc_norm.l_gc = &l_gc;
-			lgc_norm.lst = lst;
-			lgc_norm.bol = bol;
-			main_execute(cmd, env_lst, lgc_norm, &env);
-			free(*line);
-			*line = NULL;
-			ft_free(&l_gc);
-			cmd = NULL;
-			env_lst = NULL;
-		}
+		readline_loop_hellper2(helper);
+		tcsetattr(STDIN_FILENO, TCSANOW, &helper->term_orig);
 	}
+}
+
+void	readline_loop(char **line, t_gc **lst, char **env)
+{
+	t_norm_rll	help_rll;
+
+	init_rn_rll(&help_rll);
+	help_rll.bol = setup_env_and_path(&env, lst, &help_rll.l_gc);
+	check_and_export_status(&env, &help_rll.l_gc, lst);
+	help_rll.env = env;
+	help_rll.lst = lst;
+	help_rll.line = line;
+	readline_loop_hellper(&help_rll);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	struct termios	term, term_orig;
 	t_gc			*lst;
 	char			*line;
 
-	tcgetattr(STDIN_FILENO, &term);
-	term_orig = term;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	lst = NULL;
 	if (ac != 1)
 		return (printf("Usage: %s\n", av[0]), 1);
@@ -124,7 +101,6 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigint);
 	readline_loop(&line, &lst, env);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term_orig);
 	ft_free(&lst);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 05:59:54 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/16 18:02:10 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:07:40 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,22 @@ int	syntax_error(t_token **token, t_gc **l_gc, t_env *env_lst)
 	return (her_doc_handling(token, l_gc, env_lst),
 		ft_putstr_fd
 		("minishell: syntax error near unexpected token `newline\' \n", 2), 1);
+}
+
+int	parsing_part(t_help *help, t_env **env_lst, t_gc **l_gc, t_cmd **cmd)
+{
+	t_token	*token_lst;
+
+	token_lst = NULL;
+	if (sp_uq_handling(help->line))
+		return (1);
+	ft_tokinize(help->line, &token_lst, l_gc);
+	if (syntax_error(&token_lst, l_gc, *env_lst))
+		return (ft_export_status(258, help->env, l_gc, help->lst), 1);
+	her_doc_handling(&token_lst, l_gc, *env_lst);
+	env_handling(&token_lst, *env_lst, l_gc);
+	init_cmd(cmd, token_lst, l_gc);
+	if (open_redirection(cmd, l_gc))
+		return (ft_export_status(1, help->env, l_gc, help->lst), 1);
+	return (0);
 }

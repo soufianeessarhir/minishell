@@ -39,9 +39,6 @@ parsepart ----------------------------------------------------------------------
 
 ############################################################################################
 
-ambiguity in spaces
-
-
 make sure you free the memory before you exit
 if malloc fail free l_gc and l_lst and exit
 
