@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 14:29:59 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:18:07 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,8 @@ void		system_export_config(char *key, char *value,
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
 void		print_exported_variables(char **envp, t_gc **gc, int bol);
-void		handle_execve_error(char *path_cmd, char *argv, t_env *env_lst, t_norm lst_n);
+void		handle_execve_error(char *path_cmd, char *argv,
+				t_env *env_lst, t_norm lst_n);
 void		handling_fd_minishell(t_cmd *cmd, char *path_cmd, t_norm lst_n);
 void		reset_terminal(void);
 void		main_execute(t_cmd *cmd, t_env	*env_lst,
