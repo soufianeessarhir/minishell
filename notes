@@ -8,7 +8,7 @@ execpart --------------------------------------------------------------
 
 
 ##############################################################################
-make sure you free the memory before you exit
+
 ##############################################################################
 
 ##############################################################################
@@ -18,10 +18,10 @@ make sure you free the memory before you exit
 
 there is some error with unset PATH
 ?? give expample i see all is good
+and i test by testers
 
 and then export it with different values like empty... etc
 the result when executing the command give uncorret exit status like (.. ieoiihewoi and so on)
-
 
 give example ??
 
@@ -38,8 +38,12 @@ parsepart ----------------------------------------------------------------------
 
 
 ############################################################################################
-signals in herdoc
-i fix it  signal in herdoc
-
 
 ambiguity in spaces
+
+
+make sure you free the memory before you exit
+if malloc fail free l_gc and l_lst and exit
+
+
+check my part is ok or not i free if exit

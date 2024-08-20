@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 01:51:21 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:34:31 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,11 +248,11 @@ void		handle_sigint(int sig);
 int			echo(int argc, char **argv);
 int			ft_builtin_func(t_cmd *cmd, char ***env, t_gc **l_gc, t_gc **lst);
 int			pwd(void);
-int			exit_0(int i, int argc, char **argv, int *flag_pipe);
+int			exit_0(int argc, char **argv, int *flag_pipe, t_norm n);
 int			env(char **env, t_gc **lst, int bol);
 int			ft_strlen_double(char **str);
 int			cd(char **argv, char ***envp, t_gc **gc, t_gc **lst);
-int			ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst);
+int			ft_execute(t_cmd *cmd, char ***envp, t_norm lst_n);
 int			ft_export(char **argv, char ***envp, t_norm n);
 int			ft_strcmp(const char *s1, const char *s2);
 void		export_pwd(char *which, char ***envp, t_gc **l_gc, t_gc **lst);
@@ -271,8 +271,8 @@ void		system_export_config(char *key, char *value,
 int			setup_env_and_path(char ***env, t_gc **lst, t_gc **l_gc);
 void		check_and_export_status(char ***env, t_gc **l_gc, t_gc **lst);
 void		print_exported_variables(char **envp, t_gc **gc, int bol);
-void		handle_execve_error(char *path_cmd, char *argv, t_env *env_lst);
-void		handling_fd_minishell(t_cmd *cmd, char *path_cmd);
+void		handle_execve_error(char *path_cmd, char *argv, t_env *env_lst, t_norm lst_n);
+void		handling_fd_minishell(t_cmd *cmd, char *path_cmd, t_norm lst_n);
 void		reset_terminal(void);
 void		main_execute(t_cmd *cmd, t_env	*env_lst,
 				t_norm l_norm, char ***env);

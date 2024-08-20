@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:13:18 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 05:32:44 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:43:32 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	handle_inout_redirection(t_shell_vars *vars)
 		if (dup2(vars->tmp->red_in_fd, STDIN_FILENO) == -1)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		close(vars->tmp->red_in_fd);
 	}
@@ -57,7 +57,7 @@ static void	handle_inout_redirection(t_shell_vars *vars)
 		if (dup2(vars->tmp->red_out_fd, STDOUT_FILENO) == -1)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		close(vars->tmp->red_out_fd);
 	}
@@ -72,7 +72,7 @@ static void	handle_redirections_and_execute(t_shell_vars *vars, char ***env)
 		if (dup2(vars->in_fd, STDIN_FILENO) == -1)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		close(vars->in_fd);
 	}
@@ -81,7 +81,7 @@ static void	handle_redirections_and_execute(t_shell_vars *vars, char ***env)
 		if (dup2(vars->out_fd, STDOUT_FILENO) == -1)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		close(vars->out_fd);
 	}

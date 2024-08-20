@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 19:16:48 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 23:57:16 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:44:29 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	setup_pipes(t_shell_vars *vars, t_cmd *cmd)
 		if (pipe(&vars->pipes_fds[vars->i * 2]) == -1)
 		{
 			perror("pipe");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		vars->i++;
 	}

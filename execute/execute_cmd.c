@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 01:50:45 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:46:31 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	handle_parent_process(void)
 	return (status);
 }
 
-static pid_t	fork_process(int *flag_pipe)
+static pid_t	fork_process(int *flag_pipe, t_norm lst_n)
 {
 	pid_t	childpid;
 
@@ -76,12 +76,12 @@ static pid_t	fork_process(int *flag_pipe)
 	if (childpid == -1)
 	{
 		perror("fork");
-		exit(1);
+		return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(1), 1);
 	}
 	return (childpid);
 }
 
-int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
+int	ft_execute(t_cmd *cmd, char ***envp, t_norm lst_n)
 {
 	char		**argv;
 	char		*path_cmd;
@@ -90,19 +90,19 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_gc **l_gc, t_gc **lst)
 
 	env_lst = NULL;
 	argv = cmd->args;
-	intit_env_list(&env_lst, *envp, l_gc);
-	path_cmd = get_command_path(cmd, env_lst, l_gc);
-	childpid = fork_process(cmd->flag_pipe);
+	intit_env_list(&env_lst, *envp, lst_n.l_gc);
+	path_cmd = get_command_path(cmd, env_lst, lst_n.l_gc);
+	childpid = fork_process(cmd->flag_pipe, lst_n);
 	if (childpid == 0)
 	{
 		if (ft_strcmp(path_cmd, "./minishell") == 0)
 		{
-			export_shelvl(envp, l_gc, lst, env_lst);
+			export_shelvl(envp, lst_n.l_gc, lst_n.lst, env_lst);
 			path_cmd = cmd->path_of_program;
 		}
-		handling_fd_minishell(cmd, path_cmd);
+		handling_fd_minishell(cmd, path_cmd, lst_n);
 		if (execve(path_cmd, argv, *envp) == -1)
-			handle_execve_error(path_cmd, argv[0], env_lst);
+			handle_execve_error(path_cmd, argv[0], env_lst, lst_n);
 	}
 	return (handle_parent_process());
 }

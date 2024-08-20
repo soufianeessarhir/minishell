@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 23:27:17 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:17:52 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,41 +62,43 @@ static long	ft_atoi_checker(char *str, int *error_msg)
 	return (res * signe);
 }
 
-static int	print_exit_error(int argc, int error_msg, int checker, char *arg)
+static int	print_exit_error(int error_msg, int checker, char *arg, t_norm n)
 {
+	int	argc;
+
+	argc = n.bol;
 	if (argc >= 2 && error_msg != -1 && error_msg != -2)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		if (argc > 2)
 			return (1);
-		exit(1);
+		return (ft_free(n.l_gc), ft_free(n.lst), exit(1), 1);
 	}
 	else if ((error_msg == -1 || error_msg == -2))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		exit(255);
+		return (ft_free(n.l_gc), ft_free(n.lst), exit(255), 1);
 	}
 	else
-		exit(checker);
+		return (ft_free(n.l_gc), ft_free(n.lst), exit(checker), 1);
 }
 
-int	exit_0(int i, int argc, char **argv, int *flag_pipe)
+int	exit_0(int argc, char **argv, int *flag_pipe, t_norm n)
 {
-	int		j;
 	long	checker;
 	int		error_msg;
 
-	j = 0;
+	n.bol = argc;
 	if (*flag_pipe != 1)
 		ft_putstr_fd("exit\n", 1);
-	if (argv[i] != NULL)
+	if (argv[1] != NULL)
 	{
 		error_msg = 0;
-		checker = ft_atoi_checker(argv[i], &error_msg);
-		if (print_exit_error(argc, error_msg, checker, argv[i]))
+		checker = ft_atoi_checker(argv[1], &error_msg);
+		if (print_exit_error(error_msg, checker, argv[1], n))
 			return (1);
 	}
-	exit(0);
+	return (ft_free(n.l_gc), ft_free(n.lst), exit(0), 0);
 }

@@ -6,13 +6,13 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 01:59:07 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:37:07 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	handle_relative_path_error(char *path_cmd)
+static void	handle_relative_path_error(char *path_cmd, t_norm lst_n)
 {
 	struct stat	statbuf;
 
@@ -24,16 +24,16 @@ static void	handle_relative_path_error(char *path_cmd)
 		{
 			ft_putstr_fd(path_cmd, 2);
 			ft_putstr_fd(": is a directory\n", 2);
-			exit(126);
+			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(126));
 		}
 		perror(path_cmd);
 		if (errno == 13)
-			exit(126);
-		exit(127);
+			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(126));
+		return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(127));
 	}
 }
 
-static void	handle_absolute_path_error(char *path_cmd)
+static void	handle_absolute_path_error(char *path_cmd, t_norm lst_n)
 {
 	struct stat	statbuf;
 
@@ -44,22 +44,22 @@ static void	handle_absolute_path_error(char *path_cmd)
 		{
 			ft_putstr_fd(path_cmd, 2);
 			ft_putstr_fd(": is a directory\n", 2);
-			exit(126);
+			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(126));
 		}
 		perror(path_cmd);
 		if (errno == 13)
-			exit(126);
-		exit(127);
+			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(126));
+		return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(127));
 	}
 }
 
-void	handle_execve_error(char *path_cmd, char *argv, t_env *env_lst)
+void	handle_execve_error(char *path_cmd, char *argv, t_env *env_lst, t_norm lst_n)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (!ft_strcmp(argv, "..") || !ft_strcmp(argv, "."))
 		path_cmd = argv;
-	handle_relative_path_error(path_cmd);
-	handle_absolute_path_error(path_cmd);
+	handle_relative_path_error(path_cmd, lst_n);
+	handle_absolute_path_error(path_cmd, lst_n);
 	if (my_getenv("PATH", env_lst) == NULL)
 	{
 		ft_putstr_fd(path_cmd, 2);
@@ -70,7 +70,7 @@ void	handle_execve_error(char *path_cmd, char *argv, t_env *env_lst)
 		ft_putstr_fd(path_cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
-	exit(127);
+	return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(127));
 }
 
 void	reset_terminal(void)
@@ -95,7 +95,7 @@ void	reset_terminal(void)
 		waitpid(pid, NULL, 0);
 }
 
-void	handling_fd_minishell(t_cmd *cmd, char *path_cmd)
+void	handling_fd_minishell(t_cmd *cmd, char *path_cmd, t_norm lst_n)
 {
 	char		*is_minishell;
 
@@ -107,7 +107,7 @@ void	handling_fd_minishell(t_cmd *cmd, char *path_cmd)
 		if (dup2(2, 1) == -1)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(1));
 		}
 	}
 }

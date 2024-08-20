@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 20:25:37 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:33:16 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:42:08 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static	void	handle_pipes(t_shell_vars *vars)
 		if (dup2(vars->pipes_fds[(vars->cmd_pipe * 2) + 1], STDOUT_FILENO) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 	}
 	if (vars->cmd_pipe > 0 && vars->tmp->red_in_fd == 0)
@@ -27,7 +27,7 @@ static	void	handle_pipes(t_shell_vars *vars)
 		if (dup2(vars->pipes_fds[(vars->cmd_pipe - 1) * 2], STDIN_FILENO) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 	}
 }
@@ -40,7 +40,7 @@ static void	handle_redirections_pipe(t_shell_vars *vars)
 		if (dup2(vars->tmp->red_in_fd, 0) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		close(vars->tmp->red_in_fd);
 	}
@@ -50,7 +50,7 @@ static void	handle_redirections_pipe(t_shell_vars *vars)
 		if (dup2(vars->tmp->red_out_fd, 1) < 0)
 		{
 			perror("dup2");
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		close(vars->tmp->red_out_fd);
 	}
@@ -66,7 +66,7 @@ static void	execute_command_pipe(t_shell_vars *vars, char ***env)
 		vars->i++;
 	}
 	vars->stexit = ft_builtin_func(vars->tmp, env, vars->l_gc, vars->lst);
-	exit(vars->stexit);
+	return (ft_free(vars->l_gc), ft_free(vars->lst), exit(vars->stexit));
 }
 
 void	handle_child_process(t_shell_vars *vars, char ***env)
@@ -81,7 +81,7 @@ void	handle_child_process(t_shell_vars *vars, char ***env)
 				close(vars->pipes_fds[vars->i]);
 				vars->i++;
 			}
-			exit(1);
+			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
 		}
 		handle_redirections_pipe(vars);
 		execute_command_pipe(vars, env);

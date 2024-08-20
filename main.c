@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 06:05:33 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 08:45:54 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void readline_loop(char **line, t_gc **lst, char **env)
 			}
 			else if (exit_s)
 				status = ft_atoi(exit_s);
-			exit(status);
+			return (ft_free(&l_gc), ft_free(lst), exit(status));
 		}
 		if (g_a.exitstatus_singnal == 1)
 		{
