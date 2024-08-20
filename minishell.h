@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 08:34:31 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:29:59 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,6 +243,7 @@ void		norm_env_zero(t_token **tmp, t_env *env_lst,
 int			is_export_arg(t_token *token_lst);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
 char		*deter_spl(char *str, char *ostr, t_gc **l_gc);
+char		*undeter_spl(char *str, t_gc **l_gc);
 
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);

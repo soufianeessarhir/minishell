@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:17:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 16:01:02 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:29:39 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,11 @@ int	sp_in_it(char *str)
 	if (!str)
 		return (0);
 	j = ft_strlen(str) - 1;
-	while (str[i] && str[i] == ' ')
+	while (i <= j && (str[i] == ' ' || str[i] == '\\'))
 		i++;
-	while (j >= 0 && str[j] == ' ')
+	if (i > j)
+		return (1);
+	while (j >= i && (str[j] == ' ' || str[j] == '\\'))
 		j--;
 	while (str[i] && i <= j)
 	{

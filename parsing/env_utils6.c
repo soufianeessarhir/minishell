@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:04:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/18 15:42:46 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:29:50 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,29 @@ char	*deter_spl(char *str, char *ostr, t_gc **l_gc)
 		i++;
 	}
 	res[i] = '\0';
+	return (res);
+}
+
+char	*undeter_spl(char *str, t_gc **l_gc)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!str)
+		return (NULL);
+	res = ft_malloc(sizeof(char) * (ft_strlen(str) + 1), l_gc);
+	while (str[i])
+	{
+		if (str[i] == '\\')
+			res[j] = ' ';
+		else
+			res[j] = str[i];
+		i++;
+		j++;
+	}
+	res[j] = '\0';
 	return (res);
 }

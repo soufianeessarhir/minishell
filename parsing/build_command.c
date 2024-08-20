@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 22:33:31 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/17 16:02:53 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:29:03 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 	{
 		ft_lstadd_back_redir(&new->rd, new_redir((*tmp)->value, l_gc));
 		ft_lstadd_back_redir(&new->rd,
-			new_redir((*tmp)->next->value, l_gc));
+			new_redir(undeter_spl((*tmp)->next->value, l_gc), l_gc));
 		*tmp = (*tmp)->next;
 	}
 	else if ((*tmp)->type != 2)
@@ -70,7 +70,8 @@ static	void	process_token(t_cmd *new, t_token **tmp, t_gc **l_gc)
 			}
 		}
 		else if ((*tmp)->value)
-			ft_lstadd_back_args(&new->args_lst, new_args((*tmp)->value, l_gc));
+			ft_lstadd_back_args(&new->args_lst,
+				new_args(undeter_spl((*tmp)->value, l_gc), l_gc));
 	}
 }
 

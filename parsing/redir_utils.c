@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 05:09:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/19 23:32:05 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:31:31 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@
 
 int	is_directory(const char *path)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
-	if (stat(path, &path_stat) != 0) 
+	if (stat(path, &path_stat) != 0)
 	{
-		if (errno == ENOENT) {
-			return 0;
-		}
-		return -1;
+		if (errno == ENOENT)
+			return (0);
+		return (-1);
 	}
-	return S_ISDIR(path_stat.st_mode);
+	return (S_ISDIR(path_stat.st_mode));
 }
 
 int	handle_red_in(t_cmd *tmp, t_gc **l_gc, t_redir *rd)
