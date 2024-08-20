@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   her_doc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 19:58:51 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 06:08:00 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:38:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	herdoc_h(t_heredoc heredoc, t_token **tmp, t_gc **l_gc, t_env *env_lst)
 		heredoc.line = NULL;
 		heredoc.line = readline(">");
 	}
+	if (heredoc.line)
+		free(heredoc.line);
 	(*tmp)->next->value = ft_strjoin(ft_strjoin("/tmp/heredoc", ft_itoa(rnd(0,
 						(*tmp)->next->value, l_gc), l_gc), l_gc),
 			(*tmp)->next->value, l_gc);
