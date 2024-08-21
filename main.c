@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 21:46:30 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:11:04 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	readline_loop_hellper2(t_norm_rll *helper)
 		rrl_nr_helpr_f2(helper);
 		main_execute(helper->cmd, helper->env_lst,
 			helper->lgc_norm, &helper->env);
-		free_nr_rl_vars(&helper->cmd, &helper->env_lst,
-			&helper->l_gc, helper->line);
 	}
+	free_nr_rl_vars(&helper->cmd, &helper->env_lst,
+		&helper->l_gc, helper->line);
 }
 
 void	readline_loop_hellper(t_norm_rll *helper)
