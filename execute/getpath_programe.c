@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 00:26:44 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/22 16:38:27 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:13:05 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ static int	handle_env_setup(char **path_of_program, t_env **env_lst,
 		chdir(tmp_pwd);
 	}
 	else
+	{
 		*path_of_program = ft_strjoin(pwd, "/./minishell", free_list.l_gc);
+		export_shelvl(env, free_list.l_gc, free_list.lst, *env_lst);
+	}
 	ft_export_anything("OLDPWD", free_list.l_gc,
 		free_list.lst, env);
 	system_export_config("@path_of_program=",

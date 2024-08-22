@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 10:55:21 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/22 16:44:31 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:10:57 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	export_shelvl(char ***envp, t_gc **l_gc, t_gc **lst, t_env *env_lst)
 	lst_n.bol2 = 0;
 	num_shlvl = my_getenv("SHLVL", env_lst);
 	if (!num_shlvl)
-		num_shlvl = "1";
+		num_shlvl = "0";
 	i = ft_atoi(num_shlvl);
 	if (i == 0 || i >= 10240)
 		i = 1;
