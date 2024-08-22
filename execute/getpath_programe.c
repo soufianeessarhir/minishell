@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 00:26:44 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/22 17:13:05 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/19 06:34:14 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,7 @@ static	char	*setup_default_env(t_env **env_lst, char ***env,
 	char	*pwd_env_i;
 
 	tmp = create_tmp_env("cd", "..", free_list.l_gc);
-	close(1);
 	cd(tmp, env, free_list.l_gc, free_list.lst);
-	if (dup2(2, 1) == -1)
-	{
-		ft_free(free_list.l_gc);
-		ft_free(free_list.lst);
-		exit(1);
-		return (NULL);
-	}
 	intit_env_list(env_lst, *env, free_list.l_gc);
 	*path_of_program = ft_strjoin(my_getenv("OLDPWD", *env_lst),
 			"/./minishell", free_list.l_gc);
@@ -74,10 +66,7 @@ static int	handle_env_setup(char **path_of_program, t_env **env_lst,
 		chdir(tmp_pwd);
 	}
 	else
-	{
 		*path_of_program = ft_strjoin(pwd, "/./minishell", free_list.l_gc);
-		export_shelvl(env, free_list.l_gc, free_list.lst, *env_lst);
-	}
 	ft_export_anything("OLDPWD", free_list.l_gc,
 		free_list.lst, env);
 	system_export_config("@path_of_program=",
