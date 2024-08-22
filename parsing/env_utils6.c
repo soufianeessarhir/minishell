@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:04:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 14:29:50 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:03:50 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	norm_env_for(char *s, int *i, t_gc **l_gc, t_env_vars **new)
 {
