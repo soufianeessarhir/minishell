@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execute_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 21:48:35 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:56:18 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	handle_execve_error(char *path_cmd, char *argv,
 	{
 		ft_putstr_fd(path_cmd, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+		if (!ft_strcmp(argv, "..") || !ft_strcmp(argv, "."))
+			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(126));
 	}
 	else
 	{
