@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/21 12:11:04 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:19:37 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	readline_loop_hellper2(t_norm_rll *helper)
 		g_a.exitstatus_singnal = 0;
 	}
 	intit_env_list(&helper->env_lst, helper->env, helper->lst);
-	if (*(helper->line)[0] != '\0')
+	if (*(helper->line)[0] != '\0' && !white_spaces(*(helper->line)))
 	{
 		add_history(*(helper->line));
 		rll_nr_helpr_f(helper);
@@ -52,10 +52,7 @@ void	readline_loop_hellper(t_norm_rll *helper)
 {
 	while (1)
 	{
-		tcgetattr(STDIN_FILENO, &helper->term);
-		helper->term_orig = helper->term;
-		tcsetattr(STDIN_FILENO, TCSANOW, &helper->term);
-		g_a.exitstatus_singnal = 0;
+		setting_term(&helper->term, &helper->term_orig);
 		*(helper->line)
 			= readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
 		if (!*(helper->line))

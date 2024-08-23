@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export_to_env.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 10:55:21 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/22 17:32:48 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:50:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@ void	export_pwd(char *which, char ***envp, t_gc **l_gc, t_gc **lst)
 {
 	char	**args;
 	t_norm	lst_n;
+	char	*tmp;
 
 	lst_n.l_gc = l_gc;
 	lst_n.lst = lst;
 	lst_n.bol2 = 0;
+	tmp = getcwd(NULL, 0);
 	args = ft_malloc(sizeof(char *) * 3, l_gc);
 	args[0] = ft_strdup("export", l_gc);
-	args[1] = ft_strjoin(which, getcwd(NULL, 0), l_gc);
+	args[1] = ft_strjoin(which, tmp, l_gc);
 	args[2] = NULL;
 	ft_export(args, envp, lst_n);
+	free(tmp);
 }
 
 void	ft_export_(char **argv, char ***envpv, t_gc **gc, t_gc **lst)

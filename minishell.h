@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/21 10:29:22 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:13:24 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,11 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
 # include <signal.h>
-# include <sys/types.h>
-# include <sanitizer/lsan_interface.h>
 # include <sys/stat.h>
 # include <termios.h>
 # include "./gc/gc.h"
@@ -270,6 +267,9 @@ void		init_rn_rll(t_norm_rll *help_rll);
 void		rll_helper1(int *a, int *b);
 void		rll_helper2(void);
 void		rll_nr_helpr_f(t_norm_rll *helper);
+char		*trem_white_spaces(char *line, t_gc **l_gc);
+int			white_spaces(char *line);
+void		setting_term(struct termios *term, struct termios *term_orig);
 
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);

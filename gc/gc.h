@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 00:53:42 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/21 10:28:47 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:57:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
 
 typedef struct s_gc
 {

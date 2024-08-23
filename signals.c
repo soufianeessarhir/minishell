@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 00:02:28 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 06:05:46 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:19:53 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,26 @@ void	handle_sigint(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+int	white_spaces(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	setting_term(struct termios *term, struct termios *term_orig)
+{
+	tcgetattr(STDIN_FILENO, term);
+	*term_orig = *term;
+	tcsetattr(STDIN_FILENO, TCSANOW, term);
+	g_a.exitstatus_singnal = 0;
 }
