@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 08:46:31 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:35:30 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,8 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_norm lst_n)
 	childpid = fork_process(cmd->flag_pipe, lst_n);
 	if (childpid == 0)
 	{
-		if (ft_strcmp(path_cmd, "./minishell") == 0)
-		{
-			export_shelvl(envp, lst_n.l_gc, lst_n.lst, env_lst);
+		if (ft_strcmp(path_cmd, "minishell") == 0)
 			path_cmd = cmd->path_of_program;
-		}
 		handling_fd_minishell(cmd, path_cmd, lst_n);
 		if (execve(path_cmd, argv, *envp) == -1)
 			handle_execve_error(path_cmd, argv[0], env_lst, lst_n);

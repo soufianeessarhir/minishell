@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/22 15:56:18 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:21:10 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	handling_fd_minishell(t_cmd *cmd, char *path_cmd, t_norm lst_n)
 {
 	char		*is_minishell;
 
-	is_minishell = ft_strnstr(path_cmd, "./minishell", ft_strlen(path_cmd));
+	is_minishell = ft_strnstr(path_cmd, "minishell", ft_strlen(path_cmd));
 	if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
 		close(1);
 	if (cmd->num_cmd == 0 && is_minishell)
