@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:13:18 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 08:43:32 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:08:35 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ static void	handle_redirections_and_execute(t_shell_vars *vars, char ***env)
 		if (dup2(vars->in_fd, STDIN_FILENO) == -1)
 		{
 			perror("dup2");
-			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
+			ft_free(vars->l_gc);
+			ft_free(vars->lst);
+			exit(1);
 		}
 		close(vars->in_fd);
 	}
@@ -81,7 +83,9 @@ static void	handle_redirections_and_execute(t_shell_vars *vars, char ***env)
 		if (dup2(vars->out_fd, STDOUT_FILENO) == -1)
 		{
 			perror("dup2");
-			return (ft_free(vars->l_gc), ft_free(vars->lst), exit(1));
+			ft_free(vars->l_gc);
+			ft_free(vars->lst);
+			exit(1);
 		}
 		close(vars->out_fd);
 	}
@@ -126,4 +130,5 @@ void	main_execute(t_cmd *cmd, t_env *env_lst, t_norm l_norm, char ***env)
 			break ;
 	}
 	handle_pipe_status(&vars, env);
+	close_redirection_pipe(&vars, cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 04:58:16 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:35:33 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:09:41 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,17 @@ void	initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst)
 	vars->tmp->flag_display_env = &vars->bol;
 	vars->tmp->num_cmd = vars->cmd_pipe;
 	vars->tmp->path_of_program = my_getenv("@path_of_program", env_lst);
+}
+
+void	close_redirection_pipe(t_shell_vars *vars, t_cmd *cmd)
+{
+	vars->tmp = cmd;
+	while (vars->tmp)
+	{
+		if (vars->tmp->red_in_fd > 0)
+			close(vars->tmp->red_in_fd);
+		if (vars->tmp->red_out_fd > 1)
+			close(vars->tmp->red_out_fd);
+		vars->tmp = vars->tmp->next;
+	}
 }

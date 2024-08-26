@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/26 01:14:50 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 03:10:03 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,5 +312,6 @@ int			advance_to_next_command(t_shell_vars *vars);
 void		initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst);
 void		initialize_shell_environment(char *path_program,
 				t_gc **l_gc, t_gc **lst, char ***env);
+void		close_redirection_pipe(t_shell_vars *vars, t_cmd *cmd);
 
 #endif
