@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/26 01:26:20 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 05:18:46 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ static int	print_exit_error(int error_msg, int checker, char *arg, t_norm n)
 	if (argc >= 2 && error_msg != -1 && error_msg != -2)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		if (argc > 2)
-			return (1);
-		return (ft_free(n.l_gc), ft_free(n.lst), exit(1), 1);
+		return (1);
 	}
 	else if ((error_msg == -1 || error_msg == -2))
 	{
