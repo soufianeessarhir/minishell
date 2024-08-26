@@ -10,7 +10,7 @@ ft_putchar_fd.c	ft_strmapi.c	ft_putstr_fd.c	ft_putendl_fd.c	ft_putnbr_fd.c ft_to
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 RM =rm -f
 AR =ar -rcs
 

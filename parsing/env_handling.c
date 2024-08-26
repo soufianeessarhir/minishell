@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/20 14:29:15 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:21:08 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	is_export_arg(t_token *token_lst)
 	t_token	*tmp;
 
 	tmp = token_lst;
+	if (tmp->value && ft_strchr(tmp->value, '=') != NULL)
+		return (0);
 	while (tmp->prev && tmp->prev->type != 3)
 		tmp = tmp->prev;
 	if (tmp && tmp->value && strcmp(tmp->value, "export") == 0)
@@ -26,6 +28,9 @@ int	is_export_arg(t_token *token_lst)
 
 void	norm_helper(char *tmp_va, t_gc **l_gc, char **value)
 {
+	tmp_va = trem_doubled_double_qoutes(tmp_va, l_gc);
+	if (tmp_va && tmp_va[0] == '\"' && tmp_va[1] != '\"')
+		return ;
 	ft_putstr_fd(ft_strjoin(ft_strjoin("minishell: ",
 				tmp_va, l_gc), ": ambiguous redirect\n", l_gc), 2);
 	*value = NULL;

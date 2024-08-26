@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/26 03:10:03 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:16:25 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ void		rll_nr_helpr_f(t_norm_rll *helper);
 char		*trem_white_spaces(char *line, t_gc **l_gc);
 int			white_spaces(char *line);
 void		setting_term(struct termios *term, struct termios *term_orig);
+char		*trem_doubled_double_qoutes(char *str, t_gc **l_gc);
 
 void		handle_sigint(int sig);
 int			echo(int argc, char **argv);

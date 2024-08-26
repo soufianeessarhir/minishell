@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/26 05:18:46 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:58:03 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	exit_0(char **argv, int *flag_pipe, t_norm n, char **env)
 
 	n.bol = ft_strlen_double(argv + 1);
 	if (*flag_pipe != 1)
-		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 1);
 	if (argv[1] != NULL)
 	{
 		error_msg = 0;
