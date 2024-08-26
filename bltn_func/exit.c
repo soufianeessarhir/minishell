@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 09:21:12 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/20 08:17:52 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/26 01:26:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,36 @@ static int	print_exit_error(int error_msg, int checker, char *arg, t_norm n)
 		return (ft_free(n.l_gc), ft_free(n.lst), exit(checker), 1);
 }
 
-int	exit_0(int argc, char **argv, int *flag_pipe, t_norm n)
+static void	exit_no_arg(t_norm helper, char **env)
+{
+	int		status;
+	t_env	*env_lst;
+	char	*exit_s;
+
+	env_lst = NULL;
+	intit_env_list(&env_lst, env, helper.lst);
+	exit_s = my_getenv("@exitstatus", env_lst);
+	status = 0;
+	if (g_a.exitstatus_singnal == 1)
+	{
+		status = 1;
+		g_a.exitstatus_singnal = 0;
+	}
+	else if (exit_s)
+		status = ft_atoi(exit_s);
+	ft_free(helper.l_gc);
+	ft_free(helper.lst);
+	exit(status);
+}
+
+int	exit_0(char **argv, int *flag_pipe, t_norm n, char **env)
 {
 	long	checker;
 	int		error_msg;
 
-	n.bol = argc;
+	n.bol = ft_strlen_double(argv + 1);
 	if (*flag_pipe != 1)
-		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("exit\n", 2);
 	if (argv[1] != NULL)
 	{
 		error_msg = 0;
@@ -100,5 +122,5 @@ int	exit_0(int argc, char **argv, int *flag_pipe, t_norm n)
 		if (print_exit_error(error_msg, checker, argv[1], n))
 			return (1);
 	}
-	return (ft_free(n.l_gc), ft_free(n.lst), exit(0), 0);
+	return (exit_no_arg(n, env), 0);
 }
