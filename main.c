@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/23 17:19:37 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/29 04:53:02 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	rrl_nr_helpr_f2(t_norm_rll *helper)
 {
 	helper->lgc_norm.l_gc = &helper->l_gc;
 	helper->lgc_norm.lst = helper->lst;
-	helper->lgc_norm.bol = helper->bol;
+	helper->lgc_norm.bol2 = &helper->bol;
 }
 
 void	readline_loop_hellper2(t_norm_rll *helper)

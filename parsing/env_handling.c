@@ -6,19 +6,25 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:16:32 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/26 12:21:08 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:21:00 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_export_arg(t_token *token_lst)
+int	is_export_arg(t_token *token_lst, char *str)
 {
 	t_token	*tmp;
+	int		i;
 
 	tmp = token_lst;
-	if (tmp->value && ft_strchr(tmp->value, '=') != NULL)
-		return (0);
+	i = 0;
+	while (str && str[i] != '\0' && str[i] != '=')
+	{
+		if (str[i] == '$')
+			return (0);
+		i++;
+	}
 	while (tmp->prev && tmp->prev->type != 3)
 		tmp = tmp->prev;
 	if (tmp && tmp->value && strcmp(tmp->value, "export") == 0)

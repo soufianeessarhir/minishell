@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 06:30:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/19 06:49:36 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/29 05:09:31 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ static int	handle_existing_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
 {
 	int		bol;
 	int		j;
-	char	*tmp;
 
-	j = 0;
-	bol = 0;
+	initialize(&j, &bol);
 	while ((*envp)[j] != NULL)
 	{
 		if (ft_strcmp(get_key((*envp)[j], gc), get_key(arg, gc)) == 0)
@@ -37,8 +35,10 @@ static int	handle_existing_key(char *arg, char ***envp, t_gc **gc, t_gc **lst)
 				break ;
 			if (ft_strchr(arg, '+') != NULL)
 			{
-				tmp = get_value(arg, gc);
-				(*envp)[j] = ft_strjoin((*envp)[j], tmp, lst);
+				arg = get_value(arg, gc);
+				if (ft_strchr((*envp)[j], '=') == NULL)
+					arg = ft_strjoin("=", arg, lst);
+				(*envp)[j] = ft_strjoin((*envp)[j], arg, lst);
 			}
 			else
 				(*envp)[j] = ft_strdup(arg, lst);

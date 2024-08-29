@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:04:47 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/26 12:07:15 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:22:35 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	norm_env_zero(t_token **tmp, t_env *env_lst, t_gc **l_gc, int *numcmd)
 	if (((*tmp)->value == NULL || sp_in_it((*tmp)->value))
 		&& (*tmp)->prev && (*tmp)->prev->type == 2)
 		norm_helper(tmp_va, l_gc, &(*tmp)->value);
-	else if (!is_export_arg(*tmp))
+	else if (!is_export_arg(*tmp, tmp_va))
 		(*tmp)->is_env = 1;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/26 12:16:25 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/29 05:03:17 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,8 @@ typedef struct s_shell_vars
 	int		childpid_tmp;
 	int		stexit;
 	int		childpid;
-	int		bol;
 	int		l;
+	int		*bol2;
 	t_cmd	*tmp;
 	t_gc	**l_gc;
 	t_gc	**lst;
@@ -255,7 +255,7 @@ void		process_reg(char *s, int *i, t_gc **l_gc, t_env_vars **new);
 void		process_quote(char *s, int *i, t_gc **l_gc, t_env_vars **new);
 void		norm_env_zero(t_token **tmp, t_env *env_lst,
 				t_gc **l_gc, int *numcmd);
-int			is_export_arg(t_token *token_lst);
+int			is_export_arg(t_token *token_lst, char *str);
 void		norm_helper(char *tmp_va, t_gc **l_gc, char **value);
 char		*deter_spl(char *str, char *ostr, t_gc **l_gc);
 char		*undeter_spl(char *str, t_gc **l_gc);
@@ -314,5 +314,6 @@ void		initialize_cmd_vars(t_shell_vars *vars, t_env *env_lst);
 void		initialize_shell_environment(char *path_program,
 				t_gc **l_gc, t_gc **lst, char ***env);
 void		close_redirection_pipe(t_shell_vars *vars, t_cmd *cmd);
+void		initialize(int *j, int *bol);
 
 #endif
