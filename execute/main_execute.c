@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:13:18 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/26 03:21:21 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/29 05:03:12 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_shell_vars	init_shell_vars(t_cmd *cmd, t_norm l_norm)
 	vars.childpid_tmp = 0;
 	vars.stexit = 0;
 	vars.childpid = -1;
-	vars.bol = l_norm.bol;
+	vars.bol2 = l_norm.bol2;
 	vars.l = 0;
 	vars.path_program = NULL;
 	vars.l_gc = l_norm.l_gc;
