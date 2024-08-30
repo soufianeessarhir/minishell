@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:23:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/30 03:43:15 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:17:53 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,8 +195,6 @@ typedef struct s_norm_rll
 	t_norm			lgc_norm;
 	char			*exit_s;
 	int				status;
-	struct termios	term;
-	struct termios	term_orig;
 	char			**line;
 	t_gc			**lst;
 	char			**env;

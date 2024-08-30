@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 04:24:26 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/29 04:53:02 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:17:25 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	readline_loop_hellper(t_norm_rll *helper)
 {
 	while (1)
 	{
-		setting_term(&helper->term, &helper->term_orig);
 		*(helper->line)
 			= readline(BOLD GREEN "minishell" YELLOW "$ " RESET BOLD);
 		if (!*(helper->line))
@@ -69,7 +68,6 @@ void	readline_loop_hellper(t_norm_rll *helper)
 				ft_free(helper->lst), exit(helper->status));
 		}
 		readline_loop_hellper2(helper);
-		tcsetattr(STDIN_FILENO, TCSANOW, &helper->term_orig);
 	}
 }
 
