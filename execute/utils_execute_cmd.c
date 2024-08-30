@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:50:00 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/29 06:49:49 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/30 03:43:56 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,11 @@ void	reset_terminal(void)
 		waitpid(pid, NULL, 0);
 }
 
-void	handling_fd_minishell(t_cmd *cmd, char *path_cmd, t_norm lst_n)
+void	handling_fd_minishell(t_cmd *cmd, char *path_cmd)
 {
 	char		*is_minishell;
 
 	is_minishell = ft_strnstr(path_cmd, "minishell", ft_strlen(path_cmd));
-	if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0)
+	if (*cmd->flag_pipe && is_minishell && cmd->num_cmd > 0 && access(path_cmd, F_OK) == 0)
 		close(1);
-	if (cmd->num_cmd == 0 && is_minishell)
-	{
-		if (dup2(2, 1) == -1)
-		{
-			perror("dup2");
-			return (ft_free(lst_n.l_gc), ft_free(lst_n.lst), exit(1));
-		}
-	}
 }

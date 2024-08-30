@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 19:16:48 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/26 02:13:33 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/30 03:13:48 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	handle_pipe_status(t_shell_vars *vars, char ***env)
 {
 	if (vars->flag_pipe)
 	{
+		g_a.stpsignal_inparent = 1;
 		vars->i = 0;
 		while (vars->i < vars->num_pipe * 2)
 		{
@@ -88,6 +89,7 @@ void	handle_pipe_status(t_shell_vars *vars, char ***env)
 			vars->i++;
 		}
 		wait_for_processes(vars, env);
+		g_a.stpsignal_inparent = 0;
 		if (vars->status == 130)
 			printf("\n");
 		if (vars->status == 131)

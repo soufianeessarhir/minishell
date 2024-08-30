@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:13:18 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/29 05:03:12 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/30 03:44:47 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	handle_redirections_and_execute(t_shell_vars *vars, char ***env)
 static int	check_and_update_path_program(t_shell_vars *vars)
 {
 	if (vars->l < 1 && vars->tmp->num_cmd == 0
-		&& ft_strnstr(vars->tmp->args[0], "minishell",
+		&& access(vars->tmp->args[0], F_OK) == 0 && ft_strnstr(vars->tmp->args[0], "minishell",
 			ft_strlen(vars->tmp->args[0])))
 	{
 		vars->l = 1;

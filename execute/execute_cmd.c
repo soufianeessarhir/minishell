@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/29 06:43:36 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/30 03:43:20 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_execute(t_cmd *cmd, char ***envp, t_norm lst_n)
 	{
 		if (ft_strcmp(path_cmd, "minishell") == 0)
 			path_cmd = cmd->path_of_program;
-		handling_fd_minishell(cmd, path_cmd, lst_n);
+		handling_fd_minishell(cmd, path_cmd);
 		if (execve(path_cmd, argv, *envp) == -1)
 			handle_execve_error(path_cmd, argv[0], env_lst, lst_n);
 	}
