@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 19:16:48 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/30 03:13:48 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/31 02:02:39 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	fork_and_manage_process(t_shell_vars *vars)
 static void	wait_for_processes(t_shell_vars *vars, char ***env)
 {
 	vars->i = 0;
-	g_a.stpsignal_inparent = 1;
 	while (vars->i <= vars->num_pipe)
 	{
 		vars->childpid_tmp = wait(&vars->status);
@@ -72,9 +71,17 @@ static void	wait_for_processes(t_shell_vars *vars, char ***env)
 			else
 				ft_export_status(WEXITSTATUS(vars->status),
 					env, vars->l_gc, vars->lst);
+			if (vars->status == 130)
+				printf("\n");
+			if (vars->status == 131)
+			{
+				printf("Quit: 3\n");
+				reset_terminal();
+			}
 		}
 		vars->i++;
 	}
+	g_a.exitstatus_singnal = 0;
 }
 
 void	handle_pipe_status(t_shell_vars *vars, char ***env)
@@ -90,10 +97,6 @@ void	handle_pipe_status(t_shell_vars *vars, char ***env)
 		}
 		wait_for_processes(vars, env);
 		g_a.stpsignal_inparent = 0;
-		if (vars->status == 130)
-			printf("\n");
-		if (vars->status == 131)
-			printf("Quit: 3\n");
 		if (vars->childpid == -1)
 			ft_export_status(1, env, vars->l_gc, vars->lst);
 		ft_export_anything("_=", vars->l_gc, vars->lst, env);

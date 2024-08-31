@@ -6,7 +6,7 @@
 /*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 01:34:58 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/30 03:43:20 by relamine         ###   ########.fr       */
+/*   Updated: 2024/08/31 01:32:07 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static int	handle_parent_process(void)
 	else
 		status = WEXITSTATUS(status);
 	g_a.stpsignal_inparent = 0;
+	g_a.exitstatus_singnal = 0;
 	if (status == 130)
 		printf("\n");
 	if (status == 131)

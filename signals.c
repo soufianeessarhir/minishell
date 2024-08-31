@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relamine <relamine@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 00:02:28 by relamine          #+#    #+#             */
-/*   Updated: 2024/08/23 17:19:53 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/31 01:34:05 by relamine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,4 @@ void	setting_term(struct termios *term, struct termios *term_orig)
 	tcgetattr(STDIN_FILENO, term);
 	*term_orig = *term;
 	tcsetattr(STDIN_FILENO, TCSANOW, term);
-	g_a.exitstatus_singnal = 0;
 }
