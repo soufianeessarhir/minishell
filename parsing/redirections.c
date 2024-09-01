@@ -6,11 +6,19 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 03:58:22 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/29 10:51:40 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/31 10:01:42 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	close_redirection_fds(t_cmd *cmd)
+{
+	if (cmd->red_in_fd != 0)
+		close(cmd->red_in_fd);
+	if (cmd->red_out_fd != 1)
+		close(cmd->red_out_fd);
+}
 
 char	*trim_dir(char	*str, t_gc **l_gc)
 {
@@ -52,11 +60,7 @@ int	handle_redirections(t_cmd *tmp, t_gc **l_gc)
 				|| ft_strcmp(tmp->rd->redio, "<<") == 0))
 		{
 			if (handle_red_in(tmp, l_gc, tmp->rd))
-			{
-				if (tmp->red_in_fd != 0)
-					close(tmp->red_in_fd);
 				return (tmp->exit_status = 1, 1);
-			}
 		}
 		if (tmp->rd->next)
 			tmp->rd = tmp->rd->next->next;
@@ -79,11 +83,11 @@ int	open_redirection(t_cmd **cmd, t_gc **l_gc)
 		if (tmp->rd)
 		{
 			if (handle_redirections(tmp, l_gc))
-			{
 				if (!tmp->next)
-					return (1);
-			}
+					return (close_redirection_fds(tmp), 1);
 		}
+		if (tmp->exit_status == 1)
+			close_redirection_fds(tmp);
 		tmp = tmp->next;
 	}
 	return (0);

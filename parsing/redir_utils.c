@@ -6,7 +6,7 @@
 /*   By: sessarhi <sessarhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 05:09:21 by sessarhi          #+#    #+#             */
-/*   Updated: 2024/08/29 10:52:44 by sessarhi         ###   ########.fr       */
+/*   Updated: 2024/08/31 09:53:09 by sessarhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,12 @@ int	handle_red_out(t_cmd *tmp, t_gc **l_gc, t_redir *rd)
 	{
 		if (rd->next && handle_overwrite_redirection(tmp,
 				rd->next->redio, l_gc))
-		{
-			if (tmp->red_out_fd != 1)
-				close(tmp->red_out_fd);
 			return (1);
-		}
 	}
 	else if (rd->redio && ft_strcmp(rd->redio, ">>") == 0)
 	{
 		if (rd->next && handle_append_redirection(tmp, rd->next->redio, l_gc))
-		{
-			if (tmp->red_out_fd != 1)
-				close(tmp->red_out_fd);
 			return (1);
-		}
 	}
 	return (0);
 }
