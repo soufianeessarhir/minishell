@@ -1,0 +1,15 @@
+Makefile
+bltn_func
+execute
+gc
+libft
+ls
+main.c
+main.o
+main_helper.c
+main_helper.o
+minishell
+minishell.h
+parsing
+signals.c
+signals.o

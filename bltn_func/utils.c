@@ -41,10 +41,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 int	ft_isonlydigit(char *str)
 {
 	int	i;
-	int	flag;
 
 	i = 0;
-	flag = 0;
 	if (ft_isdigit(str[0]))
 		return (1);
 	while (str[i])
